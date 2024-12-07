@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 221,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.axaml",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\MainWindow.axaml",
+              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\MainWindow.axaml",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\MainWindow.axaml",
+              "RelativeToolTip": "TranslatorFromAssembly\\Views\\MainWindow.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-12-07T08:17:58.578Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindowViewModel.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeDocumentMoniker": "TranslatorFromAssembly\\ViewModels\\MainWindowViewModel.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeToolTip": "TranslatorFromAssembly\\ViewModels\\MainWindowViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-07T08:17:58.412Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

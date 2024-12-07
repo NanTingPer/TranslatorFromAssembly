@@ -34,6 +34,8 @@ namespace TranslatorFromAssembly
         public IRootViewCut IRootViewCut => _serviceProvider.GetService<IRootViewCut>();
 
         public MainViewModel MainViewModel => _serviceProvider.GetService<MainViewModel>();
+        public MainWindowModel MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
+        
 
         public ServiceLocator()
         {
@@ -45,6 +47,8 @@ namespace TranslatorFromAssembly
 
             //MainViewModel
             _services.AddSingleton<MainViewModel>();
+
+            _services.AddSingleton<MainWindowModel>();
 
             _serviceProvider = _services.BuildServiceProvider();
         }

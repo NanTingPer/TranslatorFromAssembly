@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="stardict.db" />
+    <EmbeddedResource Include="stardict.db">
+      <LogicalName>stardict.db</LogicalName>
+    </EmbeddedResource>
     <Folder Include="ModelClass\" />
   </ItemGroup>
 

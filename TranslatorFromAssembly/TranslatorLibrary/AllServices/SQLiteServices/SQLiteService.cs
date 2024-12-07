@@ -18,8 +18,8 @@ namespace TranslatorLibrary.AllServices.SQLiteServices
         private SQLiteAsyncConnection _connection;
         public SQLiteService()
         {
-            _databasePath = "stardict.db";
-            _databasePath = GetAppFilePath.GetPathAndCreate(_databasePath, 2);
+            _databaseName = "stardict.db";
+            _databasePath = GetAppFilePath.GetPathAndCreate(_databaseName, 2);
         }
 
         
@@ -48,9 +48,12 @@ namespace TranslatorLibrary.AllServices.SQLiteServices
         {
             if (_exesitDatabase == false)
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                string? resourceName = assembly.GetManifestResourceNames().FirstOrDefault(f => f.Contains("stardict.db"));
-                using Stream database = assembly.GetManifestResourceStream(resourceName);
+                //Assembly assembly = Assembly.GetExecutingAssembly();
+                
+                Assembly assembly = typeof(SQLiteService).Assembly;
+                //string resourceName = assembly.GetManifestResourceNames().FirstOrDefault(f => f.Contains("stardict"));
+
+                using Stream database = assembly.GetManifestResourceStream(_databaseName);
                 using Stream fromStram = new FileStream(GetAppFilePath.GetPathAndCreate(_databaseName), FileMode.Open);
                 await database.CopyToAsync(fromStram);
             }

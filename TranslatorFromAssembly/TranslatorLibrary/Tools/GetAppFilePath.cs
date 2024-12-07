@@ -8,7 +8,7 @@ namespace TranslatorLibrary.Tools
 {
     public class GetAppFilePath
     {
-        private static string _appFilePath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        private static string _appFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"TranslatorFromAssembly");
 
         /// <summary>
         /// 获取应用存储位置 不会创建文件夹
@@ -36,7 +36,7 @@ namespace TranslatorLibrary.Tools
         /// <para>1创建 2不创建</para>
         /// </summary>
         /// <param name="fileName"> 目标文件名 </param>
-        /// <param name="mode"> 1创建 2不创建 </param>
+        /// <param name="mode"> 1创建 2创文件夹 3不创建 </param>
         /// <returns></returns>
         public static string GetPathAndCreate(string fileName,int mode = 1)
         {
@@ -46,6 +46,9 @@ namespace TranslatorLibrary.Tools
                 case 1:
                     GetPathAndCreate();
                     File.Create(filePath).Close();
+                    return filePath;
+                case 2:
+                    GetPathAndCreate();
                     return filePath;
                 default:
                     return filePath;

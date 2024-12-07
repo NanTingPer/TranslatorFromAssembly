@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using TranslatorFromAssembly.ViewModels;
+using TranslatorLibrary.AllViewModel;
 
 namespace TranslatorFromAssembly
 {

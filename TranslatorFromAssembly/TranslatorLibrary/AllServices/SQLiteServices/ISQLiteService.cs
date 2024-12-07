@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace TranslatorLibrary.AllServices.SQLiteServices
 {
     public interface ISQLiteService
     {
+
         /// <summary>
         /// 初始化数据库
         /// </summary>

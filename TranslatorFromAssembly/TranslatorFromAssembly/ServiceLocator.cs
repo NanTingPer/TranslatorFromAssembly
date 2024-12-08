@@ -7,8 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TranslatorFromAssembly.AllService;
 using TranslatorLibrary.AllServices.IServices;
-using TranslatorLibrary.AllServices.SQLiteServices;
+using TranslatorLibrary.AllServices.Services;
+using TranslatorLibrary.AllServices.Services.SQLiteServices;
 using TranslatorLibrary.AllViewModel;
+using TranslatorLibrary.ModelClass;
 
 namespace TranslatorFromAssembly
 {
@@ -33,8 +35,11 @@ namespace TranslatorFromAssembly
         /// </summary>
         public IRootViewCut IRootViewCut => _serviceProvider.GetService<IRootViewCut>();
 
+        public IILService IILService => _serviceProvider.GetService<IILService>();
         public MainViewModel MainViewModel => _serviceProvider.GetService<MainViewModel>();
         public MainWindowModel MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
+
+
         
 
         public ServiceLocator()
@@ -44,6 +49,9 @@ namespace TranslatorFromAssembly
 
             //页面切换
             _services.AddSingleton<IRootViewCut, RootViewCut>();
+
+            //IL
+            _services.AddSingleton<IILService, ILService>();
 
             //MainViewModel
             _services.AddSingleton<MainViewModel>();

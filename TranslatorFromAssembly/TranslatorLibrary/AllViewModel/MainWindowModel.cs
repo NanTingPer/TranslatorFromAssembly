@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
-using TranslatorLibrary.AllServices.SQLiteServices;
 
 namespace TranslatorLibrary.AllViewModel
 {
@@ -28,6 +27,7 @@ namespace TranslatorLibrary.AllViewModel
         private async Task Init()
         {
            await _SQLiteService.Initialization();
+            _rootViewCut.ViewCut("");
         }
     }
 }

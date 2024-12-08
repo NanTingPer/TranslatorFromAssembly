@@ -12,9 +12,9 @@ namespace TranslatorFromAssembly.AllService
     /// </summary>
     public class RootViewCut : IRootViewCut
     {
-        public void ViewCut()
+        public void ViewCut(string viewName)
         {
-            throw new NotImplementedException();
+            ServiceLocator.GetThis.MainWindowModel.View = ServiceLocator.GetThis.MainViewModel;
         }
     }
 }

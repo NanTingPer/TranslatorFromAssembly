@@ -12,12 +12,4 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="stardict.db" />
-    <EmbeddedResource Include="stardict.db">
-      <LogicalName>stardict.db</LogicalName>
-    </EmbeddedResource>
-    <Folder Include="ModelClass\" />
-  </ItemGroup>
-
 </Project>

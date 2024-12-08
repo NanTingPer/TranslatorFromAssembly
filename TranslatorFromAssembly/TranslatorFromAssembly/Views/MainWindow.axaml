@@ -16,4 +16,8 @@
             <InvokeCommandAction Command="{Binding InitCommand}" />
         </EventTriggerBehavior>
     </Interaction.Behaviors>
+    <Grid RowDefinitions="40,*">
+        <Label Grid.Row="0" Background="AliceBlue" />
+        <ContentControl Grid.Row="1" Content="{Binding View}" />
+    </Grid>
 </Window>

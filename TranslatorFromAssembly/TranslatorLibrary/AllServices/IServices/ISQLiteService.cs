@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TranslatorLibrary.ModelClass;
 
-namespace TranslatorLibrary.AllServices.SQLiteServices
+namespace TranslatorLibrary.AllServices.IServices
 {
     public interface ISQLiteService
     {
-
+        bool ExesitDatabase { get; }
         /// <summary>
         /// 初始化数据库
         /// </summary>
@@ -20,7 +21,8 @@ namespace TranslatorLibrary.AllServices.SQLiteServices
         /// 获取数据
         /// </summary>
         /// <returns></returns>
-        Task GetData();
+        Task<IEnumerable<DatabaseModle>> GetData(string work);
+
 
         /// <summary>
         /// 创建数据库

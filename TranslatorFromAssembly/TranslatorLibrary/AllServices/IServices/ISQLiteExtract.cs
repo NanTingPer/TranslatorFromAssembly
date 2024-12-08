@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace TranslatorLibrary.AllServices.IServices
 {
-    /// <summary>
-    /// 用来主页面切换
-    /// </summary>
-    public interface IRootViewCut
+    public interface ISQLiteExtract
     {
-        void ViewCut(string viewName);
+        void Delete();
+
+        void Alter();
+
+        void GetData();
+
+        void AddData();
+
+        void CreateDatabase(string dataBase);
     }
 }

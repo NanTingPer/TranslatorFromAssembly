@@ -15,28 +15,29 @@ namespace TranslatorLibrary.Tools
     {
         public static async Task<string> TranEnglish(string URL,ISQLiteService _sqliteService)
         {
-            if(_sqliteService.ExesitDatabase == false) return string.Empty;
-            IEnumerable<DatabaseModle> works = await _sqliteService.GetData(URL);
-            StringBuilder stb = new StringBuilder();
-            foreach (DatabaseModle work in works)
-            {
-                if (work is not null)
-                {
-                    string translation = work.Translation;
-                    if (translation.Split(".").Length <= 1)
-                    {
-                        stb.Append(translation.Trim().Split(";")[0].Split("；")[0].Split(",")[0].Split("\n")[0].Replace("\n", ""));
-                    }
-                    else
-                    {
-                        stb.Append(translation.Split(".")[1].Trim().Split(";")[0].Split("；")[0].Split(",")[0].Split("\n")[0].Replace("\n", ""));
-                    }
-                }
+            return string.Empty;
+            //if (_sqliteService.ExesitDatabase == true)  return string.Empty;
+            //IEnumerable<DatabaseModle> works = await _sqliteService.GetData(URL);
+            //StringBuilder stb = new StringBuilder();
+            //foreach (DatabaseModle work in works)
+            //{
+            //    if (work is not null)
+            //    {
+            //        string translation = work.Translation;
+            //        if (translation.Split(".").Length <= 1)
+            //        {
+            //            stb.Append(translation.Trim().Split(";")[0].Split("；")[0].Split(",")[0].Split("\n")[0].Replace("\n", ""));
+            //        }
+            //        else
+            //        {
+            //            stb.Append(translation.Split(".")[1].Trim().Split(";")[0].Split("；")[0].Split(",")[0].Split("\n")[0].Replace("\n", ""));
+            //        }
+            //    }
 
-            }
-            if (string.IsNullOrWhiteSpace(stb.ToString()))
-                return string.Empty;
-            return stb.ToString();
+            //}
+            //if (string.IsNullOrWhiteSpace(stb.ToString()))
+            //    return string.Empty;
+            //return stb.ToString();
         }
     }
 }

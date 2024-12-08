@@ -2,3 +2,7 @@
 *.db
 *.vsidx
 *.bin
+/TranslatorFromAssembly/TranslatorFromAssembly/bin
+/TranslatorFromAssembly/TranslatorFromAssembly/obj
+/TranslatorFromAssembly/TranslatorLibrary/obj
+/TranslatorFromAssembly/TranslatorLibrary/bin

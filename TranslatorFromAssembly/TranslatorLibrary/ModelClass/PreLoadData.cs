@@ -49,5 +49,24 @@ namespace TranslatorLibrary.ModelClass
         /// </summary>
         [SQLite.Column("autochinese")]
         public string AutoChinese { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 是否显示 0显示 1不显示
+        /// </summary>
+        [SQLite.Column("isshow")]
+        public int IsShow { get; set; } = 0;
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null) return false;
+            if(obj is PreLoadData r)
+            {
+                if(r.ModName.Equals(ModName) &&
+                    r.ClassName.Equals(ClassName) &&
+                    r.MethodName.Equals(MethodName) &&
+                    r.English.Equals(English)) return true;
+            }
+            return false;
+        }
     }
 }

@@ -1,16 +1,11 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Rocks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MCollections = Mono.Collections.Generic.Collection<Mono.Cecil.Cil.Instruction>;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
-using System.Reflection.Emit;
 using MMethodBody = Mono.Cecil.Cil.MethodBody;
 using MOpenCodes = Mono.Cecil.Cil.OpCodes;
+using MCollections = Mono.Collections.Generic.Collection<Mono.Cecil.Cil.Instruction>;
+
 using TranslatorLibrary.Tools;
 
 namespace TranslatorLibrary.AllServices.Services

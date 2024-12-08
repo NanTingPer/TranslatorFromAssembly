@@ -15,14 +15,18 @@ namespace TranslatorLibrary.AllViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private int task = 0;
+        private int skip = 0;
         private ISQLiteService _sqliteService;
         private IILService _ilService;
+        private ISQLiteExtract<PreLoadData> _sQLiteExtract;
         private string _indexText;
         public ICommand CommandGetTranslator { get; }
         public ICommand PitchsCommand { get; }
-
         public ICommand GetAssemblyStrCommand { get; }
-        
+        public ICommand GetAssemblyStrPgDnCommand { get; }
+        public ICommand SetSQLiteExtractCommand { get; }
+
         /// <summary>
         /// 用来显示项目
         /// </summary>
@@ -42,14 +46,18 @@ namespace TranslatorLibrary.AllViewModel
         /// 第一个可编辑文本框 未来用来填入 FilePath
         /// </summary>
         public string IndexText { get => _indexText; set => SetProperty(ref _indexText, value); }
-        public MainViewModel(ISQLiteService sqliteService,IILService iLService) 
+        public MainViewModel(ISQLiteService sqliteService,IILService iLService,ISQLiteExtract<PreLoadData> liteExtract) 
         {
             _sqliteService = sqliteService;
             _ilService = iLService;
-            IndexText = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\FargowiltasSouls\\FargowiltasSouls.dll";
+            _sQLiteExtract = liteExtract;
             CommandGetTranslator = new AsyncRelayCommand(GetTranslator);
             PitchsCommand = new RelayCommand<object>(GetPitchs);
             GetAssemblyStrCommand = new AsyncRelayCommand(GetAssemblyStr);
+            SetSQLiteExtractCommand = new RelayCommand(SetSQLiteExtract);
+            GetAssemblyStrPgDnCommand = new AsyncRelayCommand(GetAssemblyStrPgDn);
+
+            IndexText = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\FargowiltasSouls\\FargowiltasSouls.dll";
         }
 
         /// <summary>
@@ -67,18 +75,39 @@ namespace TranslatorLibrary.AllViewModel
             }
         }
 
+
+        
         /// <summary>
-        /// 用来加载ILService提出的项目 到显示List中
+        /// 用来加载ILService提出的项目 到显示List中 从数据库加载 下一页
         /// </summary>
         private async Task GetAssemblyStr()
         {
             ModEnglishList.Clear();
-            List<PreLoadData> tempList = await _ilService.GetAssemblyILString(IndexText);
-            foreach (var item in tempList)
+            PreLoadData[] datas = await _sQLiteExtract.GetData(task,10);
+            if (datas.Count() == 0)
+                return;
+            foreach (var item in datas)
+            {
+                ModEnglishList.Add(item);
+            }
+            task += 10;
+        }
+
+        /// <summary>
+        /// 用来加载ILService提出的项目 到显示List中 从数据库加载 上一页
+        /// </summary>
+        private async Task GetAssemblyStrPgDn()
+        {
+            ModEnglishList.Clear();
+            task = task - 10 <= 0 ? 0 : task - 10;
+            PreLoadData[] datas = await _sQLiteExtract.GetData(task, 10);
+            if(datas.Count() == 0) return;
+            foreach (var item in datas)
             {
                 ModEnglishList.Add(item);
             }
         }
+
 
         /// <summary>
         /// 项目被选中 触发 并载入(加载) Pitchs
@@ -91,6 +120,29 @@ namespace TranslatorLibrary.AllViewModel
             {
                 Pitchs.Add((PreLoadData)item);
             }
+        }
+
+        /// <summary>
+        /// 将内容插入数据库
+        /// </summary>
+        private async void SetSQLiteExtract()
+        {
+            string[] strs = Path.GetFileName(IndexText).Split(".");
+            if (strs[1] is "dll")
+            {
+                ModEnglishList.Clear();
+                CreateSQLiteExtractDataBase(strs[0]);
+                List<PreLoadData> tempList = await _ilService.GetAssemblyILString(IndexText);
+                await _sQLiteExtract.AddData(tempList);
+
+                await GetAssemblyStr();
+            }
+            return;
+        }
+
+        private void CreateSQLiteExtractDataBase(string name)
+        {
+            _sQLiteExtract.CreateDatabase(name);
         }
     }
 }

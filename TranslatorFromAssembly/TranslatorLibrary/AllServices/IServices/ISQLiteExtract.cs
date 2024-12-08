@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace TranslatorLibrary.AllServices.IServices
 {
-    public interface ISQLiteExtract
+    public interface ISQLiteExtract<T>
     {
-        void Delete();
+        Task Delete();
 
-        void Alter();
+        Task Alter();
 
-        void GetData();
+        Task<T[]> GetData(int spik, int taks);
 
-        void AddData();
+        Task AddData(IList<T> values);
 
         void CreateDatabase(string dataBase);
     }

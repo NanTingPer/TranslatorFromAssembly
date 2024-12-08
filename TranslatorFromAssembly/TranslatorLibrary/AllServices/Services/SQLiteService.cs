@@ -46,18 +46,18 @@ namespace TranslatorLibrary.AllServices.Services.SQLiteServices
         /// <returns> 可枚举类型 自行枚举 </returns>
         public async Task<IEnumerable<DatabaseModle>> GetData(string word)
         {
-            if (_exesitDatabase == true)
-            {
-                string words = word.Trim().ToLower();
-                string[] strs = words.Split(" ");
-                List<DatabaseModle> ie = new List<DatabaseModle>();
-                foreach (string work in strs)
-                {
-                    //var str = work.Trim();
-                    ie.Add(await ConnectionAsync.Table<DatabaseModle>().FirstOrDefaultAsync(f => f.Word.Equals(work)));
-                }
-                return ie;
-            }
+            //if (ExesitDatabase == true)
+            //{
+            //    string words = word.Trim().ToLower();
+            //    string[] strs = words.Split(" ");
+            //    List<DatabaseModle> ie = new List<DatabaseModle>();
+            //    foreach (string work in strs)
+            //    {
+            //        //var str = work.Trim();
+            //        ie.Add(await ConnectionAsync.Table<DatabaseModle>().FirstOrDefaultAsync(f => f.Word.Equals(work)));
+            //    }
+            //    return ie;
+            //}
             return null;
         }
 
@@ -68,23 +68,23 @@ namespace TranslatorLibrary.AllServices.Services.SQLiteServices
         /// <returns></returns>
         public async Task Initialization()
         {
-            if (_exesitDatabase == false)
-            {
-                try
-                {
-                    //Assembly assembly = Assembly.GetExecutingAssembly();
-                    Assembly assembly = typeof(SQLiteService).Assembly;
-                    //string resourceName = assembly.GetManifestResourceNames().FirstOrDefault(f => f.Contains("stardict"));
+            //if (_exesitDatabase == false)
+            //{
+            //    try
+            //    {
+            //        //Assembly assembly = Assembly.GetExecutingAssembly();
+            //        Assembly assembly = typeof(SQLiteService).Assembly;
+            //        //string resourceName = assembly.GetManifestResourceNames().FirstOrDefault(f => f.Contains("stardict"));
 
-                    using Stream database = assembly.GetManifestResourceStream(_databaseName);
-                    using Stream fromStram = new FileStream(GetAppFilePath.GetPathAndCreate(_databaseName), FileMode.Open);
-                    await database.CopyToAsync(fromStram);
-                }
-                catch
-                {
+            //        using Stream database = assembly.GetManifestResourceStream(_databaseName);
+            //        using Stream fromStram = new FileStream(GetAppFilePath.GetPathAndCreate(_databaseName), FileMode.Open);
+            //        await database.CopyToAsync(fromStram);
+            //    }
+            //    catch
+            //    {
                     
-                }
-            }
+            //    }
+            //}
         }
 
         public Task InsertData()

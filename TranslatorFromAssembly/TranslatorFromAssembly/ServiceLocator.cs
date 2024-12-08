@@ -36,6 +36,8 @@ namespace TranslatorFromAssembly
         public IRootViewCut IRootViewCut => _serviceProvider.GetService<IRootViewCut>();
 
         public IILService IILService => _serviceProvider.GetService<IILService>();
+
+        public ISQLiteExtract<PreLoadData> ISQLiteExtractPreData => _serviceProvider.GetService<ISQLiteExtract<PreLoadData>>();
         public MainViewModel MainViewModel => _serviceProvider.GetService<MainViewModel>();
         public MainWindowModel MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
 
@@ -46,6 +48,9 @@ namespace TranslatorFromAssembly
         {
             //SQL访问相关
             _services.AddSingleton<ISQLiteService, SQLiteService>();
+
+            //提取内容的数据库
+            _services.AddSingleton<ISQLiteExtract<PreLoadData>, SQLiteExtract>();
 
             //页面切换
             _services.AddSingleton<IRootViewCut, RootViewCut>();

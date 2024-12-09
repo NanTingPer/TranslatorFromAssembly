@@ -40,6 +40,7 @@ namespace TranslatorFromAssembly
         public ISQLiteExtract<PreLoadData> ISQLiteExtractPreData => _serviceProvider.GetService<ISQLiteExtract<PreLoadData>>();
         public MainViewModel MainViewModel => _serviceProvider.GetService<MainViewModel>();
         public MainWindowModel MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
+        public DataViewModel DataViewModel => _serviceProvider.GetService<DataViewModel>();
 
 
         
@@ -62,6 +63,7 @@ namespace TranslatorFromAssembly
             _services.AddSingleton<MainViewModel>();
 
             _services.AddSingleton<MainWindowModel>();
+            _services.AddSingleton<DataViewModel>();
 
             _serviceProvider = _services.BuildServiceProvider();
         }

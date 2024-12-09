@@ -82,15 +82,15 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async Task GetAssemblyStr()
         {
-            ModEnglishList.Clear();
-            PreLoadData[] datas = await _sQLiteExtract.GetData(task,10);
-            if (datas.Count() == 0)
+            PreLoadData[] datas = await _sQLiteExtract.GetData(skip,10);
+            if (datas.Count() <= 0)
                 return;
             foreach (var item in datas)
             {
                 ModEnglishList.Add(item);
+                ModEnglishList.RemoveAt(0);
             }
-            task += 10;
+            skip += 10;
         }
 
         /// <summary>
@@ -98,13 +98,13 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async Task GetAssemblyStrPgDn()
         {
-            ModEnglishList.Clear();
-            task = task - 10 <= 0 ? 0 : task - 10;
-            PreLoadData[] datas = await _sQLiteExtract.GetData(task, 10);
+            skip = skip - 10 <= 0 ? 0 : skip - 10;
+            PreLoadData[] datas = await _sQLiteExtract.GetData(skip, 10);
             if(datas.Count() == 0) return;
             foreach (var item in datas)
             {
                 ModEnglishList.Add(item);
+                ModEnglishList.RemoveAt(0);
             }
         }
 
@@ -131,6 +131,8 @@ namespace TranslatorLibrary.AllViewModel
             if (strs[1] is "dll")
             {
                 ModEnglishList.Clear();
+                for (int i = 0; i < 10; i++)
+                    ModEnglishList.Add(new());
                 CreateSQLiteExtractDataBase(strs[0]);
                 List<PreLoadData> tempList = await _ilService.GetAssemblyILString(IndexText);
                 await _sQLiteExtract.AddData(tempList);

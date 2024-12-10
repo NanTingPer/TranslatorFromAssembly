@@ -25,7 +25,6 @@ namespace TranslatorFromAssembly
                 DisableAvaloniaDataAnnotationValidation();
                 desktop.MainWindow = new MainWindow();
             }
-
             base.OnFrameworkInitializationCompleted();
         }
 

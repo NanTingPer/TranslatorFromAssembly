@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,10 +14,34 @@ using TranslatorLibrary.ModelClass;
 
 namespace TranslatorLibrary.AllViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public partial class DLLViewModel : ViewModelBase
     {
+        /// <summary>
+        /// 拿出数据条数
+        /// </summary>
         private int task = 0;
+
+        /// <summary>
+        /// 跳过数据条数
+        /// </summary>
         private int skip = 0;
+
+        /// <summary>
+        /// 数据总条数
+        /// </summary>
+        private int pageCount = 0;
+
+        /// <summary>
+        /// 单页数据大小
+        /// </summary>
+        private int pageSize = 10;
+
+        /// <summary>
+        /// 第几页
+        /// </summary>
+        private int pageNum = 0;
+
+        //public int Skip { get => skip ; set => SetProperty(ref skip,value); }
         private ISQLiteService _sqliteService;
         private IILService _ilService;
         private ISQLiteExtract<PreLoadData> _sQLiteExtract;
@@ -46,7 +71,7 @@ namespace TranslatorLibrary.AllViewModel
         /// 第一个可编辑文本框 未来用来填入 FilePath
         /// </summary>
         public string IndexText { get => _indexText; set => SetProperty(ref _indexText, value); }
-        public MainViewModel(ISQLiteService sqliteService,IILService iLService,ISQLiteExtract<PreLoadData> liteExtract) 
+        public DLLViewModel(ISQLiteService sqliteService,IILService iLService,ISQLiteExtract<PreLoadData> liteExtract) 
         {
             _sqliteService = sqliteService;
             _ilService = iLService;
@@ -74,23 +99,27 @@ namespace TranslatorLibrary.AllViewModel
                     ViewList.Add(st);
             }
         }
-
-
         
         /// <summary>
         /// 用来加载ILService提出的项目 到显示List中 从数据库加载 下一页
         /// </summary>
         private async Task GetAssemblyStr()
         {
-            PreLoadData[] datas = await _sQLiteExtract.GetData(skip,10);
+            if (++pageNum * pageSize >= pageCount)
+            { 
+                pageNum--;
+                return;
+            }
+            PreLoadData[] datas = await _sQLiteExtract.GetData((pageNum * pageSize), pageSize);
             if (datas.Count() <= 0)
                 return;
+
             foreach (var item in datas)
             {
                 ModEnglishList.Add(item);
                 ModEnglishList.RemoveAt(0);
             }
-            skip += 10;
+            
         }
 
         /// <summary>
@@ -98,14 +127,20 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async Task GetAssemblyStrPgDn()
         {
-            skip = skip - 10 <= 0 ? 0 : skip - 10;
-            PreLoadData[] datas = await _sQLiteExtract.GetData(skip, 10);
+            if (--pageNum < 0)
+            {
+                pageNum++;
+                 return;
+            }
+                
+            PreLoadData[] datas = await _sQLiteExtract.GetData((pageNum * pageSize),pageSize);
             if(datas.Count() == 0) return;
             foreach (var item in datas)
             {
                 ModEnglishList.Add(item);
                 ModEnglishList.RemoveAt(0);
             }
+            
         }
 
 
@@ -127,19 +162,39 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async void SetSQLiteExtract()
         {
+            pageNum = 0;
             string[] strs = Path.GetFileName(IndexText).Split(".");
             if (strs[1] is "dll")
             {
                 ModEnglishList.Clear();
+
+                //载入空数据 防止无法加载
                 for (int i = 0; i < 10; i++)
                     ModEnglishList.Add(new());
+
                 CreateSQLiteExtractDataBase(strs[0]);
                 List<PreLoadData> tempList = await _ilService.GetAssemblyILString(IndexText);
                 await _sQLiteExtract.AddData(tempList);
 
                 await GetAssemblyStr();
             }
+            pageCount = await _sQLiteExtract.PageCount();
+            InitaDataList();
             return;
+        }
+
+        /// <summary>
+        /// 初始化显示视图
+        /// </summary>
+        private async void InitaDataList()
+        {
+            pageNum++;
+            PreLoadData[] datas = await _sQLiteExtract.GetData(0, pageSize);
+            foreach (var item in datas)
+            {
+                ModEnglishList.Add(item);
+                ModEnglishList.RemoveAt(0);
+            }
         }
 
         private void CreateSQLiteExtractDataBase(string name)

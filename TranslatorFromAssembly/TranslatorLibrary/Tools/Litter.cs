@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TranslatorLibrary.AllServices.IServices;
@@ -38,6 +39,29 @@ namespace TranslatorLibrary.Tools
             //if (string.IsNullOrWhiteSpace(stb.ToString()))
             //    return string.Empty;
             //return stb.ToString();
+        }
+
+        /// <summary>
+        /// 判断两个PreLoadData对象是否相等
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public static bool PreLoadDataIsEqual(PreLoadData p1,PreLoadData p2)
+        {
+            if (p1 == null && p2 == null)
+                return true;
+
+            if (p1 == null || p2 == null)
+                return false;
+
+            if (p1.ModName == p2.ModName &&
+                p1.ClassName == p2.ClassName &&
+                p1.MethodName == p2.MethodName &&
+                p1.English == p2.English)
+                return true;
+
+            return false;
         }
     }
 }

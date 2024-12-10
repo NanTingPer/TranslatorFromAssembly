@@ -14,7 +14,7 @@ namespace TranslatorFromAssembly
                 return null;
 
             var name2 = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal).Replace("All","").Replace("View","Views");
-            var name = name2.Substring(0, name2.Length - 1).Replace("TranslatorLibrary","TranslatorFromAssembly");
+            var name = name2.Substring(0, name2.Length - 1).Replace("TranslatorLibrary","TranslatorFromAssembly").Replace("Models","Views");
             var type = Type.GetType(name);
 
             if (type != null)

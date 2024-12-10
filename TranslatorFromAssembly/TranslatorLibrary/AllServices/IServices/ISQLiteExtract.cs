@@ -15,6 +15,8 @@ namespace TranslatorLibrary.AllServices.IServices
 
         Task<T[]> GetData(int spik, int taks);
 
+        Task<int> PageCount();
+
         Task AddData(IList<T> values);
 
         void CreateDatabase(string dataBase);

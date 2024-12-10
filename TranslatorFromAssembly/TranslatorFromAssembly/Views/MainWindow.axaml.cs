@@ -1,4 +1,8 @@
 using Avalonia.Controls;
+using System.Threading;
+using System.Threading.Tasks;
+using TranslatorFromAssembly.Models;
+using TranslatorLibrary.AllViewModel;
 
 namespace TranslatorFromAssembly.Views
 {
@@ -8,5 +12,6 @@ namespace TranslatorFromAssembly.Views
         {
             InitializeComponent();
         }
+
     }
 }

@@ -7,6 +7,7 @@ using MOpenCodes = Mono.Cecil.Cil.OpCodes;
 using MCollections = Mono.Collections.Generic.Collection<Mono.Cecil.Cil.Instruction>;
 
 using TranslatorLibrary.Tools;
+using Mono.Cecil.Cil;
 
 namespace TranslatorLibrary.AllServices.Services
 {
@@ -28,41 +29,53 @@ namespace TranslatorLibrary.AllServices.Services
             long tempNume = 0L;
             List<PreLoadData> TempList = new List<PreLoadData>();
             ModuleDefinition DLLModule = ModuleDefinition.ReadModule(dllPath);
-            IEnumerable<TypeDefinition> types = DLLModule.GetTypes();
-            foreach (var type in types)
+            foreach (var type in DLLModule.GetTypes())
             {
-                IEnumerable<MethodDefinition> methods = type.GetMethods();
-                foreach (var method in methods)
+                foreach (var method in type.GetMethods())
                 {
-                    MMethodBody methodBody  = method.Body;
-                    if (methodBody is not null)
+                    MMethodBody methodBody = method.Body;
+                    if (methodBody is null)
+                        continue;
+
+                    foreach (var il in methodBody.Instructions)
                     {
-                        MCollections ilALL = methodBody.Instructions;
-                        foreach (var il in ilALL)
+                        if (!il.OpCode.Equals(MOpenCodes.Ldstr))
+                            continue;
+
+                        string? english = il.Operand.ToString();
+
+                        if (string.IsNullOrWhiteSpace(english))
+                            continue;
+
+                        string chinese = await Litter.TranEnglish(english, _sqliteService);
+                        TempList.Add(new PreLoadData()
                         {
-                            if (il.OpCode.Equals(MOpenCodes.Ldstr))
-                            {
-                                string english = il.Operand.ToString();
-                                if (!string.IsNullOrWhiteSpace(english))
-                                {
-                                    string chinese = await Litter.TranEnglish(english, _sqliteService);
-                                    TempList.Add(new PreLoadData()
-                                    {
-                                        Id = tempNume++,
-                                        English = english,
-                                        ModName = ModName,
-                                        MethodName = method.Name,
-                                        ClassName = type.Name,
-                                        AutoChinese = chinese
-                                    });
-                                }
-                            }
-                        }
+                            Id = tempNume++,
+                            English = english,
+                            ModName = ModName,
+                            MethodName = method.Name,
+                            ClassName = type.Name,
+                            AutoChinese = chinese
+                        });
                     }
                 }
             }
-
             return TempList;
+        }
+
+
+        private void GetILs(MethodDefinition method)
+        {
+            MCollections Instruction =  method.Body.Instructions;
+        }
+        private IEnumerable<MethodDefinition> GetMethod(TypeDefinition type)
+        {
+            return type.GetMethods();
+        }
+
+        private IEnumerable<TypeDefinition> GetTypes(ModuleDefinition module)
+        {
+            return module.GetTypes();
         }
     }
 }

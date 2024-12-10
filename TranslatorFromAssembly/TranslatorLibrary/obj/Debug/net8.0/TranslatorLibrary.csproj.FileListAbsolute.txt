@@ -1,0 +1,13 @@
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\bin\Debug\net8.0\TranslatorLibrary.deps.json
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\bin\Debug\net8.0\TranslatorLibrary.dll
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\bin\Debug\net8.0\TranslatorLibrary.pdb
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.csproj.AssemblyReference.cache
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.AssemblyInfoInputs.cache
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.AssemblyInfo.cs
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.csproj.CoreCompileInputs.cache
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.sourcelink.json
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.dll
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\refint\TranslatorLibrary.dll
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\TranslatorLibrary.pdb
+D:\TranslatorFromAssembly\TranslatorFromAssembly\TranslatorLibrary\obj\Debug\net8.0\ref\TranslatorLibrary.dll

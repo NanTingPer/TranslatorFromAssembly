@@ -8,103 +8,14 @@
     d:DesignWidth="800"
     DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
     mc:Ignorable="d">
-    <Grid ColumnDefinitions="*">
-        <Grid Grid.Column="1" RowDefinitions="auto,auto,auto,auto,auto,auto,*">
-            <Label Grid.Row="0" Background="Linen" />
-            <TextBox
-                x:Name="IndexText"
-                Grid.Row="1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                AcceptsReturn="True"
-                CornerRadius="0"
-                FontSize="14"
-                Text="{Binding IndexText}"
-                TextWrapping="Wrap" />
+    <SplitView IsPaneOpen="{Binding IsPaneOpen}" OpenPaneLength="{Binding PaneSize}">
+        <SplitView.Pane>
+            <Button Command="{Binding IsPaneOpenCommand}" />
+        </SplitView.Pane>
 
-            <Button
-                Grid.Row="2"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Command="{Binding SetSQLiteExtractCommand}"
-                Content="确定"
-                CornerRadius="0"
-                FontSize="22"
-                IsVisible="True" />
+        <SplitView.Content>
+            <Button Command="{Binding IsPaneOpenCommand}" />
+        </SplitView.Content>
 
-            <TextBlock
-                Grid.Row="3"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="{Binding Translator}"
-                TextWrapping="Wrap" />
-
-            <DataGrid
-                x:Name="grid"
-                Grid.Row="4"
-                HorizontalAlignment="Center"
-                AutoGenerateColumns="False"
-                Background="#88eeecc6"
-                CanUserResizeColumns="True"
-                ColumnWidth="200"
-                GridLinesVisibility="All"
-                IsReadOnly="False"
-                ItemsSource="{Binding ModEnglishList}">
-                <Interaction.Behaviors>
-                    <EventTriggerBehavior EventName="SelectionChanged">
-                        <InvokeCommandAction Command="{Binding PitchsCommand}" CommandParameter="{Binding #grid.SelectedItems}" />
-                    </EventTriggerBehavior>
-                </Interaction.Behaviors>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Header="ID" />
-                    <DataGridTextColumn Binding="{Binding ModName}" Header="模组名称" />
-                    <DataGridTextColumn Binding="{Binding ClassName}" Header="类名称" />
-                    <DataGridTextColumn Binding="{Binding MethodName}" Header="方法名称" />
-                    <DataGridTextColumn Binding="{Binding English}" Header="英文" />
-                    <DataGridTextColumn Binding="{Binding Chinese}" Header="中文" />
-                    <DataGridTextColumn Binding="{Binding AutoChinese}" Header="机翻" />
-                </DataGrid.Columns>
-            </DataGrid>
-
-
-            <Grid Grid.Row="5" ColumnDefinitions="5*,5*">
-                <Button
-                    Grid.Column="0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Command="{Binding GetAssemblyStrPgDnCommand}"
-                    Content="上一页"
-                    CornerRadius="0"
-                    FontSize="20" />
-
-                <Button
-                    Grid.Column="1"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Command="{Binding GetAssemblyStrCommand}"
-                    Content="下一页"
-                    CornerRadius="0"
-                    FontSize="20" />
-
-            </Grid>
-
-
-
-
-
-
-
-
-
-
-        </Grid>
-    </Grid>
+    </SplitView>
 </UserControl>

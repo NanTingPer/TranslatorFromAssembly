@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TranslatorFromAssembly.AllService;
+using TranslatorFromAssembly.Models;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.AllServices.Services;
 using TranslatorLibrary.AllServices.Services.SQLiteServices;
@@ -38,12 +39,13 @@ namespace TranslatorFromAssembly
         public IILService IILService => _serviceProvider.GetService<IILService>();
 
         public ISQLiteExtract<PreLoadData> ISQLiteExtractPreData => _serviceProvider.GetService<ISQLiteExtract<PreLoadData>>();
-        public MainViewModel MainViewModel => _serviceProvider.GetService<MainViewModel>();
+        public DLLViewModel DLLViewModel => _serviceProvider.GetService<DLLViewModel>();
         public MainWindowModel MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
         public DataViewModel DataViewModel => _serviceProvider.GetService<DataViewModel>();
+        public MainViewModel MainViewModel => _serviceProvider.GetService<MainViewModel>();
 
 
-        
+
 
         public ServiceLocator()
         {
@@ -60,10 +62,12 @@ namespace TranslatorFromAssembly
             _services.AddSingleton<IILService, ILService>();
 
             //MainViewModel
-            _services.AddSingleton<MainViewModel>();
+            _services.AddSingleton<DLLViewModel>();
 
             _services.AddSingleton<MainWindowModel>();
             _services.AddSingleton<DataViewModel>();
+            _services.AddSingleton<MainViewModel>();
+        
 
             _serviceProvider = _services.BuildServiceProvider();
         }

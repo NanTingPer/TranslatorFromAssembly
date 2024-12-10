@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
@@ -31,5 +30,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TranslatorLibrary\TranslatorLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\DLLView.axaml.cs">
+      <DependentUpon>DLLView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

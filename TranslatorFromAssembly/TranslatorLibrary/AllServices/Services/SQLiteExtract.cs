@@ -31,7 +31,11 @@ namespace TranslatorLibrary.AllServices.Services
         {
             foreach (var item in datas)
             {
-                PreLoadData? whereItem = await Connection.Table<PreLoadData>().Where(f => f.MethodName == item.MethodName).FirstOrDefaultAsync();
+                PreLoadData? whereItem = await Connection.Table<PreLoadData>().Where(f =>
+                f.ModName == item.ModName &&
+                f.ClassName == item.ClassName &&
+                f.MethodName == item.MethodName &&
+                f.English == item.English).FirstOrDefaultAsync();
 
                 //降序排序取最大值
                 long? maxid = Connection.Table<PreLoadData>().OrderByDescending(x => x.Id).FirstOrDefaultAsync()?.Id;
@@ -72,6 +76,11 @@ namespace TranslatorLibrary.AllServices.Services
         public Task<PreLoadData[]> GetData(int skip,int take)
         {
             return Connection.Table<PreLoadData>().Skip(skip).Take(take).ToArrayAsync();
+        }
+
+        public Task<int> PageCount()
+        {
+            return Connection.Table<PreLoadData>().CountAsync();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace TranslatorFromAssembly.AllService
     {
         public void ViewCut(string viewName)
         {
-            ServiceLocator.GetThis.MainWindowModel.View = ServiceLocator.GetThis.MainViewModel;
+            //ServiceLocator.GetThis.MainWindowModel.View = ServiceLocator.GetThis.DLLViewModel;
         }
     }
 }

@@ -29,20 +29,21 @@ namespace TranslatorFromAssembly
         /// <summary>
         /// 访问数据库
         /// </summary>
-        public ISQLiteService ISQLiteService => _serviceProvider.GetService<ISQLiteService>();
+        public ISQLiteService? ISQLiteService => _serviceProvider.GetService<ISQLiteService>();
 
         /// <summary>
         /// 页面切换
         /// </summary>
-        public IRootViewCut IRootViewCut => _serviceProvider.GetService<IRootViewCut>();
+        public IRootViewCut? IRootViewCut => _serviceProvider.GetService<IRootViewCut>();
 
-        public IILService IILService => _serviceProvider.GetService<IILService>();
+        public IILService? IILService => _serviceProvider.GetService<IILService>();
 
-        public ISQLiteExtract<PreLoadData> ISQLiteExtractPreData => _serviceProvider.GetService<ISQLiteExtract<PreLoadData>>();
-        public DLLViewModel DLLViewModel => _serviceProvider.GetService<DLLViewModel>();
-        public MainWindowModel MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
-        public DataViewModel DataViewModel => _serviceProvider.GetService<DataViewModel>();
-        public MainViewModel MainViewModel => _serviceProvider.GetService<MainViewModel>();
+        public ISQLiteExtract<PreLoadData>? ISQLiteExtractPreData => _serviceProvider.GetService<ISQLiteExtract<PreLoadData>>();
+        public DLLViewModel? DLLViewModel => _serviceProvider.GetService<DLLViewModel>();
+        public MainWindowModel? MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
+        public MainViewModel? MainViewModel => _serviceProvider.GetService<MainViewModel>();
+
+        public ListViewModel? ListViewModel => _serviceProvider.GetService<ListViewModel>();
 
 
 
@@ -65,8 +66,8 @@ namespace TranslatorFromAssembly
             _services.AddSingleton<DLLViewModel>();
 
             _services.AddSingleton<MainWindowModel>();
-            _services.AddSingleton<DataViewModel>();
             _services.AddSingleton<MainViewModel>();
+            _services.AddSingleton<ListViewModel>();
         
 
             _serviceProvider = _services.BuildServiceProvider();

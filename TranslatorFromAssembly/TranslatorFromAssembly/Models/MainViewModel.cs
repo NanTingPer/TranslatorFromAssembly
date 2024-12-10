@@ -6,31 +6,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TranslatorFromAssembly.AllService;
 using TranslatorFromAssembly.Views;
+using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.AllViewModel;
 
 namespace TranslatorFromAssembly.Models
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel()
+        public MainViewModel(IRootViewCut rootViewCut)
         {
             IsPaneOpenCommand = new RelayCommand(IsPaneOpenMethod);
             SetPaneSizeCommand = new RelayCommand(SetPaneSize);
-            ContentView = ServiceLocator.DLLViewModel;
+            InitViewCommand = new RelayCommand(InitView);
+            ClickOptionCommand = new RelayCommand(ClickOption);
+            _rootViewCut = rootViewCut;
+            //ContentView = ServiceLocator.DLLViewModel;
         }
 
+        private IRootViewCut _rootViewCut;
         private bool _isPaneOpen;
         private int _PaneSize = 200;
         private bool _oneLoad = false;
         private ViewModelBase _contentView;
+        private AllViewInfo _allViewInfo = AllViewInfo.AllViewInfos[0];
 
         public ICommand IsPaneOpenCommand { get; }
         public ICommand SetPaneSizeCommand { get; }
+        public ICommand InitViewCommand { get; }
+        public ICommand ClickOptionCommand { get; }
         public bool IsPaneOpen { get => _isPaneOpen; set => SetProperty(ref _isPaneOpen, value); }
         public int PaneSize { get => _PaneSize; set => SetProperty(ref _PaneSize, value); }
+        public AllViewInfo AllViewInfo { get => _allViewInfo; set => SetProperty(ref _allViewInfo, value); }
         public ViewModelBase ContentView { get => _contentView; set => SetProperty(ref _contentView, value); }
         public ServiceLocator ServiceLocator = ServiceLocator.GetThis;
 
@@ -44,26 +55,31 @@ namespace TranslatorFromAssembly.Models
 
 
         /// <summary>
-        /// 获取主窗体
-        /// </summary>
-        /// <returns></returns>
-        private Window? GetWindow()
-        {
-            if (App.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                return desktop.MainWindow;
-            }
-            return null;
-        }
-
-        /// <summary>
         /// 修改PaneSize的大小
         /// </summary>
         private void SetPaneSize()
         {
-            if(_oneLoad)
-                PaneSize = (int)GetWindow().Width / 4;
+            if (_oneLoad)
+                App.PaneSize = (int)App.GetWindow().Width / 5;
+                PaneSize = App.PaneSize;
             _oneLoad = true;
+        }
+
+        /// <summary>
+        /// 初始化页面
+        /// </summary>
+        private void InitView()
+        {
+            _rootViewCut.ViewCut(AllViews.DLLViewModel);
+        }
+
+        /// <summary>
+        /// 点击选项
+        /// </summary>
+        private void ClickOption()
+        {
+            _rootViewCut.ViewCut(AllViewInfo.ViewName);
+            IsPaneOpenMethod();
         }
     }
 }

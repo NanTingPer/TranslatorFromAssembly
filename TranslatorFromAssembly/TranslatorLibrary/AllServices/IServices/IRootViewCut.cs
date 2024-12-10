@@ -13,4 +13,12 @@ namespace TranslatorLibrary.AllServices.IServices
     {
         void ViewCut(string viewName);
     }
+
+    public static class AllViews
+    {
+        public const string ListViewModel = nameof(ListViewModel);
+        public const string DLLViewModel = nameof(DLLViewModel);
+    }
+
+
 }

@@ -11,14 +11,14 @@ namespace TranslatorLibrary.AllViewModel
 {
     public class MainWindowModel : ViewModelBase
     {
-       
+
         //private ViewModelBase _view;
         //private IRootViewCut _rootViewCut;
         //private ISQLiteService _SQLiteService;
         //public ICommand InitCommand { get; }
         //public ViewModelBase View { get => _view; set => SetProperty(ref _view, value); }
 
-        //public MainWindowModel(IRootViewCut rootViewCut,ISQLiteService sQLiteService)
+        //public MainWindowModel(IRootViewCut rootViewCut, ISQLiteService sQLiteService)
         //{
         //    _rootViewCut = rootViewCut;
         //    _SQLiteService = sQLiteService;
@@ -27,7 +27,7 @@ namespace TranslatorLibrary.AllViewModel
 
         //private async Task Init()
         //{
-        //   await _SQLiteService.Initialization();
+        //    await _SQLiteService.Initialization();
         //    _rootViewCut.ViewCut("");
         //}
     }

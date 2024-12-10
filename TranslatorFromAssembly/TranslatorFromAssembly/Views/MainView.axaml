@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vsS="using:TranslatorFromAssembly.AllService"
     d:DesignHeight="450"
     d:DesignWidth="800"
     DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
@@ -13,11 +14,17 @@
             <InvokeCommandAction Command="{Binding SetPaneSizeCommand}" />
         </EventTriggerBehavior>
     </Interaction.Behaviors>
+    <Interaction.Behaviors>
+        <EventTriggerBehavior EventName="Initialized">
+            <InvokeCommandAction Command="{Binding InitViewCommand}" />
+        </EventTriggerBehavior>
+    </Interaction.Behaviors>
+
 
 
     <SplitView IsPaneOpen="{Binding IsPaneOpen}" OpenPaneLength="{Binding PaneSize}">
         <SplitView.Pane>
-            <Grid RowDefinitions="auto,auto">
+            <Grid RowDefinitions="30,*,auto">
                 <Button
                     Grid.Row="0"
                     HorizontalAlignment="Stretch"
@@ -25,6 +32,24 @@
                     Command="{Binding IsPaneOpenCommand}"
                     Content="关闭"
                     CornerRadius="0" />
+
+                <ListBox
+                    Grid.Row="1"
+                    ItemsSource="{Binding Source={x:Static vsS:AllViewInfo.AllViewInfos}}"
+                    SelectedItem="{Binding AllViewInfo, Mode=TwoWay}">
+                    <Interaction.Behaviors>
+                        <EventTriggerBehavior EventName="Tapped">
+                            <InvokeCommandAction Command="{Binding ClickOptionCommand}" />
+                        </EventTriggerBehavior>
+                    </Interaction.Behaviors>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding ViewTitle}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Grid.Row="2" Text="{Binding AllViewInfo.ViewTitle}" />
             </Grid>
 
 

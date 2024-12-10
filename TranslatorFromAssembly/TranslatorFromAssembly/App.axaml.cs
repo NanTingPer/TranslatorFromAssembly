@@ -1,5 +1,7 @@
+using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
@@ -11,6 +13,9 @@ namespace TranslatorFromAssembly
 {
     public partial class App : Application
     {
+        public static ObservableCollection<int> PaneSiezs { get; set; } = new() { 200 };
+        public static int PaneSize { get => PaneSiezs[0]; set => PaneSiezs[0] = value; }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -40,5 +45,21 @@ namespace TranslatorFromAssembly
                 BindingPlugins.DataValidators.Remove(plugin);
             }
         }
+
+
+        /// <summary>
+        /// 获取主窗体
+        /// </summary>
+        /// <returns></returns>
+        public static Window? GetWindow()
+        {
+            if (App.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                return desktop.MainWindow;
+            }
+            return null;
+        }
+
     }
+
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TranslatorLibrary.ModelClass;
+using TranslatorLibrary.Tools;
 
 namespace TranslatorLibrary.AllServices.IServices
 {
@@ -11,9 +13,9 @@ namespace TranslatorLibrary.AllServices.IServices
     {
         Task Delete();
 
-        Task Alter();
+        Task Alter(PublicProperty.SaveMode mode , params PreLoadData[] preLoadData);
 
-        Task<T[]> GetData(int spik, int taks);
+        Task<T[]> GetData(int spik, int taks,string className="",string methodName="",string count="");
 
         Task<int> PageCount();
 

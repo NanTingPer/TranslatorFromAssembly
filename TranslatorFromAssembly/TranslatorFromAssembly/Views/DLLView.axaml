@@ -85,6 +85,7 @@
                     VerticalAlignment="Stretch"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
+                    BorderThickness="0"
                     CornerRadius="0"
                     Text="{Binding PageNum}" />
 

@@ -4,20 +4,179 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:app="using:TranslatorFromAssembly"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dtl="using:TranslatorLibrary.Tools"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <!--  OpenPaneLength="{Binding Source={x:Static app:App.PaneSiezs[0]}}  -->
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+    </UserControl.Styles>
+
     <SplitView IsPaneOpen="{Binding IsPaneOpen}" OpenPaneLength="200">
         <SplitView.Content>
             <Grid RowDefinitions="30,*">
-                <Button Command="{Binding IsPaneOpenMethodCommand}" Content="run" />
+
+                <Grid Grid.Row="0" ColumnDefinitions="30,60,auto,60,auto,60,auto,30,70,*">
+                    <Button
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Command="{Binding IsPaneOpenMethodCommand}"
+                        Content="三"
+                        CornerRadius="0">
+                        <Interaction.Behaviors>
+                            <EventTriggerBehavior EventName="Click">
+                                <InvokeCommandAction Command="{Binding LoadDataPathToListCommand}" />
+                            </EventTriggerBehavior>
+                        </Interaction.Behaviors>
+                    </Button>
+                    <Label
+                        Grid.Column="1"
+                        Grid.ColumnSpan="7"
+                        Background="#66333333" />
+                    <Label Grid.Column="1" Content="类名" />
+                    <TextBox Grid.Column="2" Text="{Binding ClassName}" />
+                    <Label Grid.Column="3" Content="方法" />
+                    <TextBox Grid.Column="4" Text="{Binding MethodName}" />
+                    <Label Grid.Column="5" Content="内容" />
+                    <TextBox Grid.Column="6" Text="{Binding English}" />
+                    <Button
+                        Grid.Column="8"
+                        Command="{Binding SetDataIsNoShowCommand}"
+                        Content="不显示" />
+
+                    <!--
+                    <Button
+                        Grid.Column="7"
+                        Command="{Binding InitialTableListCommand}"
+                        Content="查询" />
+                    -->
+                </Grid>
+
+                <Grid Grid.Row="1" RowDefinitions="30,*,40">
+                    <Label
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Background="#66333333" />
+                    <DataGrid
+                        x:Name="grid"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        HorizontalAlignment="Center"
+                        AutoGenerateColumns="False"
+                        Background="#88eeecc6"
+                        CanUserResizeColumns="True"
+                        CanUserSortColumns="False"
+                        ColumnWidth="200"
+                        GridLinesVisibility="All"
+                        ItemsSource="{Binding Source={x:Static dtl:PublicProperty.DataList}}"
+                        SelectedItem="{Binding SelectItem}">
+                        <Interaction.Behaviors>
+                            <EventTriggerBehavior EventName="SelectionChanged">
+                                <InvokeCommandAction Command="{Binding SelectContCommand}" CommandParameter="{Binding #grid.SelectedItems}" />
+                            </EventTriggerBehavior>
+                        </Interaction.Behaviors>
+
+                        <Interaction.Behaviors>
+                            <EventTriggerBehavior EventName="CellEditEnded">
+                                <InvokeCommandAction Command="{Binding EditEndedMethodCommand}" />
+                            </EventTriggerBehavior>
+                        </Interaction.Behaviors>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Id}" Header="ID" />
+                            <DataGridTextColumn Binding="{Binding ModName}" Header="模组名称" />
+                            <DataGridTextColumn Binding="{Binding ClassName}" Header="类名称" />
+                            <DataGridTextColumn Binding="{Binding MethodName}" Header="方法名称" />
+                            <DataGridTextColumn Binding="{Binding English}" Header="英文" />
+                            <DataGridTextColumn
+                                Binding="{Binding Chinese}"
+                                Header="中文"
+                                IsReadOnly="False" />
+                            <DataGridTextColumn Binding="{Binding AutoChinese}" Header="机翻" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--  最下面的三个小玩意  -->
+                    <Grid Grid.Row="2" ColumnDefinitions="5*,auto,5*">
+                        <Button
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Command="{Binding GetAssemblyStr_PgUpCommand}"
+                            Content="上一页"
+                            CornerRadius="0" />
+                        <TextBox
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            BorderThickness="0"
+                            CornerRadius="0" />
+                        <Button
+                            Grid.Column="2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Command="{Binding GetAssemblyStr_PgDnCommand}"
+                            Content="下一页"
+                            CornerRadius="0" />
+                    </Grid>
+
+                </Grid>
             </Grid>
         </SplitView.Content>
 
         <SplitView.Pane>
-            <Button Command="{Binding IsPaneOpenMethodCommand}" Content="run" />
+            <Grid RowDefinitions="*">
+                <Grid Grid.Row="1" RowDefinitions="30,*">
+                    <Button
+                        Grid.Row="0"
+                        Command="{Binding IsPaneOpenMethodCommand}"
+                        Content="X" />
+                    <ListBox
+                        Grid.Row="1"
+                        ItemsSource="{Binding Source={x:Static dtl:PublicProperty.DataFilePaths}}"
+                        SelectedItem="{Binding DataFilePath}">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding FileName}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                        <Interaction.Behaviors>
+                            <EventTriggerBehavior EventName="Tapped">
+                                <InvokeCommandAction Command="{Binding InitialTableListCommand}" />
+                            </EventTriggerBehavior>
+                        </Interaction.Behaviors>
+
+                    </ListBox>
+
+                </Grid>
+
+            </Grid>
         </SplitView.Pane>
 
     </SplitView>

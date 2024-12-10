@@ -15,19 +15,25 @@ namespace TranslatorFromAssembly.Models
 {
     public class MainViewModel : ViewModelBase
     {
-        public MainViewModel() 
+        public MainViewModel()
         {
             IsPaneOpenCommand = new RelayCommand(IsPaneOpenMethod);
-            
+            SetPaneSizeCommand = new RelayCommand(SetPaneSize);
+            ContentView = ServiceLocator.DLLViewModel;
         }
 
         private bool _isPaneOpen;
         private int _PaneSize = 200;
+        private bool _oneLoad = false;
+        private ViewModelBase _contentView;
 
         public ICommand IsPaneOpenCommand { get; }
+        public ICommand SetPaneSizeCommand { get; }
         public bool IsPaneOpen { get => _isPaneOpen; set => SetProperty(ref _isPaneOpen, value); }
         public int PaneSize { get => _PaneSize; set => SetProperty(ref _PaneSize, value); }
-        
+        public ViewModelBase ContentView { get => _contentView; set => SetProperty(ref _contentView, value); }
+        public ServiceLocator ServiceLocator = ServiceLocator.GetThis;
+
         /// <summary>
         /// 控制侧边栏开关
         /// </summary>
@@ -50,6 +56,14 @@ namespace TranslatorFromAssembly.Models
             return null;
         }
 
-        //private void SetPan
+        /// <summary>
+        /// 修改PaneSize的大小
+        /// </summary>
+        private void SetPaneSize()
+        {
+            if(_oneLoad)
+                PaneSize = (int)GetWindow().Width / 4;
+            _oneLoad = true;
+        }
     }
 }

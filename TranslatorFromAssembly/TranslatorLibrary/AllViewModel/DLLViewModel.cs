@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
+using TranslatorLibrary.Tools;
 
 namespace TranslatorLibrary.AllViewModel
 {
@@ -60,7 +61,7 @@ namespace TranslatorLibrary.AllViewModel
         /// <summary>
         /// 用来显示被ILService提取出来的项目
         /// </summary>
-        public ObservableCollection<PreLoadData> ModEnglishList { get; set; } = new();
+        public ObservableCollection<PreLoadData> ModEnglishList = PublicProperty.DataList;
 
         /// <summary>
         /// 存储被选中项
@@ -71,6 +72,8 @@ namespace TranslatorLibrary.AllViewModel
         /// 第一个可编辑文本框 未来用来填入 FilePath
         /// </summary>
         public string IndexText { get => _indexText; set => SetProperty(ref _indexText, value); }
+
+        public int PageNum { get => pageNum; set => SetProperty(ref pageNum, value); }
         public DLLViewModel(ISQLiteService sqliteService,IILService iLService,ISQLiteExtract<PreLoadData> liteExtract) 
         {
             _sqliteService = sqliteService;
@@ -105,12 +108,11 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async Task GetAssemblyStr()
         {
-            if (++pageNum * pageSize >= pageCount)
+            if (++PageNum * pageSize >= pageCount)
             { 
-                pageNum--;
-                return;
+                PageNum = pageCount / pageSize - 1;
             }
-            PreLoadData[] datas = await _sQLiteExtract.GetData((pageNum * pageSize), pageSize);
+            PreLoadData[] datas = await _sQLiteExtract.GetData((PageNum * pageSize), pageSize);
             if (datas.Count() <= 0)
                 return;
 
@@ -119,7 +121,6 @@ namespace TranslatorLibrary.AllViewModel
                 ModEnglishList.Add(item);
                 ModEnglishList.RemoveAt(0);
             }
-            
         }
 
         /// <summary>
@@ -127,13 +128,12 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async Task GetAssemblyStrPgDn()
         {
-            if (--pageNum < 0)
+            if (--PageNum < 0)
             {
-                pageNum++;
-                 return;
+                PageNum = 0;
             }
                 
-            PreLoadData[] datas = await _sQLiteExtract.GetData((pageNum * pageSize),pageSize);
+            PreLoadData[] datas = await _sQLiteExtract.GetData((PageNum * pageSize),pageSize);
             if(datas.Count() == 0) return;
             foreach (var item in datas)
             {
@@ -162,7 +162,7 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async void SetSQLiteExtract()
         {
-            pageNum = 0;
+            PageNum = 0;
             string[] strs = Path.GetFileName(IndexText).Split(".");
             if (strs[1] is "dll")
             {
@@ -188,7 +188,7 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async void InitaDataList()
         {
-            pageNum++;
+            PageNum++;
             PreLoadData[] datas = await _sQLiteExtract.GetData(0, pageSize);
             foreach (var item in datas)
             {

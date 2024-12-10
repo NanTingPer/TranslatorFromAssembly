@@ -8,13 +8,44 @@
     d:DesignWidth="800"
     DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
     mc:Ignorable="d">
+    <Interaction.Behaviors>
+        <EventTriggerBehavior EventName="SizeChanged">
+            <InvokeCommandAction Command="{Binding SetPaneSizeCommand}" />
+        </EventTriggerBehavior>
+    </Interaction.Behaviors>
+
+
     <SplitView IsPaneOpen="{Binding IsPaneOpen}" OpenPaneLength="{Binding PaneSize}">
         <SplitView.Pane>
-            <Button Command="{Binding IsPaneOpenCommand}" />
+            <Grid RowDefinitions="auto,auto">
+                <Button
+                    Grid.Row="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Command="{Binding IsPaneOpenCommand}"
+                    Content="关闭"
+                    CornerRadius="0" />
+            </Grid>
+
+
         </SplitView.Pane>
 
         <SplitView.Content>
-            <Button Command="{Binding IsPaneOpenCommand}" />
+            <Grid RowDefinitions="30,*">
+
+                <Grid Grid.Row="0" ColumnDefinitions="auto,auto">
+                    <Button
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Command="{Binding IsPaneOpenCommand}"
+                        Content="打开"
+                        CornerRadius="0" />
+                </Grid>
+
+                <ContentControl Grid.Row="1" Content="{Binding ContentView}" />
+            </Grid>
+
         </SplitView.Content>
 
     </SplitView>

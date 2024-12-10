@@ -8,15 +8,10 @@
     Title="TranslatorFromAssembly"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Content="{Binding DLLView, Source={StaticResource ServiceLocator}}"
+    Content="{Binding MainViewModel, Source={StaticResource ServiceLocator}}"
     DataContext="{Binding MainWindowModel, Source={StaticResource ServiceLocator}}"
     Icon="/Assets/avalonia-logo.ico"
     mc:Ignorable="d">
-    <Interaction.Behaviors>
-        <EventTriggerBehavior EventName="SizeChanged">
-            <InvokeCommandAction Command="{Binding}" />
-        </EventTriggerBehavior>
-    </Interaction.Behaviors>
     <!--
     <Interaction.Behaviors>
         <EventTriggerBehavior EventName="Initialized">

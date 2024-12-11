@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace TranslatorLibrary.ModelClass
 {
+
+    /// <summary>
+    /// 简单汉化类
+    /// </summary>
     public class SimpleTranslator
     {
         private SimpleTranslator() { }
@@ -14,6 +18,12 @@ namespace TranslatorLibrary.ModelClass
         public string Translation { get; set; } = string.Empty;
 
 
+        /// <summary>
+        /// 使用复制汉化类创建简单汉化类
+        /// <para>复杂汉化类为 DatabaseModle</para>
+        /// </summary>
+        /// <param name="database"></param>
+        /// <returns></returns>
         public static SimpleTranslator CreateSimpleTranslator(DatabaseModle database)
         {
             if (database is null)

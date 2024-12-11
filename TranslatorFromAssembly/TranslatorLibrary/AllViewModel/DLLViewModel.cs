@@ -85,7 +85,7 @@ namespace TranslatorLibrary.AllViewModel
             SetSQLiteExtractCommand = new RelayCommand(SetSQLiteExtract);
             GetAssemblyStrPgDnCommand = new AsyncRelayCommand(GetAssemblyStrPgDn);
 
-            IndexText = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\FargowiltasSouls\\FargowiltasSouls.dll";
+            IndexText = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\Stellamod\\Stellamod.dll";
         }
 
         /// <summary>
@@ -112,6 +112,7 @@ namespace TranslatorLibrary.AllViewModel
             { 
                 PageNum = pageCount / pageSize - 1;
             }
+            if(pageNum <= 0) pageNum = 1;
             PreLoadData[] datas = await _sQLiteExtract.GetData((PageNum * pageSize), pageSize);
             if (datas.Count() <= 0)
                 return;

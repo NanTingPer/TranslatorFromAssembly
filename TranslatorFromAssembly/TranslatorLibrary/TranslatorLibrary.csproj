@@ -4,6 +4,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="ForceLocalizeSystem"></None>
+    <EmbeddedResource Include="ForceLocalizeSystem">
+      <LogicalName>ForceLocalizeSystem</LogicalName>
+    </EmbeddedResource>
+    <Folder Include="ForceLocalizeSystem" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />

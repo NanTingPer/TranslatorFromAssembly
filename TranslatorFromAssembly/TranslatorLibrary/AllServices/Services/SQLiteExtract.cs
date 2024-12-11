@@ -32,6 +32,11 @@ namespace TranslatorLibrary.AllServices.Services
             set => _connection = value;
         }
 
+        /// <summary>
+        /// 用来添加条目 需要先调用CreateDatabase
+        /// </summary>
+        /// <param name="datas"></param>
+        /// <returns></returns>
         public async Task AddData(IList<PreLoadData> datas)
         {
             if(ConnectionIsNULL()) return;
@@ -55,11 +60,14 @@ namespace TranslatorLibrary.AllServices.Services
 
         /// <summary>
         /// 用来获取数据库中的内容
+        /// <para>需要先调用CreateDatabase</para>
+        /// <para>skip 跳过的条目数</para>
+        /// <para>take 取出的条目数</para>
         /// </summary>
         /// <param name="skip">跳过 </param>
         /// <param name="take">取出数量</param>
         /// <returns></returns>
-        public Task<PreLoadData[]> GetData(int skip,int take,string className="", string methodName="", string counte="")
+        public Task<PreLoadData[]> GetData(int skip,int take,string className="", string methodName="", string counte="",SaveMode save = SaveMode.None)
         {
             PreLoadData[] pe = [];
             if (ConnectionIsNULL())
@@ -68,15 +76,27 @@ namespace TranslatorLibrary.AllServices.Services
             bool cn = false;
             bool mn = false;
             bool en = false;
-            if(string.IsNullOrEmpty(className)) cn = true;
-            if(string.IsNullOrEmpty(methodName)) mn = true;
-            if(string.IsNullOrEmpty(counte)) en = true;
+            if (string.IsNullOrEmpty(className))cn = true;
+            if (string.IsNullOrEmpty(methodName))mn = true;
+            if (string.IsNullOrEmpty(counte))en = true;
+
+
+            if (save == SaveMode.Write)
+            {
+                return Connection.Table<PreLoadData>()
+                .Where(f => cn || f.ClassName.Contains(className))
+                .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
+                .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
+                .Where(f => !string.IsNullOrEmpty(f.Chinese))
+                .ToArrayAsync();
+            }
+
 
             return Connection.Table<PreLoadData>()
                 .Where(f => f.IsShow == 0)
-                .Where(f => cn || f.ClassName == className)
-                .Where(f => mn || f.MethodName == methodName)
-                .Where(f => en || f.English == counte)
+                .Where(f => cn || f.ClassName.Contains(className))
+                .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
+                .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
                 .Skip(skip)
                 .Take(take)
                 .ToArrayAsync();
@@ -89,6 +109,7 @@ namespace TranslatorLibrary.AllServices.Services
 
         /// <summary>
         /// 获取数据条目数量
+        /// <para>需要先调用CreateDatabase</para>
         /// </summary>
         /// <returns></returns>
         public Task<int> PageCount()
@@ -100,6 +121,10 @@ namespace TranslatorLibrary.AllServices.Services
             return Connection.Table<PreLoadData>().CountAsync();
         }
 
+        /// <summary>
+        /// 初始化Connection 这是必须的
+        /// </summary>
+        /// <param name="dataBase"></param>
         public void CreateDatabase(string dataBase)
         {
             Connection = new SQLiteAsyncConnection(Path.Combine(_AllPath, dataBase));
@@ -107,6 +132,10 @@ namespace TranslatorLibrary.AllServices.Services
         }
 
 
+        /// <summary>
+        /// 判断Connection是否为空
+        /// </summary>
+        /// <returns></returns>
         private bool ConnectionIsNULL()
         {
             if(Connection is null) return true;
@@ -115,6 +144,10 @@ namespace TranslatorLibrary.AllServices.Services
 
         /// <summary>
         /// 修改数据库内容
+        /// <para>需要先调用CreateDatabase</para>
+        /// <para>IsShowNo 不显示</para>
+        /// <para>IsShowYes 显示</para>
+        /// <para>Chinese 中文发生改变</para>
         /// </summary>
         public async Task Alter(SaveMode mode, params PreLoadData[] preLoadData)
         {

@@ -61,6 +61,9 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         public PreLoadData SelectItem { get => _selectItem; set => SetProperty(ref _selectItem, value); }
 
+        /// <summary>
+        /// 存储被选中项 多选
+        /// </summary>
         public List<PreLoadData> SelectData { get; set; } = new();
 
         public ObservableCollection<PreLoadData> DataList { get; set; } = PublicProperty.DataList;
@@ -137,6 +140,9 @@ namespace TranslatorLibrary.AllViewModel
             IsPaneOpen = !IsPaneOpen;
         }
 
+        /// <summary>
+        /// 加载文件列表到侧边栏
+        /// </summary>
         private void LoadDataPathToList()
         {
             PublicProperty.LoadAllDataFileToDataFilePaths();
@@ -204,9 +210,11 @@ namespace TranslatorLibrary.AllViewModel
         /// <summary>
         /// 可见性更改为不可见
         /// </summary>
-        private void SetDataIsNoShow()
+        private async void SetDataIsNoShow()
         {
-            _SQLiteExtract.Alter(PublicProperty.SaveMode.IsShowNo, SelectData.ToArray());
+            await _SQLiteExtract.Alter(PublicProperty.SaveMode.IsShowNo, SelectData.ToArray());
+            await GetAssemblyStr_PgDn();
+            await GetAssemblyStr_PgUp();
         }
     }
 }

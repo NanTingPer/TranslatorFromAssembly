@@ -15,7 +15,7 @@ namespace TranslatorLibrary.AllServices.IServices
 
         Task Alter(PublicProperty.SaveMode mode , params PreLoadData[] preLoadData);
 
-        Task<T[]> GetData(int spik, int taks,string className="",string methodName="",string count="");
+        Task<T[]> GetData(int spik, int taks,string className="",string methodName="",string count="",PublicProperty.SaveMode save = PublicProperty.SaveMode.None);
 
         Task<int> PageCount();
 

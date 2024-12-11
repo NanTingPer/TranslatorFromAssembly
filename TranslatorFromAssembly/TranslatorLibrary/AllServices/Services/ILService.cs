@@ -46,16 +46,36 @@ namespace TranslatorLibrary.AllServices.Services
 
                         if (string.IsNullOrWhiteSpace(english))
                             continue;
-
+                        int isShow = 0;
                         string chinese = await Litter.TranEnglish(english, _sqliteService);
+
+                        if (type.Name.Contains("<") || 
+                            type.Name.Contains(">") ||
+                            english.Contains("/") || 
+                            //english.Count(f => f == '.') >= 2 ||
+                            //english.StartsWith('.') ||
+                            english.StartsWith("_") ||
+                            english.Length <= 2 ||
+                            english.Contains(".") ||
+                            method.Name.Contains("AddRecipe") ||
+                            method.Name.Contains("AI") ||
+                            method.Name.Contains("Draw") ||
+                            method.Name.Contains("HitEffect") ||
+                            method.Name.Contains("_") ||
+                            method.Name.Contains("ToString") ||
+                            (method.Name.Contains("Load") && english.Contains(":")) ||
+                            (method.Name.Contains("Update") && english.Contains(":")))
+                            isShow = 1;
+
                         TempList.Add(new PreLoadData()
                         {
                             Id = tempNume++,
                             English = english,
                             ModName = ModName,
                             MethodName = method.Name,
-                            ClassName = type.Name,
-                            AutoChinese = chinese
+                            ClassName = type.FullName,
+                            AutoChinese = chinese,
+                            IsShow = isShow
                         });
                     }
                 }

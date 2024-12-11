@@ -9,6 +9,12 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <Interaction.Behaviors>
+        <EventTriggerBehavior EventName="Initialized">
+            <InvokeCommandAction Command="{Binding LoadDataPathToListCommand}" />
+        </EventTriggerBehavior>
+    </Interaction.Behaviors>
+
     <!--  OpenPaneLength="{Binding Source={x:Static app:App.PaneSiezs[0]}}  -->
     <UserControl.Styles>
         <Style Selector="Button">
@@ -21,6 +27,7 @@
         <Style Selector="TextBox">
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="0" />
         </Style>
         <Style Selector="Label">
@@ -43,7 +50,7 @@
                         CornerRadius="0">
                         <Interaction.Behaviors>
                             <EventTriggerBehavior EventName="Click">
-                                <InvokeCommandAction Command="{Binding LoadDataPathToListCommand}" />
+                                <InvokeCommandAction Command="{Binding}" />
                             </EventTriggerBehavior>
                         </Interaction.Behaviors>
                     </Button>
@@ -101,7 +108,7 @@
                         </Interaction.Behaviors>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Id}" Header="ID" />
+                            <!--<DataGridTextColumn Binding="{Binding Id}" Header="ID" />-->
                             <DataGridTextColumn Binding="{Binding ModName}" Header="模组名称" />
                             <DataGridTextColumn Binding="{Binding ClassName}" Header="类名称" />
                             <DataGridTextColumn Binding="{Binding MethodName}" Header="方法名称" />

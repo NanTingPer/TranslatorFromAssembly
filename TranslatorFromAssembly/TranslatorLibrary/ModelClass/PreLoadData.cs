@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TranslatorLibrary.ModelClass
 {
+    /// <summary>
+    /// 最后入库的类型 也是读取的类型
+    /// </summary>
     public class PreLoadData
     {
         /// <summary>

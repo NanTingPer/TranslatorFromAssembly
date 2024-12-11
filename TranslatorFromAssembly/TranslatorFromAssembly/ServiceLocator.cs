@@ -37,13 +37,14 @@ namespace TranslatorFromAssembly
         public IRootViewCut? IRootViewCut => _serviceProvider.GetService<IRootViewCut>();
 
         public IILService? IILService => _serviceProvider.GetService<IILService>();
-
+        public IWriteFileService? IWriteFileService => _serviceProvider.GetService<IWriteFileService>();
         public ISQLiteExtract<PreLoadData>? ISQLiteExtractPreData => _serviceProvider.GetService<ISQLiteExtract<PreLoadData>>();
         public DLLViewModel? DLLViewModel => _serviceProvider.GetService<DLLViewModel>();
         public MainWindowModel? MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
         public MainViewModel? MainViewModel => _serviceProvider.GetService<MainViewModel>();
 
         public ListViewModel? ListViewModel => _serviceProvider.GetService<ListViewModel>();
+        public SaveViewModel? SaveViewModel => _serviceProvider.GetService<SaveViewModel>();
 
 
 
@@ -62,12 +63,15 @@ namespace TranslatorFromAssembly
             //IL
             _services.AddSingleton<IILService, ILService>();
 
+            _services.AddSingleton<IWriteFileService, WriteFileService>();
+
             //MainViewModel
             _services.AddSingleton<DLLViewModel>();
 
             _services.AddSingleton<MainWindowModel>();
             _services.AddSingleton<MainViewModel>();
             _services.AddSingleton<ListViewModel>();
+            _services.AddSingleton<SaveViewModel>();
         
 
             _serviceProvider = _services.BuildServiceProvider();

@@ -1,0 +1,71 @@
+<UserControl
+    x:Class="TranslatorFromAssembly.Views.SaveView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sou="using:TranslatorLibrary.Tools"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Interaction.Behaviors>
+        <EventTriggerBehavior EventName="Initialized">
+            <InvokeCommandAction Command="{Binding LoadDataPathToListCommand}" />
+        </EventTriggerBehavior>
+    </Interaction.Behaviors>
+
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid ColumnDefinitions="200,*">
+
+        <ListBox
+            Grid.Column="0"
+            ItemsSource="{Binding Source={x:Static sou:PublicProperty.DataFilePaths}}"
+            SelectedItem="{Binding ListBoxOption}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding FileName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <Interaction.Behaviors>
+                <EventTriggerBehavior EventName="Tapped">
+                    <InvokeCommandAction Command="{Binding ClickListOptionCommand}" />
+                </EventTriggerBehavior>
+            </Interaction.Behaviors>
+        </ListBox>
+
+
+        <Grid Grid.Column="2" RowDefinitions="30,30,30,30,30,30,30,*">
+            <Label Grid.Row="0" Content="你的模组名称" />
+            <TextBox Grid.Row="1" Text="{Binding MyModName}" />
+            <Label Grid.Row="2" Content="目标模组名称" />
+            <TextBox Grid.Row="3" Text="{Binding TarGetModName}" />
+            <Label Grid.Row="4" Content="你的模组所在目录" />
+            <TextBox Grid.Row="5" Text="{Binding MyModPath}" />
+            <Button
+                Grid.Row="6"
+                Command="{Binding WriteOutputCommand}"
+                Content="导出" />
+        </Grid>
+
+    </Grid>
+</UserControl>

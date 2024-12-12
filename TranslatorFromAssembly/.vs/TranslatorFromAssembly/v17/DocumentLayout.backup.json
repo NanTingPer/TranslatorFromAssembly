@@ -62,8 +62,7 @@
               "RelativeToolTip": "TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAkwDAAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:03:48.339Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T04:03:48.339Z"
             },
             {
               "$type": "Document",
@@ -75,8 +74,7 @@
               "RelativeToolTip": "TranslatorLibrary\\AllServices\\IServices\\IWriteFileService.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAiwBcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:03:16.409Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T04:03:16.409Z"
             },
             {
               "$type": "Document",
@@ -86,7 +84,7 @@
               "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\Services\\WriteFileService.cs",
               "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\WriteFileService.cs",
               "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\WriteFileService.cs",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAowHkAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-12T04:02:55.768Z",
               "EditorCaption": ""
@@ -101,8 +99,7 @@
               "RelativeToolTip": "TranslatorLibrary\\AllViewModel\\DLLViewModel.cs",
               "ViewState": "AgIAAEYAAAAAAAAAAAAiwFQAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:02:02.511Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T04:02:02.511Z"
             },
             {
               "$type": "Document",
@@ -114,8 +111,7 @@
               "RelativeToolTip": "TranslatorLibrary\\AllServices\\IServices\\ISQLiteExtract.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:01:38.052Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T04:01:38.052Z"
             },
             {
               "$type": "Document",
@@ -127,8 +123,7 @@
               "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\SQLiteExtract.cs",
               "ViewState": "AgIAAHEAAAAAAAAAAAAowH8AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:00:12.18Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T04:00:12.18Z"
             }
           ]
         }

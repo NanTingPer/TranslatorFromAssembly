@@ -95,7 +95,7 @@ namespace TranslatorLibrary.AllServices.Services
                     MethodName = value.Key;
                     var 内容 = value.Value;
                     //填入全类名 还有方法名
-                    Write.Write(StringToByte($"\t\t\t\tForL.LocalizeByTypeFullName(\"{ClassNaem}\", \"{value.Key}\", new ()"));
+                    Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem}\", \"{value.Key}\", new ()"));
                     Write.Write(StringToByte("\t\t\t\t{"));
                     Write.Flush();
                     foreach (Tuple<String, String> tpule in 内容)
@@ -126,9 +126,9 @@ namespace TranslatorLibrary.AllServices.Services
         /// 构造 WriteMap 需要传入一个dataBase的名称
         /// </summary>
         /// <param name="dataBaseName"></param>
-        public async void CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract,string dataBaseName)
+        public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract,string dataBaseName)
         {
-            sQLiteExtract.CreateDatabase(dataBaseName);
+            await sQLiteExtract.CreateDatabase(dataBaseName);
             PreLoadData[] data = await sQLiteExtract.GetData(0, 0, save : PublicProperty.SaveMode.Write);
 
             var e = PublicProperty.WriteMap;

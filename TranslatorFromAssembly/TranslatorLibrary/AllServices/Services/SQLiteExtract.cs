@@ -76,9 +76,9 @@ namespace TranslatorLibrary.AllServices.Services
             bool cn = false;
             bool mn = false;
             bool en = false;
-            if (string.IsNullOrEmpty(className))cn = true;
-            if (string.IsNullOrEmpty(methodName))mn = true;
-            if (string.IsNullOrEmpty(counte))en = true;
+            if (string.IsNullOrWhiteSpace(className))cn = true;
+            if (string.IsNullOrWhiteSpace(methodName))mn = true;
+            if (string.IsNullOrWhiteSpace(counte))en = true;
 
 
             if (save == SaveMode.Write)
@@ -125,10 +125,10 @@ namespace TranslatorLibrary.AllServices.Services
         /// 初始化Connection 这是必须的
         /// </summary>
         /// <param name="dataBase"></param>
-        public void CreateDatabase(string dataBase)
+        public async Task CreateDatabase(string dataBase)
         {
             Connection = new SQLiteAsyncConnection(Path.Combine(_AllPath, dataBase));
-            Connection.CreateTableAsync<PreLoadData>();
+            await Connection.CreateTableAsync<PreLoadData>();
         }
 
 

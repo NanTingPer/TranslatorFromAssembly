@@ -21,6 +21,6 @@ namespace TranslatorLibrary.AllServices.IServices
 
         Task AddData(IList<T> values);
 
-        void CreateDatabase(string dataBase);
+        Task CreateDatabase(string dataBase);
     }
 }

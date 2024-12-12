@@ -21,6 +21,6 @@ namespace TranslatorLibrary.AllServices.IServices
         /// 构造 WriteMap 需要传入一个dataBase的名称
         /// </summary>
         /// <param name="dataBaseName"></param>
-        void CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, string dataBaseName);
+        Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, string dataBaseName);
     }
 }

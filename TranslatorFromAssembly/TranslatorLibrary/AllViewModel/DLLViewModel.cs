@@ -82,7 +82,7 @@ namespace TranslatorLibrary.AllViewModel
             CommandGetTranslator = new AsyncRelayCommand(GetTranslator);
             PitchsCommand = new RelayCommand<object>(GetPitchs);
             GetAssemblyStrCommand = new AsyncRelayCommand(GetAssemblyStr);
-            SetSQLiteExtractCommand = new RelayCommand(SetSQLiteExtract);
+            SetSQLiteExtractCommand = new AsyncRelayCommand(SetSQLiteExtract);
             GetAssemblyStrPgDnCommand = new AsyncRelayCommand(GetAssemblyStrPgDn);
 
             IndexText = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\Stellamod\\Stellamod.dll";
@@ -161,7 +161,7 @@ namespace TranslatorLibrary.AllViewModel
         /// <summary>
         /// 将内容插入数据库
         /// </summary>
-        private async void SetSQLiteExtract()
+        private async Task SetSQLiteExtract()
         {
             PageNum = 0;
             string[] strs = Path.GetFileName(IndexText).Split(".");
@@ -173,7 +173,7 @@ namespace TranslatorLibrary.AllViewModel
                 for (int i = 0; i < 10; i++)
                     ModEnglishList.Add(new());
 
-                CreateSQLiteExtractDataBase(strs[0]);
+                await CreateSQLiteExtractDataBase(strs[0]);
                 List<PreLoadData> tempList = await _ilService.GetAssemblyILString(IndexText);
                 await _sQLiteExtract.AddData(tempList);
 
@@ -198,9 +198,9 @@ namespace TranslatorLibrary.AllViewModel
             }
         }
 
-        private void CreateSQLiteExtractDataBase(string name)
+        private async Task CreateSQLiteExtractDataBase(string name)
         {
-            _sQLiteExtract.CreateDatabase(name);
+            await _sQLiteExtract.CreateDatabase(name);
         }
     }
 }

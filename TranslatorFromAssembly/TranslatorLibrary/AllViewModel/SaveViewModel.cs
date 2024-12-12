@@ -37,16 +37,16 @@ namespace TranslatorLibrary.AllViewModel
             _sQLiteExtract = sQLiteExtract;
 
             ClickListOptionCommand = new RelayCommand(ClickListOption);
-            WriteOutputCommand = new RelayCommand(WriteOutput);
+            WriteOutputCommand = new AsyncRelayCommand(WriteOutput);
             LoadDataPathToListCommand = new RelayCommand(LoadDataPathToList);
         }
 
-        private void WriteOutput()
+        private async Task WriteOutput()
         {
             if(string.IsNullOrWhiteSpace(MyModName) ||
                 string.IsNullOrWhiteSpace(TarGetModName) ||
                 string.IsNullOrWhiteSpace(MyModPath)) { return; }
-            _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption.FileName);
+            await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption.FileName);
             _writeFileService.WriteFile(MyModPath,TarGetModName,MyModName);
         }
 

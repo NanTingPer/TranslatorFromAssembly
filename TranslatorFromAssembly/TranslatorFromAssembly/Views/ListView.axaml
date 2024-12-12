@@ -41,7 +41,7 @@
         <SplitView.Content>
             <Grid RowDefinitions="30,*">
 
-                <Grid Grid.Row="0" ColumnDefinitions="30,60,auto,60,auto,60,auto,30,70,*">
+                <Grid Grid.Row="0" ColumnDefinitions="30,60,auto,60,auto,60,auto,70,100,100,100,*">
                     <Button
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
@@ -65,16 +65,25 @@
                     <Label Grid.Column="5" Content="内容" />
                     <TextBox Grid.Column="6" Text="{Binding English}" />
                     <Button
-                        Grid.Column="8"
-                        Command="{Binding SetDataIsNoShowCommand}"
-                        Content="不显示" />
-
-                    <!--
-                    <Button
                         Grid.Column="7"
-                        Command="{Binding InitialTableListCommand}"
+                        Command="{Binding SelectCommand}"
                         Content="查询" />
-                    -->
+                    <Button
+                        Grid.Column="8"
+                        Command="{Binding ClearSelectCommand}"
+                        Content="清空查询" />
+
+                    <Button
+                        Grid.Column="9"
+                        Command="{Binding IsShowCommand}"
+                        Content="{Binding IsShow}" />
+                    <Button
+                        Grid.Column="10"
+                        Command="{Binding SetDataIsNoShowCommand}"
+                        Content="不显示/显示" />
+
+
+
                 </Grid>
 
                 <Grid Grid.Row="1" RowDefinitions="30,*,40">
@@ -113,6 +122,7 @@
                             <DataGridTextColumn Binding="{Binding ClassName}" Header="类名称" />
                             <DataGridTextColumn Binding="{Binding MethodName}" Header="方法名称" />
                             <DataGridTextColumn Binding="{Binding English}" Header="英文" />
+                            <DataGridTextColumn Binding="{Binding IsShow}" Header="1不显示" />
                             <DataGridTextColumn
                                 Binding="{Binding Chinese}"
                                 Header="中文"

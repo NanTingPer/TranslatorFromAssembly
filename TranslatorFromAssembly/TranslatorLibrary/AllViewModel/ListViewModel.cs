@@ -32,6 +32,12 @@ namespace TranslatorLibrary.AllViewModel
         private string _className = string.Empty;
 
         private string _methodName = string.Empty;
+        private string _isShow = "不显示隐藏";
+
+        /// <summary>
+        /// 决定是否显示隐藏 false 不显示
+        /// </summary>
+        private bool fineIsShow = false;
 
         private string _english = string.Empty;
         private PreLoadData _selectItem;
@@ -49,12 +55,16 @@ namespace TranslatorLibrary.AllViewModel
         public ICommand EditEndedMethodCommand { get; }
         public ICommand SelectContCommand { get; }
         public ICommand SetDataIsNoShowCommand { get; }
+        public ICommand SelectCommand { get; }
+        public ICommand ClearSelectCommand { get; }
+        public ICommand IsShowCommand { get; }
 
         public int PaneSize { get => _paneSize; set => SetProperty(ref _paneSize, value); }
         public bool IsPaneOpen { get => _isPaneOpen; set => SetProperty(ref _isPaneOpen, value); }
         public string ClassName { get => _className; set => SetProperty(ref _className, value); }
         public string MethodName { get => _methodName; set => SetProperty(ref _methodName, value); }
         public string English { get => _english; set => SetProperty(ref _english, value); }
+        public string IsShow { get => _isShow; set => SetProperty(ref _isShow, value); }
 
         /// <summary>
         /// 列表中被选中项
@@ -83,6 +93,9 @@ namespace TranslatorLibrary.AllViewModel
             EditEndedMethodCommand = new RelayCommand(EditEndedMethod);
             SelectContCommand = new RelayCommand<object>(SelectCont);
             SetDataIsNoShowCommand = new RelayCommand(SetDataIsNoShow);
+            SelectCommand = new AsyncRelayCommand(Select);
+            ClearSelectCommand = new RelayCommand(ClearSelect);
+            IsShowCommand = new RelayCommand(IsShow_);
         }
 
 
@@ -99,15 +112,23 @@ namespace TranslatorLibrary.AllViewModel
             {
                 pageNum = pageCount / pageSize - 1;
             }
-            PreLoadData[] datas = await _SQLiteExtract.GetData((pageNum * pageSize), pageSize, ClassName, MethodName, English);
+            PreLoadData[] datas = await _SQLiteExtract.GetData((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow:fineIsShow);
             if (datas.Count() <= 0){ pageNum -= 1;return; }
                 
 
             foreach (var item in datas)
             {
+                if (DataList.Contains(item))
+                    continue;
+
                 DataList.Add(item);
-                DataList.RemoveAt(0);
+                if (DataList.Count >= 10)
+                {
+                    DataList.RemoveAt(0);
+                }
             }
+
+            控制显示();
         }
 
         /// <summary>
@@ -123,13 +144,22 @@ namespace TranslatorLibrary.AllViewModel
                 pageNum = 0;
             }
 
-            PreLoadData[] datas = await _SQLiteExtract.GetData((pageNum * pageSize), pageSize, ClassName, MethodName, English);
+            PreLoadData[] datas = await _SQLiteExtract.GetData((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow : fineIsShow);
             if (datas.Count() == 0){ pageNum += 1; return; }
             foreach (var item in datas)
             {
+                if(DataList.Contains(item)) 
+                    continue;
+
                 DataList.Add(item);
-                DataList.RemoveAt(0);
+                if(DataList.Count >= 10)
+                { 
+                    DataList.RemoveAt(0);
+                }
             }
+
+            控制显示();
+
         }
 
         /// <summary>
@@ -164,13 +194,14 @@ namespace TranslatorLibrary.AllViewModel
             initTextOrderBy();
 
             DataList.Clear();
-            _SQLiteExtract.CreateDatabase(DataFilePath.FileName);
+            await _SQLiteExtract.CreateDatabase(DataFilePath.FileName);
             PreLoadData[] data = await _SQLiteExtract.GetData(0, 10);
             foreach (var item in data)
             {
                 DataList.Add(item);
             }
             IsPaneOpenMethod();
+            控制显示();
         }
 
         /// <summary>
@@ -208,7 +239,7 @@ namespace TranslatorLibrary.AllViewModel
         }
 
         /// <summary>
-        /// 可见性更改为不可见
+        /// 可见性更改为不可见 / 可见
         /// </summary>
         private async void SetDataIsNoShow()
         {
@@ -216,5 +247,56 @@ namespace TranslatorLibrary.AllViewModel
             await GetAssemblyStr_PgDn();
             await GetAssemblyStr_PgUp();
         }
+
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <returns></returns>
+        private async Task Select()
+        {
+            await GetAssemblyStr_PgUp();
+        }
+
+        /// <summary>
+        /// 清空查询
+        /// </summary>
+        private void ClearSelect()
+        {
+            English = "";
+            MethodName = "";
+            ClassName = "";
+        }
+
+        /// <summary>
+        /// 决定显示/不显示
+        /// </summary>
+        private async void IsShow_()
+        {
+           fineIsShow = !fineIsShow;
+            if (fineIsShow == true)
+                IsShow = "显示隐藏";
+
+            if (fineIsShow == false)
+                IsShow = "不显示隐藏";
+
+            pageNum = 0;
+            await GetAssemblyStr_PgUp();
+            控制显示();
+        }
+
+        private void 控制显示()
+        {
+            for (int i = 0; i < DataList.Count; i++)
+            {
+                //如果 不显示隐藏  但是数据是隐藏的 删掉
+                if (fineIsShow == false && DataList[i].IsShow == 1)
+                    DataList.RemoveAt(i);
+
+                //如果 显示隐藏   但是数据是不隐藏的 删掉
+                if (fineIsShow == true && DataList[i].IsShow == 0)
+                    DataList.RemoveAt(i);
+            }
+        }
+
     }
 }

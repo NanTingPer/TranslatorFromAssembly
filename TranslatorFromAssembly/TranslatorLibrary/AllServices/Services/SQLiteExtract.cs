@@ -63,15 +63,16 @@ namespace TranslatorLibrary.AllServices.Services
         /// <para>需要先调用CreateDatabase</para>
         /// <para>skip 跳过的条目数</para>
         /// <para>take 取出的条目数</para>
+        /// <para>isShow 为 true 只看隐藏</para>
         /// </summary>
         /// <param name="skip">跳过 </param>
         /// <param name="take">取出数量</param>
         /// <returns></returns>
-        public Task<PreLoadData[]> GetData(int skip,int take,string className="", string methodName="", string counte="",SaveMode save = SaveMode.None)
+        public async Task<PreLoadData[]> GetData(int skip,int take,string className="", string methodName="", string counte="",SaveMode save = SaveMode.None,bool isShow = false)
         {
             PreLoadData[] pe = [];
             if (ConnectionIsNULL())
-                return Task.FromResult(pe);
+                return pe;
 
             bool cn = false;
             bool mn = false;
@@ -83,7 +84,7 @@ namespace TranslatorLibrary.AllServices.Services
 
             if (save == SaveMode.Write)
             {
-                return Connection.Table<PreLoadData>()
+                return await Connection.Table<PreLoadData>()
                 .Where(f => cn || f.ClassName.Contains(className))
                 .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
                 .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
@@ -91,15 +92,27 @@ namespace TranslatorLibrary.AllServices.Services
                 .ToArrayAsync();
             }
 
+            
+            if (isShow)
+            {
+                return await Connection.Table<PreLoadData>()
+                    .Where(f => f.IsShow == 1)
+                    .Where(f => cn || f.ClassName.Contains(className))
+                    .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
+                    .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
+                    .Skip(skip)
+                    .Take(take)
+                    .ToArrayAsync();
+            }
 
-            return Connection.Table<PreLoadData>()
-                .Where(f => f.IsShow == 0)
-                .Where(f => cn || f.ClassName.Contains(className))
-                .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
-                .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
-                .Skip(skip)
-                .Take(take)
-                .ToArrayAsync();
+            return await Connection.Table<PreLoadData>()
+                    .Where(f => f.IsShow == 0)
+                    .Where(f => cn || f.ClassName.Contains(className))
+                    .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
+                    .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
+                    .Skip(skip)
+                    .Take(take)
+                    .ToArrayAsync();
         }
 
         public Task Delete()
@@ -162,26 +175,16 @@ namespace TranslatorLibrary.AllServices.Services
                     await Connection.UpdateAsync(data);
                 }
             }
-            if(mode == SaveMode.IsShowNo)
+            if(mode == SaveMode.IsShowNo || mode == SaveMode.IsShowYes)
             {
                 foreach (var item in preLoadData)
                 {
                     var data = await Connection.Table<PreLoadData>().Where(f => f.Id == item.Id).FirstOrDefaultAsync();
-                    data.IsShow = 1;
+                    
+                    data.IsShow = data.IsShow == 1 ? 0 : 1;
                     await Connection.UpdateAsync(data);
                 }
             }
-
-            if (mode == SaveMode.IsShowYes)
-            {
-                foreach (var item in preLoadData)
-                {
-                    var data = await Connection.Table<PreLoadData>().Where(f => f.Id == item.Id).FirstOrDefaultAsync();
-                    data.IsShow = 0;
-                    await Connection.UpdateAsync(data);
-                }
-            }
-
         }
     }
 }

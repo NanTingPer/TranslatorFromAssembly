@@ -180,6 +180,7 @@ namespace TranslatorLibrary.AllViewModel
                 await GetAssemblyStr();
             }
             pageCount = await _sQLiteExtract.PageCount();
+            PageNum = 1;
             InitaDataList();
             return;
         }

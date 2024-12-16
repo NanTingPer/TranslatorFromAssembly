@@ -98,6 +98,7 @@
                         HorizontalAlignment="Center"
                         AutoGenerateColumns="False"
                         Background="#88eeecc6"
+                        CanUserReorderColumns="True"
                         CanUserResizeColumns="True"
                         CanUserSortColumns="False"
                         ColumnWidth="200"
@@ -122,12 +123,13 @@
                             <DataGridTextColumn Binding="{Binding ClassName}" Header="类名称" />
                             <DataGridTextColumn Binding="{Binding MethodName}" Header="方法名称" />
                             <DataGridTextColumn Binding="{Binding English}" Header="英文" />
-                            <DataGridTextColumn Binding="{Binding IsShow}" Header="1不显示" />
+
                             <DataGridTextColumn
                                 Binding="{Binding Chinese}"
                                 Header="中文"
                                 IsReadOnly="False" />
-                            <DataGridTextColumn Binding="{Binding AutoChinese}" Header="机翻" />
+                            <DataGridTextColumn Binding="{Binding IsShow}" Header="1不显示" />
+                            <!--<DataGridTextColumn Binding="{Binding AutoChinese}" Header="机翻" />-->
                         </DataGrid.Columns>
                     </DataGrid>
 

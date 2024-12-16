@@ -128,8 +128,8 @@ namespace TranslatorLibrary.AllServices.Services
         /// <param name="dataBaseName"></param>
         public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract,string dataBaseName)
         {
-            await sQLiteExtract.CreateDatabase(dataBaseName);
-            PreLoadData[] data = await sQLiteExtract.GetData(0, 0, save : PublicProperty.SaveMode.Write);
+            await sQLiteExtract.CreateDatabaseAsync(dataBaseName);
+            PreLoadData[] data = await sQLiteExtract.GetDataAsync(0, 0, save : PublicProperty.SaveMode.Write);
 
             var e = PublicProperty.WriteMap;
 

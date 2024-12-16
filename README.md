@@ -59,3 +59,93 @@
 13. 打开你的模组所在目录下的 `Systems`目录
 14. 打开里面的文件(应该只有一个)
 15. 编辑名称空间`namespace FargoCP.Systems;` 改为`你的模组名称.Systems`
+
+
+
+
+
+## 提取过滤条件
+
+1. ldstr下一句包含`Terraria.ModLoader.Mod::Find` 
+   1. 下一个`call` 包含 `ModLoader.Mod::Find`
+2. ldstr下一句包含`ModLoader.ModContent::Request` 
+   1. 下一个`call` 包含 `ModLoader.ModContent::Request`
+3. ldstr下一句OpCodes为`call` 包含 `Localization.Language::GetTextValue` (获取本地化字符串)
+4. ldstr下一句OpCodes为`call` 包含`Graphics.ShaderManager::GetShader`(获取Shader)
+5. ldstr下一句OpCodes为`call (包含)`   并且 包含`Microsoft.Xna.Framework`
+6. ldstr下一句OpCodes为`call (包含)`并且 包含`Luminance.Core.Graphics` （Luminance是泰拉的一个模组）
+7. ldstr下一句OpCodes为`ret` (return)
+8. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.ModContent::TryFind`
+9. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.ModContent::Find`
+10. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.ModType::get_Name`
+11. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.MusicLoader::GetMusicSlot` (获取音乐)
+12. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.ModLoader::TryGetMod`(尝试获取加载的模组)
+13. ldstr下一句OpCodes为`call` 并且 包含`Graphics.Effects.EffectManager`
+14. ldstr下一句OpCodes为`call` 并且 包含`Terraria.Audio.SoundStyle`
+15. ldstr下一句OpCodes为`call` 并且 包含`Terraria.Graphics.Shaders.MiscShaderData` (着色器管理集)
+16. ldstr下一句OpCodes为`call` 并且 包含`Terraria.Recipe::AddIngredient` (制作站)
+17. ldstr下一句OpCodes为`call` 并且 包含`System.Collections.Generic.Dictionary`
+18. ldstr下一句OpCodes为`call` 并且 包含`Localization.Language::GetText` 从本地化键读取 [文档](http://docs.tmodloader.net/docs/stable/class_language.html)
+
+
+
+19. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.ILocalizedModTypeExtensions::GetLocalization` [文档 会生成本地化文件](http://docs.tmodloader.net/docs/stable/class_i_localized_mod_type_extensions.html)
+20. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.ILocalizedModTypeExtensions::GetLocalizationKey` 
+21. ldstr下一句OpCodes为`call` 并且 包含`ModLoader.ILocalizedModTypeExtensions::GetLocalizedValue` 
+
+
+
+22. ldstr下一句OpCodes为`call` 并且 包含`Terraria.Player::ManageSpecialBiomeVisuals` (管理生物群系视觉效果)
+23. ldstr下一句OpCodes为`call `并且 包含 `Terraria.Dust::NewDust` (创建粒子)
+
+> 反射的字符串调用
+
+1. ldstr下一句OpCodes为`call`  并且 包含`System.Type::GetMethod`
+2. ldstr下一句OpCodes为`call`  并且 包含`System.Type::get_Assembly`
+3. ldstr下一句OpCodes为`call`  并且 包含`System.Reflection.Assembly::GetType`
+
+
+
+## 无法过滤项
+
+> ### 1
+
+```csharp
+DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(9, 1);
+defaultInterpolatedStringHandler.AppendLiteral("randrsd");
+defaultInterpolatedStringHandler.AppendFormatted<int>(l);
+Gore.NewGore(source_FromThis, vector, vector2, ModContent.Find<ModGore>(name, defaultInterpolatedStringHandler.ToStringAndClear()).Type, base.NPC.scale);
+```
+
+> ### 2
+
+```csharp
+ldstr     "/Assets/Sounds/BaronHit"
+ldc.i4.0
+newobj    instance void [tModLoader]Terraria.Audio.SoundStyle::.ctor(string, valuetype [tModLoader]Terraria.Audio.SoundType)
+```
+
+> ### 3
+
+```csharp
+public override LocalizedText DefaultContainerName(int frameX, int frameY)
+{
+	return ILocalizedModTypeExtensions.GetLocalization(this, "MapEntry" + (frameX / 36).ToString(), null);
+}
+```
+
+
+
+
+
+## 日志
+
+2024/12/16
+
+添加Hjson NeGet包
+
+添加`HjsonModel` 模型类
+
+添加`HjsonSQLiteExtract` 服务类 `HjsonSQLiteExtract : ISQLiteExtract<HjsonService>`
+
+添加`IHjson` 接口 实现类 `HjsonService`

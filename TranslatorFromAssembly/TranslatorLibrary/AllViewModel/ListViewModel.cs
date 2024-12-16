@@ -107,12 +107,12 @@ namespace TranslatorLibrary.AllViewModel
             initTextOrderBy();
             if (DataFilePath is null)
                 return;
-            pageCount = await _SQLiteExtract.PageCount();
+            pageCount = await _SQLiteExtract.PageCountAsync();
             if (++pageNum * pageSize >= pageCount)
             {
                 pageNum = pageCount / pageSize - 1;
             }
-            PreLoadData[] datas = await _SQLiteExtract.GetData((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow:fineIsShow);
+            PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow:fineIsShow);
             if (datas.Count() <= 0){ pageNum -= 1;return; }
                 
 
@@ -144,7 +144,7 @@ namespace TranslatorLibrary.AllViewModel
                 pageNum = 0;
             }
 
-            PreLoadData[] datas = await _SQLiteExtract.GetData((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow : fineIsShow);
+            PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow : fineIsShow);
             if (datas.Count() == 0){ pageNum += 1; return; }
             foreach (var item in datas)
             {
@@ -194,8 +194,8 @@ namespace TranslatorLibrary.AllViewModel
             initTextOrderBy();
 
             DataList.Clear();
-            await _SQLiteExtract.CreateDatabase(DataFilePath.FileName);
-            PreLoadData[] data = await _SQLiteExtract.GetData(0, 10);
+            await _SQLiteExtract.CreateDatabaseAsync(DataFilePath.FileName);
+            PreLoadData[] data = await _SQLiteExtract.GetDataAsync(0, 10);
             foreach (var item in data)
             {
                 DataList.Add(item);
@@ -219,7 +219,7 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private void EditEndedMethod()
         {
-            _SQLiteExtract.Alter(PublicProperty.SaveMode.Chinese,SelectItem);
+            _SQLiteExtract.AlterAsync(PublicProperty.SaveMode.Chinese,SelectItem);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async void SetDataIsNoShow()
         {
-            await _SQLiteExtract.Alter(PublicProperty.SaveMode.IsShowNo, SelectData.ToArray());
+            await _SQLiteExtract.AlterAsync(PublicProperty.SaveMode.IsShowNo, SelectData.ToArray());
             await GetAssemblyStr_PgDn();
             await GetAssemblyStr_PgUp();
         }

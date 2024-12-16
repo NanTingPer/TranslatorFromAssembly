@@ -583,6 +583,19 @@
           }
         }
       },
+      "Hjson/3.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.3/Hjson.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard1.3/Hjson.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "MicroCom.Runtime/0.11.0": {
         "type": "package",
         "compile": {
@@ -969,6 +982,7 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "CommunityToolkit.Mvvm": "8.2.1",
+          "Hjson": "3.0.0",
           "Microsoft.Extensions.DependencyInjection": "9.0.0",
           "Mono.Cecil": "0.11.6",
           "sqlite-net-pcl": "1.9.172"
@@ -1753,6 +1767,21 @@
         "runtimes/win-arm64/native/libHarfBuzzSharp.dll",
         "runtimes/win-x64/native/libHarfBuzzSharp.dll",
         "runtimes/win-x86/native/libHarfBuzzSharp.dll"
+      ]
+    },
+    "Hjson/3.0.0": {
+      "sha512": "4rcPlG9REnY5aXPoOoWoa4l3cABuP6zlA0qz5wJ1f3vZwgzIJCdoYv/UDkDq9nl5QdesOkNovbv3uf5acneNBw==",
+      "type": "package",
+      "path": "hjson/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hjson.3.0.0.nupkg.sha512",
+        "hjson.nuspec",
+        "lib/net40/Hjson.dll",
+        "lib/net40/Hjson.xml",
+        "lib/netstandard1.3/Hjson.dll",
+        "lib/netstandard1.3/Hjson.xml"
       ]
     },
     "MicroCom.Runtime/0.11.0": {

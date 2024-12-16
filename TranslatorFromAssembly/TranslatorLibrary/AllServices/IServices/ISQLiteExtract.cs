@@ -13,14 +13,14 @@ namespace TranslatorLibrary.AllServices.IServices
     {
         Task Delete();
 
-        Task Alter(PublicProperty.SaveMode mode , params PreLoadData[] preLoadData);
+        Task AlterAsync(PublicProperty.SaveMode mode , params PreLoadData[] preLoadData);
 
-        Task<T[]> GetData(int spik, int taks,string className="",string methodName="",string count="",PublicProperty.SaveMode save = PublicProperty.SaveMode.None,bool isShow = false);
+        Task<T[]> GetDataAsync(int spik, int taks,string className="",string methodName="",string count="",PublicProperty.SaveMode save = PublicProperty.SaveMode.None,bool isShow = false);
 
-        Task<int> PageCount();
+        Task<int> PageCountAsync();
 
-        Task AddData(IList<T> values);
+        Task AddDataAsync(IList<T> values);
 
-        Task CreateDatabase(string dataBase);
+        Task CreateDatabaseAsync(string dataBase);
     }
 }

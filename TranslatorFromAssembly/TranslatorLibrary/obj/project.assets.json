@@ -18,6 +18,19 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
+      "Hjson/3.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.3/Hjson.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard1.3/Hjson.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Extensions.DependencyInjection/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -282,6 +295,21 @@
         "lib/netstandard2.1/CommunityToolkit.Mvvm.xml"
       ]
     },
+    "Hjson/3.0.0": {
+      "sha512": "4rcPlG9REnY5aXPoOoWoa4l3cABuP6zlA0qz5wJ1f3vZwgzIJCdoYv/UDkDq9nl5QdesOkNovbv3uf5acneNBw==",
+      "type": "package",
+      "path": "hjson/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hjson.3.0.0.nupkg.sha512",
+        "hjson.nuspec",
+        "lib/net40/Hjson.dll",
+        "lib/net40/Hjson.xml",
+        "lib/netstandard1.3/Hjson.dll",
+        "lib/netstandard1.3/Hjson.xml"
+      ]
+    },
     "Microsoft.Extensions.DependencyInjection/9.0.0": {
       "sha512": "MCPrg7v3QgNMr0vX4vzRXvkNGgLg8vKWX0nKCWUxu2uPyMsaRgiRc1tHBnbTcfJMhMKj2slE/j2M9oGkd25DNw==",
       "type": "package",
@@ -498,6 +526,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "CommunityToolkit.Mvvm >= 8.2.1",
+      "Hjson >= 3.0.0",
       "Microsoft.Extensions.DependencyInjection >= 9.0.0",
       "Mono.Cecil >= 0.11.6",
       "sqlite-net-pcl >= 1.9.172"
@@ -556,6 +585,10 @@
           "CommunityToolkit.Mvvm": {
             "target": "Package",
             "version": "[8.2.1, )"
+          },
+          "Hjson": {
+            "target": "Package",
+            "version": "[3.0.0, )"
           },
           "Microsoft.Extensions.DependencyInjection": {
             "target": "Package",

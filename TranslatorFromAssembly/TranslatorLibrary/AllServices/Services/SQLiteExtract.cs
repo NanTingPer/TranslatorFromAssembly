@@ -37,7 +37,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// </summary>
         /// <param name="datas"></param>
         /// <returns></returns>
-        public async Task AddData(IList<PreLoadData> datas)
+        public async Task AddDataAsync(IList<PreLoadData> datas)
         {
             if(ConnectionIsNULL()) return;
             foreach (var item in datas)
@@ -68,7 +68,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// <param name="skip">跳过 </param>
         /// <param name="take">取出数量</param>
         /// <returns></returns>
-        public async Task<PreLoadData[]> GetData(int skip,int take,string className="", string methodName="", string counte="",SaveMode save = SaveMode.None,bool isShow = false)
+        public async Task<PreLoadData[]> GetDataAsync(int skip,int take,string className="", string methodName="", string counte="",SaveMode save = SaveMode.None,bool isShow = false)
         {
             PreLoadData[] pe = [];
             if (ConnectionIsNULL())
@@ -125,7 +125,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// <para>需要先调用CreateDatabase</para>
         /// </summary>
         /// <returns></returns>
-        public Task<int> PageCount()
+        public Task<int> PageCountAsync()
         {
 
             if(ConnectionIsNULL())
@@ -138,7 +138,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// 初始化Connection 这是必须的
         /// </summary>
         /// <param name="dataBase"></param>
-        public async Task CreateDatabase(string dataBase)
+        public async Task CreateDatabaseAsync(string dataBase)
         {
             Connection = new SQLiteAsyncConnection(Path.Combine(_AllPath, dataBase));
             await Connection.CreateTableAsync<PreLoadData>();
@@ -162,7 +162,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// <para>IsShowYes 显示</para>
         /// <para>Chinese 中文发生改变</para>
         /// </summary>
-        public async Task Alter(SaveMode mode, params PreLoadData[] preLoadData)
+        public async Task AlterAsync(SaveMode mode, params PreLoadData[] preLoadData)
         {
             if (ConnectionIsNULL())
                 return;

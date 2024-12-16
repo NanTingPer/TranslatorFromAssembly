@@ -113,7 +113,7 @@ namespace TranslatorLibrary.AllViewModel
                 PageNum = pageCount / pageSize - 1;
             }
             if(pageNum <= 0) pageNum = 1;
-            PreLoadData[] datas = await _sQLiteExtract.GetData((PageNum * pageSize), pageSize);
+            PreLoadData[] datas = await _sQLiteExtract.GetDataAsync((PageNum * pageSize), pageSize);
             if (datas.Count() <= 0)
                 return;
 
@@ -134,7 +134,7 @@ namespace TranslatorLibrary.AllViewModel
                 PageNum = 0;
             }
                 
-            PreLoadData[] datas = await _sQLiteExtract.GetData((PageNum * pageSize),pageSize);
+            PreLoadData[] datas = await _sQLiteExtract.GetDataAsync((PageNum * pageSize),pageSize);
             if(datas.Count() == 0) return;
             foreach (var item in datas)
             {
@@ -174,12 +174,12 @@ namespace TranslatorLibrary.AllViewModel
                     ModEnglishList.Add(new());
 
                 await CreateSQLiteExtractDataBase(strs[0]);
-                List<PreLoadData> tempList = await _ilService.GetAssemblyILString(IndexText);
-                await _sQLiteExtract.AddData(tempList);
+                List<PreLoadData> tempList = await _ilService.GetAssemblyILStringAsync(IndexText);
+                await _sQLiteExtract.AddDataAsync(tempList);
 
                 await GetAssemblyStr();
             }
-            pageCount = await _sQLiteExtract.PageCount();
+            pageCount = await _sQLiteExtract.PageCountAsync();
             PageNum = 1;
             InitaDataList();
             return;
@@ -191,7 +191,7 @@ namespace TranslatorLibrary.AllViewModel
         private async void InitaDataList()
         {
             PageNum++;
-            PreLoadData[] datas = await _sQLiteExtract.GetData(0, pageSize);
+            PreLoadData[] datas = await _sQLiteExtract.GetDataAsync(0, pageSize);
             foreach (var item in datas)
             {
                 ModEnglishList.Add(item);
@@ -201,7 +201,7 @@ namespace TranslatorLibrary.AllViewModel
 
         private async Task CreateSQLiteExtractDataBase(string name)
         {
-            await _sQLiteExtract.CreateDatabase(name);
+            await _sQLiteExtract.CreateDatabaseAsync(name);
         }
     }
 }

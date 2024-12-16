@@ -161,6 +161,10 @@
               "target": "Package",
               "version": "[8.2.1, )"
             },
+            "Hjson": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
               "version": "[9.0.0, )"

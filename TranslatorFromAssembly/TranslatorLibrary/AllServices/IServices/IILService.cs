@@ -14,6 +14,6 @@ namespace TranslatorLibrary.AllServices.IServices
         /// </summary>
         /// <param name="dllPath"></param>
         /// <returns></returns>
-        Task<List<PreLoadData>> GetAssemblyILString(string dllPath);
+        Task<List<PreLoadData>> GetAssemblyILStringAsync(string dllPath);
     }
 }

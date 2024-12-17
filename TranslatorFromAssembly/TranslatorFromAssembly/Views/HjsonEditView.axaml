@@ -1,0 +1,100 @@
+<UserControl
+    x:Class="TranslatorFromAssembly.Views.HjsonEditView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    DataContext="{Binding HjsonEditViewModel, Source={StaticResource ServiceLocator}}"
+    mc:Ignorable="d">
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+    </UserControl.Styles>
+
+    <Interaction.Behaviors>
+        <EventTriggerBehavior EventName="Initialized">
+            <InvokeCommandAction Command="{Binding ListBoxSelectInitalizedCommand}" />
+        </EventTriggerBehavior>
+    </Interaction.Behaviors>
+
+    <Grid ColumnDefinitions="auto,*" RowDefinitions="30,*">
+        <Button
+            Grid.Row="0"
+            Command="{Binding ListBoxBackspaceCommand}"
+            Content="上一目录" />
+        <ScrollViewer
+            Grid.Row="1"
+            Grid.Column="0"
+            VerticalScrollBarVisibility="Auto">
+            <ListBox ItemsSource="{Binding FileList}" SelectedItem="{Binding SelectItem}">
+
+                <Interaction.Behaviors>
+                    <EventTriggerBehavior EventName="Tapped">
+                        <InvokeCommandAction Command="{Binding ListBoxTappedCommand}" />
+                    </EventTriggerBehavior>
+                </Interaction.Behaviors>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding FileName}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+        </ScrollViewer>
+
+        <DataGrid
+            x:Name="grid"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            AutoGenerateColumns="False"
+            Background="#88eeecc6"
+            CanUserReorderColumns="True"
+            CanUserResizeColumns="True"
+            CanUserSortColumns="False"
+            ColumnWidth="200"
+            GridLinesVisibility="All"
+            ItemsSource="{Binding ValueList}"
+            SelectedItem="{Binding SelectItem}">
+            <Interaction.Behaviors>
+                <EventTriggerBehavior EventName="SelectionChanged">
+                    <InvokeCommandAction Command="{Binding SelectContCommand}" CommandParameter="{Binding #grid.SelectedItems}" />
+                </EventTriggerBehavior>
+            </Interaction.Behaviors>
+
+            <Interaction.Behaviors>
+                <EventTriggerBehavior EventName="CellEditEnded">
+                    <InvokeCommandAction Command="{Binding EditEndedMethodCommand}" />
+                </EventTriggerBehavior>
+            </Interaction.Behaviors>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Key}" Header="键" />
+                <DataGridTextColumn Binding="{Binding Value}" Header="英文" />
+                <DataGridTextColumn Binding="{Binding Chinese}" Header="中文" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+
+</UserControl>

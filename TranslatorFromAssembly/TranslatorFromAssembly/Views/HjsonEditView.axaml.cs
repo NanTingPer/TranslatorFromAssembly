@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace TranslatorFromAssembly.Views;
 
-public partial class HjsonView : UserControl
+public partial class HjsonEditView : UserControl
 {
-    public HjsonView()
+    public HjsonEditView()
     {
         InitializeComponent();
     }

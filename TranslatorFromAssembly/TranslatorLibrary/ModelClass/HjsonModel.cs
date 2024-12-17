@@ -14,7 +14,7 @@ namespace TranslatorLibrary.ModelClass
         /// <summary>
         /// 唯一标识符
         /// </summary>
-        [SQLite.Column("id"),SQLite.AutoIncrement,SQLite.PrimaryKey]
+        [SQLite.Column("id"), SQLite.AutoIncrement, SQLite.PrimaryKey]
         public long Id { get; set; } = 0;
 
         /// <summary>
@@ -46,5 +46,24 @@ namespace TranslatorLibrary.ModelClass
         /// </summary>
         [SQLite.Column("oldchinese")]
         public string OldChinese { get; set; } = string.Empty;
+
+        public HjsonEditValue EditTime {  get; set; } = HjsonEditValue.DataOneTo;
     }
+
+    /// <summary>
+    /// 标记数据更新情况
+    /// </summary>
+    public enum HjsonEditValue 
+    {
+        /// <summary>
+        /// 第一次
+        /// </summary>
+        DataOneTo,
+
+        /// <summary>
+        /// 发生更改
+        /// </summary>
+        NoDataOneTo,
+    }
+
 }

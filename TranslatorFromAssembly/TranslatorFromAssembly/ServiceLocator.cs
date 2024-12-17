@@ -39,12 +39,18 @@ namespace TranslatorFromAssembly
         public IILService? IILService => _serviceProvider.GetService<IILService>();
         public IWriteFileService? IWriteFileService => _serviceProvider.GetService<IWriteFileService>();
         public ISQLiteExtract<PreLoadData>? ISQLiteExtractPreData => _serviceProvider.GetService<ISQLiteExtract<PreLoadData>>();
+        public ISQLiteExtract<HjsonModel>? ISQLiteExtractHjsonModel => _serviceProvider.GetService<ISQLiteExtract<HjsonModel>>();
+        public IHjsonProcess? IHjsonProcess => _serviceProvider.GetService<IHjsonProcess>();    
+
+
         public DLLViewModel? DLLViewModel => _serviceProvider.GetService<DLLViewModel>();
         public MainWindowModel? MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
         public MainViewModel? MainViewModel => _serviceProvider.GetService<MainViewModel>();
 
         public ListViewModel? ListViewModel => _serviceProvider.GetService<ListViewModel>();
         public SaveViewModel? SaveViewModel => _serviceProvider.GetService<SaveViewModel>();
+        public HjsonViewModel? HjsonViewModel => _serviceProvider.GetService<HjsonViewModel>();
+        public HjsonEditViewModel? HjsonEditViewModel => _serviceProvider.GetService<HjsonEditViewModel>();
 
 
 
@@ -62,16 +68,22 @@ namespace TranslatorFromAssembly
 
             //IL
             _services.AddSingleton<IILService, ILService>();
-
             _services.AddSingleton<IWriteFileService, WriteFileService>();
+
+
+            //Hsjon
+            _services.AddSingleton<ISQLiteExtract<HjsonModel>, HjsonSQLiteExtract>();
+            _services.AddSingleton<IHjsonProcess, HjsonService>();
+
 
             //MainViewModel
             _services.AddSingleton<DLLViewModel>();
-
             _services.AddSingleton<MainWindowModel>();
             _services.AddSingleton<MainViewModel>();
             _services.AddSingleton<ListViewModel>();
             _services.AddSingleton<SaveViewModel>();
+            _services.AddSingleton<HjsonViewModel>();
+            _services.AddSingleton<HjsonEditViewModel>();
         
 
             _serviceProvider = _services.BuildServiceProvider();

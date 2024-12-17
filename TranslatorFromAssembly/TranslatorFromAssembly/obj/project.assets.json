@@ -981,6 +981,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "Avalonia": "11.2.1",
           "CommunityToolkit.Mvvm": "8.2.1",
           "Hjson": "3.0.0",
           "Microsoft.Extensions.DependencyInjection": "9.0.0",

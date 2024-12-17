@@ -11,6 +11,10 @@ namespace TranslatorLibrary.AllServices.IServices
     /// </summary>
     public interface IRootViewCut
     {
+        /// <summary>
+        /// 传入ViewModel的名字
+        /// </summary>
+        /// <param name="viewName"></param>
         void ViewCut(string viewName);
     }
 
@@ -18,6 +22,7 @@ namespace TranslatorLibrary.AllServices.IServices
     {
         public const string ListViewModel = nameof(ListViewModel);
         public const string DLLViewModel = nameof(DLLViewModel);
+        public const string HjsonEditViewModel = nameof(HjsonEditViewModel);
     }
 
 

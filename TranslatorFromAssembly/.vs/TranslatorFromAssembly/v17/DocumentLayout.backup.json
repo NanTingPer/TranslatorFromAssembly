@@ -3,36 +3,24 @@
   "WorkspaceRootPath": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allservices\\services\\hjsonsqliteextract.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allservices\\services\\hjsonsqliteextract.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allviewmodel\\hjsoneditviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allviewmodel\\hjsoneditviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\hjsonview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\hjsonview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\tools\\stackobservablelist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\tools\\stackobservablelist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\hjsonview.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\hjsonview.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allservices\\services\\hjsonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allservices\\services\\hjsonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allservices\\iservices\\ihjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allservices\\iservices\\ihjson.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allviewmodel\\hjsonviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allviewmodel\\hjsonviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\modelclass\\filepathmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\modelclass\\filepathmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\modelclass\\hjsonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\modelclass\\hjsonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\modelclass\\preloaddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\modelclass\\preloaddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\hjsoneditview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\hjsoneditview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 221,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,102 +50,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HjsonSQLiteExtract.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\HjsonSQLiteExtract.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\Services\\HjsonSQLiteExtract.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\HjsonSQLiteExtract.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\HjsonSQLiteExtract.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAuwA0AAAA8AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "FilePathModel.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\FilePathModel.cs",
+              "RelativeDocumentMoniker": "TranslatorLibrary\\ModelClass\\FilePathModel.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\FilePathModel.cs",
+              "RelativeToolTip": "TranslatorLibrary\\ModelClass\\FilePathModel.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwBIAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T06:19:56.185Z",
+              "WhenOpened": "2024-12-17T03:29:58.313Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "HjsonView.axaml",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "RelativeToolTip": "TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-16T06:19:44.53Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HjsonView.axaml.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonView.axaml.cs",
-              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\HjsonView.axaml.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonView.axaml.cs",
-              "RelativeToolTip": "TranslatorFromAssembly\\Views\\HjsonView.axaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Title": "StackObservableList.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\Tools\\StackObservableList.cs",
+              "RelativeDocumentMoniker": "TranslatorLibrary\\Tools\\StackObservableList.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\Tools\\StackObservableList.cs",
+              "RelativeToolTip": "TranslatorLibrary\\Tools\\StackObservableList.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T06:19:44.39Z",
+              "WhenOpened": "2024-12-17T02:43:13.212Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "HjsonService.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\HjsonService.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\Services\\HjsonService.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\HjsonService.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\HjsonService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T04:48:52.614Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IHjson.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\IServices\\IHjson.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\IServices\\IHjson.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\IServices\\IHjson.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllServices\\IServices\\IHjson.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T04:47:35.952Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "HjsonViewModel.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\HjsonViewModel.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllViewModel\\HjsonViewModel.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\HjsonViewModel.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllViewModel\\HjsonViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T04:46:42.576Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "PreLoadData.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\PreLoadData.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\ModelClass\\PreLoadData.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\PreLoadData.cs",
-              "RelativeToolTip": "TranslatorLibrary\\ModelClass\\PreLoadData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T04:44:00.843Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "HjsonModel.cs",
               "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\HjsonModel.cs",
               "RelativeDocumentMoniker": "TranslatorLibrary\\ModelClass\\HjsonModel.cs",
               "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\HjsonModel.cs",
               "RelativeToolTip": "TranslatorLibrary\\ModelClass\\HjsonModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAADYAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-16T04:40:38.419Z"
+              "WhenOpened": "2024-12-17T01:21:25.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HjsonEditView.axaml",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
+              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
+              "RelativeToolTip": "TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-12-16T14:29:57.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HjsonEditViewModel.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\HjsonEditViewModel.cs",
+              "RelativeDocumentMoniker": "TranslatorLibrary\\AllViewModel\\HjsonEditViewModel.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\HjsonEditViewModel.cs",
+              "RelativeToolTip": "TranslatorLibrary\\AllViewModel\\HjsonEditViewModel.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-16T13:56:56.338Z",
+              "EditorCaption": ""
             }
           ]
         }

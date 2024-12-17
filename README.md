@@ -149,3 +149,13 @@ public override LocalizedText DefaultContainerName(int frameX, int frameY)
 添加`HjsonSQLiteExtract` 服务类 `HjsonSQLiteExtract : ISQLiteExtract<HjsonService>`
 
 添加`IHjson` 接口 实现类 `HjsonService`
+
+
+
+
+
+## 要干嘛
+
+20241216 2155
+
+目录导航 在EditView的

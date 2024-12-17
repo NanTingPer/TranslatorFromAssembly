@@ -40,6 +40,8 @@ namespace TranslatorFromAssembly.AllService
             if(view is not null)
                 _mainViewModel.ContentView = (ViewModelBase)view.GetValue(_serviceLocator);
 
+            _mainViewModel.AllViewInfo = AllViewInfo.AllViewInfos.FirstOrDefault(f => f.ViewName == viewName);
+
         }
     }
 
@@ -49,12 +51,14 @@ namespace TranslatorFromAssembly.AllService
         public string ViewTitle { get; private set; } = string.Empty;
         private AllViewInfo() { }
 
-        private static AllViewInfo DLLViewModel = new AllViewInfo() { ViewName = nameof(DLLViewModel), ViewTitle = "从程序集" };
-        private static AllViewInfo ListViewModel = new AllViewInfo() { ViewName = nameof(ListViewModel), ViewTitle = "根据本地" };
-        private static AllViewInfo SaveViewModel = new AllViewInfo() { ViewName = nameof(SaveViewModel), ViewTitle = "导出" };
+        private static AllViewInfo DLLViewModel = new AllViewInfo() { ViewName = nameof(DLLViewModel), ViewTitle = "从程序集提取硬编码" };
+        private static AllViewInfo ListViewModel = new AllViewInfo() { ViewName = nameof(ListViewModel), ViewTitle = "编辑硬编码文件" };
+        private static AllViewInfo SaveViewModel = new AllViewInfo() { ViewName = nameof(SaveViewModel), ViewTitle = "导出硬编码" };
+        private static AllViewInfo HjsonViewModel = new AllViewInfo() { ViewName = nameof(HjsonViewModel), ViewTitle = "导入Hjson" };
+        private static AllViewInfo HjsonEditViewModel = new AllViewInfo() { ViewName = nameof(HjsonEditViewModel), ViewTitle = "编辑Hjson" };
         public static ObservableCollection<AllViewInfo> AllViewInfos { get; private set; } = new ObservableCollection<AllViewInfo>()
         {
-            DLLViewModel,ListViewModel,SaveViewModel
+            DLLViewModel,ListViewModel,SaveViewModel,HjsonViewModel,HjsonEditViewModel
         };
     }
 }

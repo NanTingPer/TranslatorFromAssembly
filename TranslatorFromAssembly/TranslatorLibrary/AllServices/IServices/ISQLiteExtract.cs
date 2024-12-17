@@ -38,10 +38,27 @@ namespace TranslatorLibrary.AllServices.IServices
         /// <returns></returns>
         Task<T[]> GetDataAsync(int spik, int taks,string className="",string methodName="",string count="",PublicProperty.SaveMode save = PublicProperty.SaveMode.None,bool isShow = false);
 
+
         Task<int> PageCountAsync();
 
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         Task AddDataAsync(IList<T> values);
 
+        /// <summary>
+        /// 创建数据库连接 传入数据库名
+        /// </summary>
+        /// <param name="dataBase"></param>
+        /// <returns></returns>
         Task CreateDatabaseAsync(string dataBase);
+
+        /// <summary>
+        /// 关闭数据库连接
+        /// </summary>
+        /// <returns></returns>
+        Task ColseDatabaseAsync();
     }
 }

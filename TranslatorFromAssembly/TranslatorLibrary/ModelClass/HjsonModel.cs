@@ -47,6 +47,7 @@ namespace TranslatorLibrary.ModelClass
         [SQLite.Column("oldchinese")]
         public string OldChinese { get; set; } = string.Empty;
 
+        [SQLite.Column("edittime")]
         public HjsonEditValue EditTime {  get; set; } = HjsonEditValue.DataOneTo;
     }
 
@@ -58,12 +59,12 @@ namespace TranslatorLibrary.ModelClass
         /// <summary>
         /// 第一次
         /// </summary>
-        DataOneTo,
+        DataOneTo = 0,
 
         /// <summary>
         /// 发生更改
         /// </summary>
-        NoDataOneTo,
+        NoDataOneTo = 1,
     }
 
 }

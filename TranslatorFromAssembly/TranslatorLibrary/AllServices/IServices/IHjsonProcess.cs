@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TranslatorLibrary.ModelClass;
 
 namespace TranslatorLibrary.AllServices.IServices
 {
@@ -18,6 +19,6 @@ namespace TranslatorLibrary.AllServices.IServices
         /// <returns></returns>
         Task LoadHjsonAsync(string path);
 
-        Task SaveHjsonAsync(string path);
+        Task SaveHjsonAsync(string path,ISQLiteExtract<HjsonModel> sQLiteExtract);
     }
 }

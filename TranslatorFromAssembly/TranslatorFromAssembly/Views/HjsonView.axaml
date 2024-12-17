@@ -31,27 +31,28 @@
         </Style>
     </UserControl.Styles>
 
+    <!--  RowDefinitions="30,auto"  -->
+    <Grid>
 
-    <Grid RowDefinitions="30,auto">
-
-        <Label
-            Grid.Row="0"
-            Content="拖入"
-            DragDrop.AllowDrop="True">
+        <Button
+            Content="将Hjson文件拖入 加载完会自动跳转"
+            DragDrop.AllowDrop="True"
+            FontSize="40">
             <Interaction.Behaviors>
                 <RoutedEventTriggerBehavior RoutedEvent="{x:Static DragDrop.DropEvent}">
                     <InvokeCommandAction Command="{Binding FileDragInCommand}" PassEventArgsToCommand="True" />
                 </RoutedEventTriggerBehavior>
             </Interaction.Behaviors>
-        </Label>
+        </Button>
 
+        <!--
         <ListBox Grid.Row="1" ItemsSource="{Binding FilePath}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding FileName}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
 
     </Grid>
 </UserControl>

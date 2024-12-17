@@ -17,6 +17,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
         <Style Selector="TextBox">
+            <Setter Property="AcceptsReturn" Value="True" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="BorderThickness" Value="0" />
@@ -35,13 +36,14 @@
         </EventTriggerBehavior>
     </Interaction.Behaviors>
 
-    <Grid ColumnDefinitions="auto,*" RowDefinitions="30,*">
+    <Grid ColumnDefinitions="auto,*" RowDefinitions="30,*,40">
         <Button
             Grid.Row="0"
             Command="{Binding ListBoxBackspaceCommand}"
             Content="上一目录" />
         <ScrollViewer
             Grid.Row="1"
+            Grid.RowSpan="2"
             Grid.Column="0"
             VerticalScrollBarVisibility="Auto">
             <ListBox ItemsSource="{Binding FileList}" SelectedItem="{Binding SelectItem}">
@@ -54,7 +56,7 @@
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding FileName}" />
+                        <Label HorizontalContentAlignment="Left" Content="{Binding FileName}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
@@ -66,7 +68,7 @@
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="1"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             AutoGenerateColumns="False"
             Background="#88eeecc6"
             CanUserReorderColumns="True"
@@ -75,13 +77,16 @@
             ColumnWidth="200"
             GridLinesVisibility="All"
             ItemsSource="{Binding ValueList}"
-            SelectedItem="{Binding SelectItem}">
+            SelectedItem="{Binding DataGridSelect}">
+            <!--  ItemsSource="{Binding ValueList}"  -->
+
+            <!--
             <Interaction.Behaviors>
                 <EventTriggerBehavior EventName="SelectionChanged">
-                    <InvokeCommandAction Command="{Binding SelectContCommand}" CommandParameter="{Binding #grid.SelectedItems}" />
+                    <InvokeCommandAction Command="{Binding EditEndedMethodCommand}" CommandParameter="{Binding #grid.SelectedItems}" />
                 </EventTriggerBehavior>
             </Interaction.Behaviors>
-
+            -->
             <Interaction.Behaviors>
                 <EventTriggerBehavior EventName="CellEditEnded">
                     <InvokeCommandAction Command="{Binding EditEndedMethodCommand}" />
@@ -89,11 +94,59 @@
             </Interaction.Behaviors>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Key}" Header="键" />
+                <DataGridTextColumn Binding="{Binding Key}" Header="Key" />
                 <DataGridTextColumn Binding="{Binding Value}" Header="英文" />
                 <DataGridTextColumn Binding="{Binding Chinese}" Header="中文" />
             </DataGrid.Columns>
+
         </DataGrid>
+        <!--
+            <Interaction.Behaviors>
+                <EventTriggerBehavior EventName="CellEditEnded">
+                    <InvokeCommandAction Command="{Binding EditEndedMethodCommand}" />
+                </EventTriggerBehavior>
+            </Interaction.Behaviors>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="英文">
+                    <DataTemplate>
+                        <TextBox Text="{Binding Key}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="中文">
+                    <DataTemplate>
+                        <TextBox Text="{Binding Chinese}">
+                            <Interaction.Behaviors>
+                                <EventTriggerBehavior EventName="TextChanged">
+                                    <InvokeCommandAction Command="{Binding EditEndedMethodCommand}" />
+                                </EventTriggerBehavior>
+                            </Interaction.Behaviors>
+                        </TextBox>
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="英文">
+                    <DataTemplate>
+                        <TextBox Text="{Binding Value}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        -->
+
+
+        <Grid
+            Grid.Row="2"
+            Grid.Column="1"
+            ColumnDefinitions="*,120">
+            <Button
+                Grid.Row="2"
+                Grid.Column="1"
+                Command="{Binding SaveFilePathCommand}"
+                Content="点击保存路径" />
+            <TextBox Text="{Binding SaveFile}" />
+        </Grid>
+
 
     </Grid>
 

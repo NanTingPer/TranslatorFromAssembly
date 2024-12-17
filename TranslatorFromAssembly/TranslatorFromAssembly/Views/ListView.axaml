@@ -105,6 +105,7 @@
                         GridLinesVisibility="All"
                         ItemsSource="{Binding Source={x:Static dtl:PublicProperty.DataList}}"
                         SelectedItem="{Binding SelectItem}">
+
                         <Interaction.Behaviors>
                             <EventTriggerBehavior EventName="SelectionChanged">
                                 <InvokeCommandAction Command="{Binding SelectContCommand}" CommandParameter="{Binding #grid.SelectedItems}" />

@@ -186,5 +186,10 @@ namespace TranslatorLibrary.AllServices.Services
                 }
             }
         }
+
+        public Task ColseDatabaseAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

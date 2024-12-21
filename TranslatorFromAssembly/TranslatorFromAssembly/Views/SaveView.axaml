@@ -54,7 +54,7 @@
         </ListBox>
 
 
-        <Grid Grid.Column="2" RowDefinitions="30,30,30,30,30,30,30,*">
+        <Grid Grid.Column="2" RowDefinitions="30,30,30,30,30,30,30,30,*">
             <Label Grid.Row="0" Content="你的模组名称" />
             <TextBox Grid.Row="1" Text="{Binding MyModName}" />
             <Label Grid.Row="2" Content="目标模组名称" />
@@ -65,6 +65,10 @@
                 Grid.Row="6"
                 Command="{Binding WriteOutputCommand}"
                 Content="导出" />
+            <Button
+                Grid.Row="7"
+                Command="{Binding SaveToSwitchCommand}"
+                Content="导出为sw" />
         </Grid>
 
     </Grid>

@@ -103,6 +103,7 @@
 1. ldstr下一句OpCodes为`call`  并且 包含`System.Type::GetMethod`
 2. ldstr下一句OpCodes为`call`  并且 包含`System.Type::get_Assembly`
 3. ldstr下一句OpCodes为`call`  并且 包含`System.Reflection.Assembly::GetType`
+4. ldstr下一句OpCodes为`call`  并且 包含`Type::GetProperty` `System.Reflection.PropertyInfo`
 
 
 

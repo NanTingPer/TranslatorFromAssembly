@@ -31,6 +31,7 @@ namespace TranslatorLibrary.AllViewModel
         public ICommand ClickListOptionCommand { get; }
         public ICommand WriteOutputCommand { get; }
         public ICommand LoadDataPathToListCommand { get; }
+        public ICommand SaveToSwitchCommand { get; }
         public SaveViewModel(IWriteFileService writeFileService,ISQLiteExtract<PreLoadData> sQLiteExtract) 
         { 
             _writeFileService = writeFileService;
@@ -39,6 +40,7 @@ namespace TranslatorLibrary.AllViewModel
             ClickListOptionCommand = new RelayCommand(ClickListOption);
             WriteOutputCommand = new AsyncRelayCommand(WriteOutput);
             LoadDataPathToListCommand = new RelayCommand(LoadDataPathToList);
+            SaveToSwitchCommand = new RelayCommand(SaveToSwitch);
         }
 
         private async Task WriteOutput()
@@ -52,6 +54,7 @@ namespace TranslatorLibrary.AllViewModel
 
         private void ClickListOption()
         {
+            _sQLiteExtract.CreateDatabaseAsync(ListBoxOption.FileName);
             TarGetModName = ListBoxOption.FileName;
             MyModPath = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
         }
@@ -59,6 +62,38 @@ namespace TranslatorLibrary.AllViewModel
         private void LoadDataPathToList()
         {
             PublicProperty.LoadAllDataFileToDataFilePaths();
+        }
+
+        //保持到临时文件
+        private async void SaveToSwitch()
+        {
+            string savePath = Path.Combine(Path.GetTempPath(),TarGetModName+".txt");
+
+            await Task.Run(async () => 
+            {
+                PreLoadData[] preLoadDatas = await _sQLiteExtract.GetDataAsync(0, 0, save: PublicProperty.SaveMode.All);
+                using (FileStream file = new FileStream(savePath, FileMode.Create))
+                {
+                    file.Write(StrToBytes("switch (str)"));
+                    file.Write(StrToBytes("{"));
+               
+                    foreach (var item in preLoadDatas)
+                    {
+                        file.Write(StrToBytes($"\tcase \"{item.English}\":"));
+                        file.Write(StrToBytes($"\t\treturn \"{item.Chinese}\";"));
+                        file.Flush();
+                    }
+                    file.Write(StrToBytes("\tdefault: return str;"));
+                    file.Write(StrToBytes("}"));
+                    file.Flush();
+                }
+            });
+
+        }
+
+        private static byte[] StrToBytes(string str)
+        {
+            return Encoding.UTF8.GetBytes(str + "\r\n");
         }
     }
 }

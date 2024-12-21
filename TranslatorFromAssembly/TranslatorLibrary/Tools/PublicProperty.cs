@@ -59,7 +59,8 @@ namespace TranslatorLibrary.Tools
             Chinese,
             IsShowNo,
             IsShowYes,
-            Write
+            Write,
+            All
         }
         public static void LoadAllDataFileToDataFilePaths()
         {

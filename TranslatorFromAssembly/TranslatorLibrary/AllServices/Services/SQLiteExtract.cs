@@ -92,6 +92,13 @@ namespace TranslatorLibrary.AllServices.Services
                 .ToArrayAsync();
             }
 
+            if(save == SaveMode.All)
+            {
+                return await Connection.Table<PreLoadData>()
+                    .Where(f => !string.IsNullOrEmpty(f.Chinese))
+                    .ToArrayAsync();
+            }
+
             
             if (isShow)
             {

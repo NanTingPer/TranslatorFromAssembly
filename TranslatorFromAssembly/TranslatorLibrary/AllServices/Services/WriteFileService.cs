@@ -57,11 +57,16 @@ namespace TranslatorLibrary.AllServices.Services
             if(dll is not null)
             {
                 string tempDric = Path.Combine(ModRootPath, "Systems");
+                //文件夹不存在就创建
                 if(!Directory.Exists(tempDric)) Directory.CreateDirectory(tempDric);
                 string tempFile  = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
-                Stream newStream = new FileStream(tempFile,FileMode.OpenOrCreate);
-                dll.CopyTo(newStream);
-                newStream.Close();
+                //资源没有转移就转移
+                if (!File.Exists(tempFile))
+                {
+                    Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
+                    dll.CopyTo(newStream);
+                    newStream.Close();
+                }
             }
             dll?.Close();
 
@@ -76,6 +81,8 @@ namespace TranslatorLibrary.AllServices.Services
 
                 //文件名称的开头 现在是类名
                 var FileName = Temp[Temp.Length - 1];
+                FileName = FileName.Replace("<", "x").Replace(">", "d").Replace(".","j").Replace("/","g");
+                
 
                 //使用类名 + 数字来命名
                 string fileSystemPath = Path.Combine(filePath, FileName + fileTail+".cs");
@@ -95,12 +102,12 @@ namespace TranslatorLibrary.AllServices.Services
                     MethodName = value.Key;
                     var 内容 = value.Value;
                     //填入全类名 还有方法名
-                    Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem}\", \"{value.Key}\", new ()"));
+                    Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem.Replace("/","+")}\", \"{value.Key}\", new ()"));
                     Write.Write(StringToByte("\t\t\t\t{"));
                     Write.Flush();
                     foreach (Tuple<String, String> tpule in 内容)
                     {
-                        Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + tpule.Item1.Trim() + "\"" + "," + "\"" + tpule.Item2.Trim() + "\"" + "},"));
+                        Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + tpule.Item1.Replace("\n","\\n") + "\"" + "," + "\"" + tpule.Item2.Replace("\n","\\n") + "\"" + "},"));
                         Write.Flush();
                     }
                     Write.Write(StringToByte("\t\t\t\t});"));
@@ -108,12 +115,10 @@ namespace TranslatorLibrary.AllServices.Services
 
 
                 Write.Write(StringToByte("\t\t\t}"));
-                Write.Write(StringToByte("\t\t\tbase.PostSetupContent();"));
+                Write.Write(StringToByte("\t\t\tbase.Load();"));
                 Write.Write(StringToByte("\t\t}"));
                 Write.Write(StringToByte("\t}"));
                 Write.Write(StringToByte("}"));
-                Write.Flush();
-
                 Write.Flush();
                 Write.Dispose();
                 Write.Close();
@@ -212,7 +217,7 @@ namespace TranslatorLibrary.AllServices.Services
             Write.Write(StringToByte($"\t\t[ExtendsFromMod(\"{ModName}\"), JITWhenModsEnabled(\"{ModName}\")]"));
 
             Write.Write(StringToByte($"\t\tprivate class TranslatorLoad : ForceLocalizeSystem<{ModName}, TranslatorLoad>" + "{}"));
-            Write.Write(StringToByte("\t\tpublic override void PostSetupContent()"));
+            Write.Write(StringToByte("\t\tpublic override void Load()"));
             Write.Write(StringToByte("\t\t{"));
 
             //获取模组判断同时能判断是不是存在

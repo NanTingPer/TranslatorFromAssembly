@@ -85,7 +85,7 @@ namespace TranslatorLibrary.AllViewModel
             SetSQLiteExtractCommand = new AsyncRelayCommand(SetSQLiteExtract);
             GetAssemblyStrPgDnCommand = new AsyncRelayCommand(GetAssemblyStrPgDn);
 
-            IndexText = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\Stellamod\\Stellamod.dll";
+            IndexText = "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\目标模组名\\目标.dll";
         }
 
         /// <summary>

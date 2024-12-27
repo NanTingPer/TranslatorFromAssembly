@@ -54,9 +54,12 @@ namespace TranslatorLibrary.AllViewModel
 
         private void ClickListOption()
         {
+            if (ListBoxOption.FileName == null)
+                return;
+
             _sQLiteExtract.CreateDatabaseAsync(ListBoxOption.FileName);
             TarGetModName = ListBoxOption.FileName;
-            MyModPath = "C:\\Users\\23759\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
+            MyModPath = "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
         }
 
         private void LoadDataPathToList()

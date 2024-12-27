@@ -13,6 +13,11 @@ namespace TranslatorLibrary.AllServices.Services
     public class WriteFileService : IWriteFileService
     {
         /// <summary>
+        /// 存储哪些方法 类
+        /// </summary>
+        private static List<StaticHookClass> staticHookList = new List<StaticHookClass>();
+
+        /// <summary>
         /// 类名
         /// </summary>
         private string ClassNaem = string.Empty;
@@ -38,10 +43,12 @@ namespace TranslatorLibrary.AllServices.Services
         /// <param name="ModRootPath"> 模组根目录 </param>
         /// <param name="ModName"> 要被汉化的模组名称 </param>
         /// <param name="YouModName">你的模组名称</param>
-        public void WriteFile(string ModRootPath,string ModName,string MyModName)
+        public void WriteFile(string ModRootPath, string ModName, string MyModName)
         {
             this.ModName = ModName;
             this.MyModName = MyModName;
+            //模组主类(继承Mod)
+            string ModRootClassPath = Path.Combine(ModRootPath, $"{MyModName}.cs");
 
             //目标根目录 使用目标模组名称 + Translator
             string rootPath = ModName + "Translator";
@@ -53,6 +60,33 @@ namespace TranslatorLibrary.AllServices.Services
             if (PublicProperty.WriteMap.Count == 0)
                 return;
 
+            //获取模组根目录下的全部
+            string[] files = Directory.GetFiles(ModRootPath);
+
+            string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));
+            //备份原始 模组.cs文件
+            if (tarGetFile != null)
+            {
+                int a = 0;
+                string bakFile = tarGetFile + ".bak";
+                string newBakFile = string.Empty;
+
+                do
+                {
+                    newBakFile = bakFile + a;
+                    a++;
+                } while (File.Exists(newBakFile));
+
+                if (!File.Exists(newBakFile))
+                {
+                    File.Create(newBakFile).Dispose();
+                }
+                //将tarGetFile替换给bakFile 备份为他自己
+                //File.Replace(tarGetFile, bakFile, tarGetFile,false);
+                File.Copy(tarGetFile, newBakFile, true);
+            }
+
+            #region 资源转移
             Stream? dll = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
             if(dll is not null)
             {
@@ -69,6 +103,7 @@ namespace TranslatorLibrary.AllServices.Services
                 }
             }
             dll?.Close();
+            #endregion
 
             int fileTail = 0;
             var map = PublicProperty.WriteMap;
@@ -89,6 +124,14 @@ namespace TranslatorLibrary.AllServices.Services
 
                 if(File.Exists(fileSystemPath)) File.Delete(fileSystemPath);
 
+                #region 构建staticHookList
+                staticHookList.Add(new StaticHookClass(
+                        ModName + "Translator",
+                        ModName + "Translator." + FileName + fileTail,
+                        "LoadTranslator")
+                { ModName = MyModName });
+                #endregion
+
 
                 //写
                 FileStream Write = File.Create(fileSystemPath);
@@ -97,11 +140,13 @@ namespace TranslatorLibrary.AllServices.Services
 
                 //方法名称 内容
                 var Translat = item.Value;
+                #region 开始输出
                 foreach (var value in Translat)
                 {
                     MethodName = value.Key;
                     var 内容 = value.Value;
                     //填入全类名 还有方法名
+                    //ClassName 全类名 value.Key 方法名
                     Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem.Replace("/","+")}\", \"{value.Key}\", new ()"));
                     Write.Write(StringToByte("\t\t\t\t{"));
                     Write.Flush();
@@ -122,8 +167,13 @@ namespace TranslatorLibrary.AllServices.Services
                 Write.Flush();
                 Write.Dispose();
                 Write.Close();
+                #endregion
             }
             fileTail++;
+
+            //构建Mod主类文件
+            BuildModFile(ModRootClassPath);
+
             PublicProperty.WriteMap.Clear();
         }
 
@@ -184,12 +234,51 @@ namespace TranslatorLibrary.AllServices.Services
             }
         }
 
-        private static byte[] StringToByte(String str)
+        private static byte[] StringToByte(string str)
         {
             String str2 = str + "\r\n";
             return Encoding.UTF8.GetBytes(str2);/*Convert.FromBase64String(str2);*/
         }
 
+        /// <summary>
+        /// 公共内容
+        /// </summary>
+        /// <param name="Write"> 文件流 </param>
+        /// <param name="MyModName"> 你的模组名称 </param>
+        /// <param name="rootPath"> 目标根目录 </param>
+        /// <param name="FileName"> 文件名的开头 </param>
+        /// <param name="fileTail"> 文件名称的结尾</param>
+        /// <param name="ModName"> 目标模组名称 </param>
+        private static void WriteTo(FileStream Write, string MyModName, string rootPath, string FileName, int fileTail, string ModName)
+        {
+            Write.Write(StringToByte($"using {MyModName}.Systems;"));
+            Write.Write(StringToByte("using System.Collections.Generic;"));
+            Write.Write(StringToByte("using Terraria.ModLoader;"));
+            //名称空间
+            Write.Write(StringToByte($"namespace {MyModName}.{rootPath}"));
+            Write.Write(StringToByte("{"));
+            //使用要被汉化的模组的名称+数字来定义类型名
+            Write.Write(StringToByte($"\tpublic class {FileName}{fileTail}"));
+            Write.Write(StringToByte("\t{"));
+            //要被汉化的模组的名称
+            Write.Write(StringToByte($"\t\tprivate class {ModName}" + "{}"));
+
+            //延迟加载
+            Write.Write(StringToByte($"\t\t[ExtendsFromMod(\"{ModName}\"), JITWhenModsEnabled(\"{ModName}\")]"));
+
+            Write.Write(StringToByte($"\t\tprivate class TranslatorLoad : ForceLocalizeSystem<{ModName}, TranslatorLoad>" + "{}"));
+            Write.Write(StringToByte("\t\tpublic static void LoadTranslator()"));
+            Write.Write(StringToByte("\t\t{"));
+
+            //获取模组判断同时能判断是不是存在
+            Write.Write(StringToByte($"\t\t\tif(ModLoader.TryGetMod(\"{ModName}\",out var mod))"));
+            Write.Write(StringToByte("\t\t\t{"));
+
+        }
+
+
+        #region 公共输出 2024/12/17 bak
+        /*
         /// <summary>
         /// 公共内容
         /// </summary>
@@ -224,6 +313,51 @@ namespace TranslatorLibrary.AllServices.Services
             Write.Write(StringToByte($"\t\t\tif(ModLoader.TryGetMod(\"{ModName}\",out var mod))"));
             Write.Write(StringToByte("\t\t\t{"));
 
+        }
+        */
+        #endregion
+        private static void BuildModFile(string filePath)
+        {
+            using FileStream write = File.Open(filePath, FileMode.Create);
+            #region 固定输出
+            write.Write(StringToByte("using System.Linq;"));
+            write.Write(StringToByte("using System.Reflection;"));
+            write.Write(StringToByte("using System.Threading;"));
+            write.Write(StringToByte("using Terraria;"));
+            write.Write(StringToByte("using Terraria.ModLoader;"));
+            write.Flush();
+            write.Write(StringToByte($"namespace {staticHookList[0].ModName}"));
+            write.Write(StringToByte("{"));
+            write.Write(StringToByte($"\tpublic class {staticHookList[0].ModName} : Mod"));
+            write.Write(StringToByte("\t{"));
+
+            write.Write(StringToByte($"\t\tstatic {staticHookList[0].ModName}()"));
+            write.Write(StringToByte("\t\t{"));
+            write.Write(StringToByte("\t\t\tvar tModLoaderDLL = typeof(Main);"));
+            write.Write(StringToByte("\t\t\tvar ModLoaderType = tModLoaderDLL.Assembly.GetTypes().FirstOrDefault(f => f.Name == \"ModContent\");"));
+            write.Write(StringToByte("\t\t\tMethodInfo LoadMethod = ModLoaderType.GetMethods(BindingFlags.Static | BindingFlags.NonPublic).FirstOrDefault(f => f.Name == \"Load\");"));
+            write.Write(StringToByte("\t\t\tMonoModHooks.Add(LoadMethod, LanguageHook);"));
+            write.Write(StringToByte("\t\t}"));
+            write.Write(StringToByte(""));
+            write.Write(StringToByte("\t\tpublic delegate void LanguageDelegate(CancellationToken token);"));
+            write.Write(StringToByte(""));
+            write.Write(StringToByte("\t\tpublic static void LanguageHook(LanguageDelegate orig, CancellationToken token)"));
+            write.Write(StringToByte("\t\t{"));
+            #endregion
+            write.Flush();
+
+            foreach(var item in staticHookList)
+            {
+                write.Write(StringToByte($"\t\t\t{item.ClassName}.{item.MethodName}();"));
+                write.Flush();
+            }
+
+            write.Write(StringToByte("\t\t\torig.Invoke(token);"));
+            write.Write(StringToByte("\t\t}"));
+            write.Write(StringToByte("\t}"));
+            write.Write(StringToByte("}"));
+            write.Flush();
+            write.Dispose();
         }
     }
 }

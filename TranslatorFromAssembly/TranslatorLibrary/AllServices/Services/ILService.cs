@@ -246,12 +246,13 @@ namespace TranslatorLibrary.AllServices.Services
                     if (value.Contains("System.Reflection.Assembly::GetType")) return true;
                     if (value.Contains("System.Collections.Generic.Dictionary")) return true;
                     if (value.Contains("System.Object::GetType")) return true;
+                    if (value.Contains("System.Reflection")) return true;
 
-                    
+
                     //对于穹月的特别优化
                     if (value.Contains("Stellamod.Helpers.LangText")) return true;
 
-                    if (num == 2)
+                    if (num == 1)
                         break;
                 }
             }

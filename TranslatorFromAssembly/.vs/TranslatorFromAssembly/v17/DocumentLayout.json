@@ -11,36 +11,16 @@
       "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allservices\\services\\ilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allservices\\iservices\\iilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allservices\\iservices\\iilservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\listview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\listview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allviewmodel\\saveviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allviewmodel\\saveviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allservices\\services\\sqliteextract.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allservices\\services\\sqliteextract.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\allviewmodel\\dllviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\allviewmodel\\dllviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\saveview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\saveview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\tools\\publicproperty.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\tools\\publicproperty.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\hjsonview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\hjsonview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorfromassembly\\views\\hjsoneditview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}|TranslatorFromAssembly\\TranslatorFromAssembly.csproj|solutionrelative:translatorfromassembly\\views\\hjsoneditview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+      "AbsoluteMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|d:\\translatorfromassembly\\translatorfromassembly\\translatorlibrary\\modelclass\\statichookclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39200E79-C3C9-463B-BC8B-D59AEEFD5850}|TranslatorLibrary\\TranslatorLibrary.csproj|solutionrelative:translatorlibrary\\modelclass\\statichookclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 221,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,15 +50,52 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IILService.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\IServices\\IILService.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\IServices\\IILService.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\IServices\\IILService.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllServices\\IServices\\IILService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "ILService.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\ILService.cs",
+              "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\Services\\ILService.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\ILService.cs",
+              "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\ILService.cs",
+              "ViewState": "AgIAAK4AAAAAAAAAAAAuwLoAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-21T07:43:13.07Z"
+              "WhenOpened": "2024-12-27T02:43:32.9Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DLLViewModel.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\DLLViewModel.cs",
+              "RelativeDocumentMoniker": "TranslatorLibrary\\AllViewModel\\DLLViewModel.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\DLLViewModel.cs",
+              "RelativeToolTip": "TranslatorLibrary\\AllViewModel\\DLLViewModel.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAcwFsAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T02:17:06.301Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SaveViewModel.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
+              "RelativeDocumentMoniker": "TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
+              "RelativeToolTip": "TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAqwDwAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T02:16:02.086Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StaticHookClass.cs",
+              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\StaticHookClass.cs",
+              "RelativeDocumentMoniker": "TranslatorLibrary\\ModelClass\\StaticHookClass.cs",
+              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\ModelClass\\StaticHookClass.cs",
+              "RelativeToolTip": "TranslatorLibrary\\ModelClass\\StaticHookClass.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAADwvxwAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T01:30:32.021Z"
             },
             {
               "$type": "Document",
@@ -88,102 +105,10 @@
               "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\Services\\WriteFileService.cs",
               "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\WriteFileService.cs",
               "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\WriteFileService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAABiAAAAAAAAAA==",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAUwJ8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-20T01:49:16.87Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ILService.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\ILService.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\Services\\ILService.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\ILService.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\ILService.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAAAD4AAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-19T14:26:32.069Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ListView.axaml",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\ListView.axaml",
-              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\ListView.axaml",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\ListView.axaml",
-              "RelativeToolTip": "TranslatorFromAssembly\\Views\\ListView.axaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-18T10:13:54.102Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "PublicProperty.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\Tools\\PublicProperty.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\Tools\\PublicProperty.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\Tools\\PublicProperty.cs",
-              "RelativeToolTip": "TranslatorLibrary\\Tools\\PublicProperty.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAADwvz4AAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-18T09:55:16.423Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SQLiteExtract.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\SQLiteExtract.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllServices\\Services\\SQLiteExtract.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllServices\\Services\\SQLiteExtract.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllServices\\Services\\SQLiteExtract.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-18T09:54:22.98Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SaveViewModel.cs",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
-              "RelativeDocumentMoniker": "TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
-              "RelativeToolTip": "TranslatorLibrary\\AllViewModel\\SaveViewModel.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAqwEMAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-18T09:49:22.183Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SaveView.axaml",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\SaveView.axaml",
-              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\SaveView.axaml",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\SaveView.axaml",
-              "RelativeToolTip": "TranslatorFromAssembly\\Views\\SaveView.axaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-18T09:49:07.324Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "HjsonView.axaml",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "RelativeToolTip": "TranslatorFromAssembly\\Views\\HjsonView.axaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-18T09:49:01.838Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "HjsonEditView.axaml",
-              "DocumentMoniker": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
-              "RelativeDocumentMoniker": "TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
-              "ToolTip": "D:\\TranslatorFromAssembly\\TranslatorFromAssembly\\TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
-              "RelativeToolTip": "TranslatorFromAssembly\\Views\\HjsonEditView.axaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-18T09:48:25.108Z"
             }
           ]
         }

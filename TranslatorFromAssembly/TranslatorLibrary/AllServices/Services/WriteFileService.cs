@@ -160,7 +160,6 @@ namespace TranslatorLibrary.AllServices.Services
 
 
                 Write.Write(StringToByte("\t\t\t}"));
-                Write.Write(StringToByte("\t\t\tbase.Load();"));
                 Write.Write(StringToByte("\t\t}"));
                 Write.Write(StringToByte("\t}"));
                 Write.Write(StringToByte("}"));
@@ -331,6 +330,8 @@ namespace TranslatorLibrary.AllServices.Services
             write.Write(StringToByte($"\tpublic class {staticHookList[0].ModName} : Mod"));
             write.Write(StringToByte("\t{"));
 
+            #region 挂钩子
+            /*
             write.Write(StringToByte($"\t\tstatic {staticHookList[0].ModName}()"));
             write.Write(StringToByte("\t\t{"));
             write.Write(StringToByte("\t\t\tvar tModLoaderDLL = typeof(Main);"));
@@ -343,7 +344,13 @@ namespace TranslatorLibrary.AllServices.Services
             write.Write(StringToByte(""));
             write.Write(StringToByte("\t\tpublic static void LanguageHook(LanguageDelegate orig, CancellationToken token)"));
             write.Write(StringToByte("\t\t{"));
-            #endregion
+            */
+            #endregion 挂钩子
+
+            write.Write(StringToByte("\t\tpublic override void Load()"));
+            write.Write(StringToByte("\t\t{"));
+
+            #endregion  固定输出
             write.Flush();
 
             foreach(var item in staticHookList)
@@ -352,7 +359,8 @@ namespace TranslatorLibrary.AllServices.Services
                 write.Flush();
             }
 
-            write.Write(StringToByte("\t\t\torig.Invoke(token);"));
+            //write.Write(StringToByte("\t\t\torig.Invoke(token);")); //挂钩子
+            write.Write(StringToByte("\t\t\tbase.Load();"));
             write.Write(StringToByte("\t\t}"));
             write.Write(StringToByte("\t}"));
             write.Write(StringToByte("}"));

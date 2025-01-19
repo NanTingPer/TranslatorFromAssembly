@@ -202,7 +202,7 @@ namespace TranslatorLibrary.AllServices.Services
             int num = 0;
             //存储当前第几条
             int conuts = count;
-            for(int i = count;i<ILs.Count;i++)
+            for(int i = count; i < ILs.Count; i++)
             {
                 var instruction = ILs[i];
                 if (num == 2)break;

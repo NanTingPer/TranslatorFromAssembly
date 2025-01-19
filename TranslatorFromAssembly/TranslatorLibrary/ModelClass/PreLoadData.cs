@@ -14,7 +14,7 @@ namespace TranslatorLibrary.ModelClass
         /// <summary>
         /// 唯一ID
         /// </summary>
-        [SQLite.Column("id"),SQLite.AutoIncrement,SQLite.PrimaryKey]
+        [SQLite.Column("id"), SQLite.AutoIncrement, SQLite.PrimaryKey]
         public long Id { get; set; }
 
         /// <summary>

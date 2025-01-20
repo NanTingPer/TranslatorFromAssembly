@@ -23,16 +23,10 @@ namespace TranslatorLibrary.Tools
         //public static Dictionary<Tuple<string,string>, List<Tuple<string,string>>> WriteMap = new();
 
 
-        //Key是类型名
-        //将Key取出命名
-        //Value是方法名
-        //取出value 遍历
         /// <summary>
-        /// 公共的 用来存储要被输出的
-        /// <para>层级</para>
-        /// <para>类名</para>
-        /// <para>方法名</para>
-        /// <para>内容</para>
+        /// 用来存储要被写入文件的全部内容
+        /// <para>第一个Kv对中，Key是类名</para>
+        /// <para>第二个Kv对中，Key是方法名，List是该方法的全部内容</para>
         /// </summary>
         public static Dictionary<string,Dictionary<string,List<Tuple<string,string>>>> WriteMap = new();
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TranslatorLibrary.ModelClass;
 
 namespace TranslatorLibrary.Tools
@@ -11,7 +6,7 @@ namespace TranslatorLibrary.Tools
     /// <summary>
     /// 全局类 全局属性
     /// </summary>
-    public static class PublicProperty 
+    public static class PublicProperty
     {
         /// <summary>
         /// 公共的 用来存储要被输出的
@@ -28,7 +23,7 @@ namespace TranslatorLibrary.Tools
         /// <para>第一个Kv对中，Key是类名</para>
         /// <para>第二个Kv对中，Key是方法名，List是该方法的全部内容</para>
         /// </summary>
-        public static Dictionary<string,Dictionary<string,List<Tuple<string,string>>>> WriteMap = new();
+        public static Dictionary<string, Dictionary<string, List<Tuple<string, string>>>> WriteMap { get; set; } = new();
 
         /// <summary>
         /// 公共的 用来存储要被GridData显示的项目
@@ -67,8 +62,7 @@ namespace TranslatorLibrary.Tools
             if (!Directory.Exists(path))
                 return;
             string[] dataPaths = Directory.GetFiles(path);
-            foreach (var dataPath in dataPaths)
-            {
+            foreach (var dataPath in dataPaths) {
                 //if (Count != 0 && yesOnNo < Count)
                 //{
                 //    DataFilePaths.RemoveAt(0);
@@ -80,7 +74,7 @@ namespace TranslatorLibrary.Tools
         }
 
         public class PublicDataList : ObservableCollection<PreLoadData>
-        { 
+        {
         }
     }
 }

@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 
@@ -14,7 +8,7 @@ namespace TranslatorLibrary.Tools
     /// </summary>
     public class Litter
     {
-        public static async Task<string> TranEnglish(string URL,ISQLiteService _sqliteService)
+        public static async Task<string> TranEnglish(string URL, ISQLiteService _sqliteService)
         {
             return string.Empty;
             //if (_sqliteService.ExesitDatabase == true)  return string.Empty;
@@ -47,7 +41,7 @@ namespace TranslatorLibrary.Tools
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public static bool PreLoadDataIsEqual(PreLoadData p1,PreLoadData p2)
+        public static bool PreLoadDataIsEqual(PreLoadData p1, PreLoadData p2)
         {
             if (p1 == null && p2 == null)
                 return true;

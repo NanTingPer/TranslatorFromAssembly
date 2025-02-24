@@ -1,11 +1,4 @@
-﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Reflection;
+using SQLite;
 using TranslatorLibrary.Tools;
 using TranslatorLibrary.ModelClass;
 using TranslatorLibrary.AllServices.IServices;
@@ -27,8 +20,8 @@ namespace TranslatorLibrary.AllServices.Services.SQLiteServices
             _databasePath = GetAppFilePath.GetPathAndCreate(_databaseName, 2);
         }
 
-        
-        
+
+
         public Task CreateDatabase()
         {
             throw new NotImplementedException();
@@ -82,7 +75,7 @@ namespace TranslatorLibrary.AllServices.Services.SQLiteServices
             //    }
             //    catch
             //    {
-                    
+
             //    }
             //}
         }
@@ -91,6 +84,6 @@ namespace TranslatorLibrary.AllServices.Services.SQLiteServices
         {
             throw new NotImplementedException();
         }
-        
+
     }
 }

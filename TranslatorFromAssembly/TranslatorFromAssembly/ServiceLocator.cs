@@ -1,10 +1,6 @@
-﻿using Avalonia;
+using Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TranslatorFromAssembly.AllService;
 using TranslatorFromAssembly.Models;
 using TranslatorLibrary.AllServices.IServices;

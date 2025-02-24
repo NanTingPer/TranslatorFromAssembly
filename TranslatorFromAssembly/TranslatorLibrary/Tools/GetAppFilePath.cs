@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace TranslatorLibrary.Tools
 {
     public class GetAppFilePath
     {
-        private static string _appFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"TranslatorFromAssembly");
+        private static string _appFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TranslatorFromAssembly");
 
         /// <summary>
         /// 获取应用存储位置 不会创建文件夹
@@ -25,8 +19,8 @@ namespace TranslatorLibrary.Tools
         /// <returns></returns>
         public static string GetPathAndCreate()
         {
-            
-            if(Directory.Exists(_appFilePath) == false) Directory.CreateDirectory(_appFilePath);
+
+            if (Directory.Exists(_appFilePath) == false) Directory.CreateDirectory(_appFilePath);
             return _appFilePath;
         }
 
@@ -38,11 +32,10 @@ namespace TranslatorLibrary.Tools
         /// <param name="fileName"> 目标文件名 </param>
         /// <param name="mode"> 1创建 2创文件夹 3不创建 </param>
         /// <returns></returns>
-        public static string GetPathAndCreate(string fileName,int mode = 1)
+        public static string GetPathAndCreate(string fileName, int mode = 1)
         {
             string filePath = Path.Combine(_appFilePath, fileName);
-            switch (mode)
-            {
+            switch (mode) {
                 case 1:
                     GetPathAndCreate();
                     File.Create(filePath).Close();
@@ -61,12 +54,9 @@ namespace TranslatorLibrary.Tools
         /// <returns>true成功，false失败</returns>
         public static bool DeleteAppFile()
         {
-            try
-            {
+            try {
                 Directory.Delete(_appFilePath);
-            }
-            catch
-            {
+            } catch {
                 return false;
             }
             return true;

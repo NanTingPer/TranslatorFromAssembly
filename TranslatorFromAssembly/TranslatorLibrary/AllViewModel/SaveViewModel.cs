@@ -1,9 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using CommunityToolkit.Mvvm.Input;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -32,8 +28,8 @@ namespace TranslatorLibrary.AllViewModel
         public ICommand WriteOutputCommand { get; }
         public ICommand LoadDataPathToListCommand { get; }
         public ICommand SaveToSwitchCommand { get; }
-        public SaveViewModel(IWriteFileService writeFileService,ISQLiteExtract<PreLoadData> sQLiteExtract) 
-        { 
+        public SaveViewModel(IWriteFileService writeFileService, ISQLiteExtract<PreLoadData> sQLiteExtract)
+        {
             _writeFileService = writeFileService;
             _sQLiteExtract = sQLiteExtract;
 
@@ -45,11 +41,11 @@ namespace TranslatorLibrary.AllViewModel
 
         private async Task WriteOutput()
         {
-            if(string.IsNullOrWhiteSpace(MyModName) ||
+            if (string.IsNullOrWhiteSpace(MyModName) ||
                 string.IsNullOrWhiteSpace(TarGetModName) ||
                 string.IsNullOrWhiteSpace(MyModPath)) { return; }
             await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption.FileName);
-            _writeFileService.WriteFile(MyModPath,TarGetModName,MyModName);
+            _writeFileService.WriteFile(MyModPath, TarGetModName, MyModName);
         }
 
         private void ClickListOption()
@@ -70,18 +66,15 @@ namespace TranslatorLibrary.AllViewModel
         //保持到临时文件
         private async void SaveToSwitch()
         {
-            string savePath = Path.Combine(Path.GetTempPath(),TarGetModName+".txt");
+            string savePath = Path.Combine(Path.GetTempPath(), TarGetModName + ".txt");
 
-            await Task.Run(async () => 
-            {
+            await Task.Run(async () => {
                 PreLoadData[] preLoadDatas = await _sQLiteExtract.GetDataAsync(0, 0, save: PublicProperty.SaveMode.All);
-                using (FileStream file = new FileStream(savePath, FileMode.Create))
-                {
+                using (FileStream file = new FileStream(savePath, FileMode.Create)) {
                     file.Write(StrToBytes("switch (str)"));
                     file.Write(StrToBytes("{"));
-               
-                    foreach (var item in preLoadDatas)
-                    {
+
+                    foreach (var item in preLoadDatas) {
                         file.Write(StrToBytes($"\tcase \"{item.English}\":"));
                         file.Write(StrToBytes($"\t\treturn \"{item.Chinese}\";"));
                         file.Flush();

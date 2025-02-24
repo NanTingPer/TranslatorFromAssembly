@@ -1,13 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -74,7 +67,7 @@ namespace TranslatorLibrary.AllViewModel
         public string IndexText { get => _indexText; set => SetProperty(ref _indexText, value); }
 
         public int PageNum { get => pageNum; set => SetProperty(ref pageNum, value); }
-        public DLLViewModel(ISQLiteService sqliteService,IILService iLService,ISQLiteExtract<PreLoadData> liteExtract) 
+        public DLLViewModel(ISQLiteService sqliteService, IILService iLService, ISQLiteExtract<PreLoadData> liteExtract)
         {
             _sqliteService = sqliteService;
             _ilService = iLService;
@@ -95,30 +88,27 @@ namespace TranslatorLibrary.AllViewModel
         private async Task GetTranslator()
         {
             IEnumerable<DatabaseModle> datas = await _sqliteService.GetData(IndexText);
-            foreach (var data in datas)
-            {
+            foreach (var data in datas) {
                 var st = SimpleTranslator.CreateSimpleTranslator(data);
-                if(!ViewList.Contains(st) && data is not null)
+                if (!ViewList.Contains(st) && data is not null)
                     ViewList.Add(st);
             }
         }
-        
+
         /// <summary>
         /// 用来加载ILService提出的项目 到显示List中 从数据库加载 下一页
         /// </summary>
         private async Task GetAssemblyStr()
         {
-            if (++PageNum * pageSize >= pageCount)
-            { 
+            if (++PageNum * pageSize >= pageCount) {
                 PageNum = pageCount / pageSize - 1;
             }
-            if(pageNum <= 0) pageNum = 1;
+            if (pageNum <= 0) pageNum = 1;
             PreLoadData[] datas = await _sQLiteExtract.GetDataAsync((PageNum * pageSize), pageSize);
             if (datas.Count() <= 0)
                 return;
 
-            foreach (var item in datas)
-            {
+            foreach (var item in datas) {
                 ModEnglishList.Add(item);
                 ModEnglishList.RemoveAt(0);
             }
@@ -129,19 +119,17 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async Task GetAssemblyStrPgDn()
         {
-            if (--PageNum < 0)
-            {
+            if (--PageNum < 0) {
                 PageNum = 0;
             }
-                
-            PreLoadData[] datas = await _sQLiteExtract.GetDataAsync((PageNum * pageSize),pageSize);
-            if(datas.Count() == 0) return;
-            foreach (var item in datas)
-            {
+
+            PreLoadData[] datas = await _sQLiteExtract.GetDataAsync((PageNum * pageSize), pageSize);
+            if (datas.Count() == 0) return;
+            foreach (var item in datas) {
                 ModEnglishList.Add(item);
                 ModEnglishList.RemoveAt(0);
             }
-            
+
         }
 
 
@@ -152,8 +140,7 @@ namespace TranslatorLibrary.AllViewModel
         public void GetPitchs(object args)
         {
             IList tempIEn = (IList)args;
-            foreach (var item in tempIEn)
-            {
+            foreach (var item in tempIEn) {
                 Pitchs.Add((PreLoadData)item);
             }
         }
@@ -165,8 +152,7 @@ namespace TranslatorLibrary.AllViewModel
         {
             PageNum = 0;
             string[] strs = Path.GetFileName(IndexText).Split(".");
-            if (strs[1] is "dll")
-            {
+            if (strs[1] is "dll") {
                 ModEnglishList.Clear();
 
                 //载入空数据 防止无法加载
@@ -192,8 +178,7 @@ namespace TranslatorLibrary.AllViewModel
         {
             PageNum++;
             PreLoadData[] datas = await _sQLiteExtract.GetDataAsync(0, pageSize);
-            foreach (var item in datas)
-            {
+            foreach (var item in datas) {
                 ModEnglishList.Add(item);
                 ModEnglishList.RemoveAt(0);
             }

@@ -1,8 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using System.Xml.Linq;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 using TranslatorLibrary.Tools;
@@ -82,7 +81,7 @@ namespace TranslatorLibrary.AllViewModel
         /// ListBox的被选中项
         /// </summary>
         public DataFilePath DataFilePath { get => _dataFilePath; set => SetProperty(ref _dataFilePath, value); }
-        public ListViewModel(ISQLiteExtract<PreLoadData> sQLiteExtract) 
+        public ListViewModel(ISQLiteExtract<PreLoadData> sQLiteExtract)
         {
             _SQLiteExtract = sQLiteExtract;
             GetAssemblyStr_PgDnCommand = new AsyncRelayCommand(GetAssemblyStr_PgDn);
@@ -108,22 +107,19 @@ namespace TranslatorLibrary.AllViewModel
             if (DataFilePath is null)
                 return;
             pageCount = await _SQLiteExtract.PageCountAsync();
-            if (++pageNum * pageSize >= pageCount)
-            {
+            if (++pageNum * pageSize >= pageCount) {
                 pageNum = pageCount / pageSize - 1;
             }
-            PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow:fineIsShow);
-            if (datas.Count() <= 0){ pageNum -= 1;return; }
-                
+            PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English, isShow: fineIsShow);
+            if (datas.Count() <= 0) { pageNum -= 1; return; }
 
-            foreach (var item in datas)
-            {
+
+            foreach (var item in datas) {
                 if (DataList.Contains(item))
                     continue;
 
                 DataList.Add(item);
-                if (DataList.Count >= 10)
-                {
+                if (DataList.Count >= 10) {
                     DataList.RemoveAt(0);
                 }
             }
@@ -139,21 +135,18 @@ namespace TranslatorLibrary.AllViewModel
             initTextOrderBy();
             if (DataFilePath is null)
                 return;
-            if (--pageNum < 0)
-            {
+            if (--pageNum < 0) {
                 pageNum = 0;
             }
 
-            PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English,isShow : fineIsShow);
-            if (datas.Count() == 0){ pageNum += 1; return; }
-            foreach (var item in datas)
-            {
-                if(DataList.Contains(item)) 
+            PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English, isShow: fineIsShow);
+            if (datas.Count() == 0) { pageNum += 1; return; }
+            foreach (var item in datas) {
+                if (DataList.Contains(item))
                     continue;
 
                 DataList.Add(item);
-                if(DataList.Count >= 10)
-                { 
+                if (DataList.Count >= 10) {
                     DataList.RemoveAt(0);
                 }
             }
@@ -196,8 +189,7 @@ namespace TranslatorLibrary.AllViewModel
             DataList.Clear();
             await _SQLiteExtract.CreateDatabaseAsync(DataFilePath.FileName);
             PreLoadData[] data = await _SQLiteExtract.GetDataAsync(0, 10);
-            foreach (var item in data)
-            {
+            foreach (var item in data) {
                 DataList.Add(item);
             }
             IsPaneOpenMethod();
@@ -219,7 +211,7 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private void EditEndedMethod()
         {
-            _SQLiteExtract.AlterAsync(PublicProperty.SaveMode.Chinese,SelectItem);
+            _SQLiteExtract.AlterAsync(PublicProperty.SaveMode.Chinese, SelectItem);
         }
 
         /// <summary>
@@ -229,10 +221,8 @@ namespace TranslatorLibrary.AllViewModel
         private void SelectCont(object? list)
         {
             SelectData.Clear();
-            if(list is IList datas)
-            {
-                foreach (var data in datas)
-                {
+            if (list is IList datas) {
+                foreach (var data in datas) {
                     SelectData.Add((PreLoadData)data);
                 }
             }
@@ -272,7 +262,7 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async void IsShow_()
         {
-           fineIsShow = !fineIsShow;
+            fineIsShow = !fineIsShow;
             if (fineIsShow == true)
                 IsShow = "显示隐藏";
 
@@ -286,8 +276,7 @@ namespace TranslatorLibrary.AllViewModel
 
         private void 控制显示()
         {
-            for (int i = 0; i < DataList.Count; i++)
-            {
+            for (int i = 0; i < DataList.Count; i++) {
                 //如果 不显示隐藏  但是数据是隐藏的 删掉
                 if (fineIsShow == false && DataList[i].IsShow == 1)
                     DataList.RemoveAt(i);

@@ -1,4 +1,4 @@
-﻿using SQLite;
+using SQLite;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 using TranslatorLibrary.Tools;
@@ -17,8 +17,7 @@ namespace TranslatorLibrary.AllServices.Services
             if (connection == null)
                 return;
 
-            foreach (var item in values)
-            {
+            foreach (var item in values) {
                 long id = 0;
                 var newValue = await connection.Table<HjsonModel>()
                     .FirstOrDefaultAsync(f => f.Key == item.Key && f.Value != item.Value);
@@ -27,12 +26,10 @@ namespace TranslatorLibrary.AllServices.Services
                     .FirstOrDefaultAsync(f => f.Key == item.Key && f.Value == item.Value);
 
                 //等等null就说明数据第一次进来
-                if (oldVlaue == null)
-                {
+                if (oldVlaue == null) {
                     var data = await connection.Table<HjsonModel>().OrderByDescending(f => f.Id).FirstOrDefaultAsync();
                     id = 0;
-                    if (data is not null)
-                    {
+                    if (data is not null) {
                         id = data.Id + 1;
                     }
                     item.Id = id;
@@ -42,8 +39,7 @@ namespace TranslatorLibrary.AllServices.Services
                 }
 
                 //不等于空就是这是新的数据
-                if (newValue is not null)
-                {
+                if (newValue is not null) {
                     var olddata = await connection.Table<HjsonModel>().FirstOrDefaultAsync(f => f.Key == item.Key);
                     olddata.OldValue = olddata.Value;
                     olddata.Value = item.Value;
@@ -56,18 +52,14 @@ namespace TranslatorLibrary.AllServices.Services
 
         public async Task AlterAsync(PublicProperty.SaveMode mode, params HjsonModel[] preLoadData)
         {
-            if (mode == PublicProperty.SaveMode.Chinese)
-            {
-                foreach (HjsonModel item in preLoadData)
-                {
-                    try
-                    { 
+            if (mode == PublicProperty.SaveMode.Chinese) {
+                foreach (HjsonModel item in preLoadData) {
+                    try {
                         HjsonModel tempData = await connection.GetAsync<HjsonModel>(item.Id);
                         tempData.OldChinese = tempData.Chinese;
                         tempData.Chinese = item.Chinese;
                         await connection.UpdateAsync(tempData);
-                    }catch(Exception e)
-                    {
+                    } catch (Exception e) {
                         continue;
                     }
                 }
@@ -76,8 +68,7 @@ namespace TranslatorLibrary.AllServices.Services
 
         public async Task ColseDatabaseAsync()
         {
-            if (connection != null)
-            {
+            if (connection != null) {
                 await connection.CloseAsync();
             }
         }

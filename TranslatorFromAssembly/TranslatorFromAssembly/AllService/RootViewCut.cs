@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TranslatorFromAssembly.Models;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.AllViewModel;
@@ -18,26 +14,24 @@ namespace TranslatorFromAssembly.AllService
     {
         private ServiceLocator _serviceLocator;
         private MainViewModel? _mainViewModel;
-        public RootViewCut() 
+        public RootViewCut()
         {
             _serviceLocator = ServiceLocator.GetThis;
-            
+
         }
         public void ViewCut(string viewName)
         {
-            _mainViewModel ??=  _serviceLocator.MainViewModel;
+            _mainViewModel ??= _serviceLocator.MainViewModel;
 
             PropertyInfo[] properties = typeof(ServiceLocator).GetProperties();
             PropertyInfo view = null;
-            foreach (var property in properties)
-            {
-                if (property.Name.Equals(viewName))
-                {
+            foreach (var property in properties) {
+                if (property.Name.Equals(viewName)) {
                     view = property;
                     break;
                 }
             }
-            if(view is not null)
+            if (view is not null)
                 _mainViewModel.ContentView = (ViewModelBase)view.GetValue(_serviceLocator);
 
             _mainViewModel.AllViewInfo = AllViewInfo.AllViewInfos.FirstOrDefault(f => f.ViewName == viewName);

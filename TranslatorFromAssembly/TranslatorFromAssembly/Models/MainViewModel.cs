@@ -1,16 +1,6 @@
-﻿using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TranslatorFromAssembly.AllService;
-using TranslatorFromAssembly.Views;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.AllViewModel;
 
@@ -61,7 +51,7 @@ namespace TranslatorFromAssembly.Models
         {
             if (_oneLoad)
                 App.PaneSize = (int)App.GetWindow().Width / 5;
-                PaneSize = App.PaneSize;
+            PaneSize = App.PaneSize;
             _oneLoad = true;
         }
 

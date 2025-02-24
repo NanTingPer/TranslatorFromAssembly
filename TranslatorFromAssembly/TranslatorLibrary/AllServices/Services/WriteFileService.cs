@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 using TranslatorLibrary.Tools;
@@ -124,7 +119,6 @@ namespace TranslatorLibrary.AllServices.Services
             foreach (var item in map)
             {
                 ClassNaem = item.Key;
-
                 Write.Write(StringToByte($"\t\t\t\t#region {ClassNaem}"));
                 //方法名称 内容
                 var Translat = item.Value;
@@ -317,7 +311,6 @@ namespace TranslatorLibrary.AllServices.Services
 
             foreach (var item in data)
             {
-                
                 if (e.ContainsKey(item.ClassName))
                 {
 
@@ -339,6 +332,7 @@ namespace TranslatorLibrary.AllServices.Services
                             var method = item.MethodName;
                             var tuple2 = Tuple.Create(item.English, item.Chinese);
                             var list = new List<Tuple<string,string>>();
+                            list.Add(tuple2);
                             value.Add(method, list);
                         }
                     }

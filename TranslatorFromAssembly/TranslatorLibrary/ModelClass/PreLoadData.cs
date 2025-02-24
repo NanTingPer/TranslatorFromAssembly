@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace TranslatorLibrary.ModelClass
 {
     /// <summary>
@@ -45,8 +39,8 @@ namespace TranslatorLibrary.ModelClass
         /// 中文
         /// </summary>
         [SQLite.Column("chinese")]
-        public string Chinese {  get; set; } = string.Empty;
-        
+        public string Chinese { get; set; } = string.Empty;
+
         /// <summary>
         /// 纯机翻
         /// </summary>
@@ -62,9 +56,8 @@ namespace TranslatorLibrary.ModelClass
         public override bool Equals(object? obj)
         {
             if (obj == null) return false;
-            if(obj is PreLoadData r)
-            {
-                if(r.ModName.Equals(ModName) &&
+            if (obj is PreLoadData r) {
+                if (r.ModName.Equals(ModName) &&
                     r.ClassName.Equals(ClassName) &&
                     r.MethodName.Equals(MethodName) &&
                     r.English.Equals(English)) return true;

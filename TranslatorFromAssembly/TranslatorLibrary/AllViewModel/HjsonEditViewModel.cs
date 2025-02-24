@@ -1,10 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -17,7 +12,7 @@ namespace TranslatorLibrary.AllViewModel
     /// </summary>
     public class HjsonEditViewModel : ViewModelBase
     {
-        public HjsonEditViewModel(ISQLiteExtract<HjsonModel> sQLiteExtract,IHjsonProcess hjsonProcess) 
+        public HjsonEditViewModel(ISQLiteExtract<HjsonModel> sQLiteExtract, IHjsonProcess hjsonProcess)
         {
             SaveFilePathCommand = new RelayCommand(SaveFilePath);
             ListBoxTappedCommand = new RelayCommand(ListBoxTapped);
@@ -52,7 +47,7 @@ namespace TranslatorLibrary.AllViewModel
 
 
         //保存位置
-        public string SaveFile { get => _saveFile; set => SetProperty(ref _saveFile,value); }
+        public string SaveFile { get => _saveFile; set => SetProperty(ref _saveFile, value); }
         //ListBox当前选择项
         public FilePathModel SelectItem { get => _selectItem; set => SetProperty(ref _selectItem, value); }
         //DataGrid当前选中项
@@ -62,8 +57,7 @@ namespace TranslatorLibrary.AllViewModel
         //侧边目录主加载
         private void RootLoadToFileList(string path)
         {
-            foreach (var item in LoadFilePathToFileList(path))
-            {
+            foreach (var item in LoadFilePathToFileList(path)) {
                 FileList.Add(item);
             }
         }
@@ -73,29 +67,23 @@ namespace TranslatorLibrary.AllViewModel
         private IEnumerable<FilePathModel> LoadFilePathToFileList(string path)
         {
             FileList.Clear();
-            if (Directory.Exists(path))
-            {
+            if (Directory.Exists(path)) {
                 string[] FilesPtah = Directory.GetFiles(path);
                 string[] directors = Directory.GetDirectories(path);
 
-                foreach (string item in directors)
-                {
+                foreach (string item in directors) {
                     FilePathModel fpm = new FilePathModel() { FilePath = item };
                     fpm.FileName = Path.GetFileName(item) ?? "什么";
                     yield return fpm;
                     //FileList.Add(fpm);
                 }
 
-                foreach (string item in FilesPtah)
-                {
-                    if (Path.GetFileName(item) != "conf")
-                    {
+                foreach (string item in FilesPtah) {
+                    if (Path.GetFileName(item) != "conf") {
                         FilePathModel fpm = new FilePathModel() { FilePath = item };
                         FilePathModel.SetName(fpm);
                         yield return fpm;
-                    }
-                    else
-                    {
+                    } else {
                         //读取配置
                         SaveFile = File.ReadAllText(item);
                     }
@@ -111,8 +99,7 @@ namespace TranslatorLibrary.AllViewModel
         private string DirectoryListPop()
         {
             string e = "";
-            if (DirectoryList.Count > 1)
-            {
+            if (DirectoryList.Count > 1) {
                 DirectoryList.RemoveAt(0);
                 e = DirectoryList[0];
                 RootLoadToFileList(e);
@@ -137,16 +124,13 @@ namespace TranslatorLibrary.AllViewModel
         private async void ListBoxTapped()
         {
             await _sQLiteExtract.ColseDatabaseAsync();
-            
-            if (SelectItem is not null)
-            {
-                if (Directory.Exists(SelectItem.FilePath))
-                {
+
+            if (SelectItem is not null) {
+                if (Directory.Exists(SelectItem.FilePath)) {
                     DirectoryListPush(SelectItem.FilePath);
                     return;
                 }
-                if (File.Exists(SelectItem.FilePath))
-                {
+                if (File.Exists(SelectItem.FilePath)) {
                     await _sQLiteExtract.CreateDatabaseAsync(SelectItem.FileName);
                     ValueList.Clear();
                     LoadDataToValueList();
@@ -157,8 +141,7 @@ namespace TranslatorLibrary.AllViewModel
         //单机退格触发(侧边栏)
         private void ListBoxBackspace()
         {
-            if (DirectoryList.Count > 0)
-            {
+            if (DirectoryList.Count > 0) {
                 DirectoryListPop();
             }
         }
@@ -173,17 +156,15 @@ namespace TranslatorLibrary.AllViewModel
 
         private async void LoadDataToValueList()
         {
-            await foreach (var item in GetData())
-                  {
-                      ValueList.Add(item);
-                  }
+            await foreach (var item in GetData()) {
+                ValueList.Add(item);
+            }
         }
 
         private async IAsyncEnumerable<HjsonModel> GetData()
         {
             HjsonModel[] hjsonData = await _sQLiteExtract.GetDataAsync(0, 10);
-            foreach (HjsonModel data in hjsonData)
-            {
+            foreach (HjsonModel data in hjsonData) {
                 yield return data;
             }
         }
@@ -192,8 +173,7 @@ namespace TranslatorLibrary.AllViewModel
         {
             await _sQLiteExtract.AlterAsync(PublicProperty.SaveMode.Chinese, DataGridSelect);
             string tempFilePath = Path.Combine(SaveFile, SelectItem.FileName);
-            if(!string.IsNullOrEmpty(SaveFile))
-            {
+            if (!string.IsNullOrEmpty(SaveFile)) {
                 await _hjsonProcess.SaveHjsonAsync(tempFilePath, _sQLiteExtract);
             }
         }
@@ -202,12 +182,9 @@ namespace TranslatorLibrary.AllViewModel
         {
             string path = DirectoryList[0];
             string confPath = Path.Combine(path, "conf");
-            if (File.Exists(confPath))
-            {
+            if (File.Exists(confPath)) {
                 File.WriteAllText(confPath, SaveFile);
-            }
-            else
-            {
+            } else {
                 File.Create(confPath).Close();
                 File.WriteAllText(confPath, SaveFile);
             }

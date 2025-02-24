@@ -1,4 +1,4 @@
-﻿using Mono.Cecil;
+using Mono.Cecil;
 using Mono.Cecil.Rocks;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -8,7 +8,6 @@ using MCollections = Mono.Collections.Generic.Collection<Mono.Cecil.Cil.Instruct
 
 using TranslatorLibrary.Tools;
 using Mono.Cecil.Cil;
-using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 
 namespace TranslatorLibrary.AllServices.Services
@@ -31,17 +30,14 @@ namespace TranslatorLibrary.AllServices.Services
             long tempNume = 0L;
             List<PreLoadData> TempList = new List<PreLoadData>();
             ModuleDefinition DLLModule = ModuleDefinition.ReadModule(dllPath);
-            foreach (var type in DLLModule.GetTypes())
-            {
-                foreach (var method in type.GetMethods())
-                {
+            foreach (var type in DLLModule.GetTypes()) {
+                foreach (var method in type.GetMethods()) {
                     var count = 0;
                     MMethodBody methodBody = method.Body;
                     if (methodBody is null)
                         continue;
 
-                    foreach (var il in methodBody.Instructions)
-                    {
+                    foreach (var il in methodBody.Instructions) {
                         count++;
                         if (!il.OpCode.Equals(MOpenCodes.Ldstr))
                             continue;
@@ -55,16 +51,15 @@ namespace TranslatorLibrary.AllServices.Services
 
                         //当前Il偏移量
                         int ilOffset = il.Offset;
-                        var allIL =  methodBody.Instructions;
+                        var allIL = methodBody.Instructions;
 
-                        if(english == "AntisocialBuff")
-                        {
+                        if (english == "AntisocialBuff") {
                             isShow = 0;
                         }
 
-                        if (MethodCount(type,method.Name) ||
-                            ExitsIL(/*ilOffset,*/ allIL,count) ||
-                            type.Name.Contains("<") || 
+                        if (MethodCount(type, method.Name) ||
+                            ExitsIL(/*ilOffset,*/ allIL, count) ||
+                            type.Name.Contains("<") ||
                             type.Name.Contains(">") ||
                             ContentValue(english) ||
 
@@ -96,7 +91,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// <returns></returns>
         private bool ContentValue(string content)
         {
-            if (content.Length <= 2)return true;
+            if (content.Length <= 2) return true;
             if (content.Contains("/")) return true;
             if (content.StartsWith("_")) return true;
             if (content.StartsWith(".")) return true;
@@ -159,15 +154,14 @@ namespace TranslatorLibrary.AllServices.Services
             if (methodName.Contains("_")) return true;
             //if (methodName.Contains("AI")) return true;
             if (methodName.Contains("Draw")) return true;
-            if (methodName.Contains("ToString"))return true;
+            if (methodName.Contains("ToString")) return true;
             if (methodName.Contains("AddRecipe")) return true;
             //if (methodName.Contains("HitEffect")) return true;
             if (methodName.Contains("LoadWorldData")) return true;
             if (methodName.Contains("SaveWorldData")) return true;
 
 
-            if (type.BaseType.ToString().Contains("ModPlayer"))
-            {
+            if (type.BaseType.ToString().Contains("ModPlayer")) {
 
                 if (methodName.Contains("SaveData"))
                     return true;
@@ -186,37 +180,33 @@ namespace TranslatorLibrary.AllServices.Services
         /// <param name="ILs"></param>
         /// <param name="count"> 第几条 </param>
         /// <returns></returns>
-        private bool ExitsIL(/*int offset, */MCollections ILs,int count)
+        private bool ExitsIL(/*int offset, */MCollections ILs, int count)
         {
-            if(count + 1 < ILs.Count)
-            {
+            if (count + 1 < ILs.Count) {
                 var opc = ILs[/*offset*/count + 1].OpCode;
                 if (opc == OpCodes.Ret) return true;
                 if (opc == OpCodes.Stelem_Ref) return true;
-                if (opc == OpCodes.Newobj)
-                {
-                    if(ILs[/*offset*/count + 1].Operand.ToString().Contains("Graphics.Shaders.ArmorShaderData")) return true;
-                } 
+                if (opc == OpCodes.Newobj) {
+                    if (ILs[/*offset*/count + 1].Operand.ToString().Contains("Graphics.Shaders.ArmorShaderData")) return true;
+                }
             }
 
             int num = 0;
             //存储当前第几条
             int conuts = count;
-            for(int i = count; i < ILs.Count; i++)
-            {
+            for (int i = count; i < ILs.Count; i++) {
                 var instruction = ILs[i];
-                if (num == 2)break;
-                if (instruction.OpCode == OpCodes.Call || instruction.OpCode == OpCodes.Callvirt)
-                {
+                if (num == 2) break;
+                if (instruction.OpCode == OpCodes.Call || instruction.OpCode == OpCodes.Callvirt) {
                     num++;
                     string value = instruction.Operand.ToString();
 
                     if (value.Contains("ModLoader.Mod::Find")) return true;
                     if (value.Contains("ModLoader.NPCShop::")) return true;
-                    if (value.Contains("ModLoader.IO.TagCompound")) return true; 
-                    if (value.Contains("ModLoader.ModContent::Find"))return true;
+                    if (value.Contains("ModLoader.IO.TagCompound")) return true;
+                    if (value.Contains("ModLoader.ModContent::Find")) return true;
                     if (value.Contains("ModLoader.ModContent::Request")) return true;
-                    if (value.Contains("ModLoader.ModContent::TryFind"))return true;
+                    if (value.Contains("ModLoader.ModContent::TryFind")) return true;
                     if (value.Contains("ModLoader.ModType::get_Name")) return true;
                     if (value.Contains("ModLoader.ModLoader::GetMod")) return true;
                     if (value.Contains("ModLoader.ModLoader::HasMod")) return true;
@@ -226,9 +216,9 @@ namespace TranslatorLibrary.AllServices.Services
                     if (value.Contains("ModLoader.ILocalizedModTypeExtensions::GetLocalizedValue")) return true;
 
                     if (value.Contains("Localization.Language::GetText")) return true;
-                    if (value.Contains("Localization.Language::GetTextValue"))return true;
-                    if (value.Contains("Graphics.ShaderManager::GetShader"))return true;
-                    if (value.Contains("Microsoft.Xna.Framework"))return true;
+                    if (value.Contains("Localization.Language::GetTextValue")) return true;
+                    if (value.Contains("Graphics.ShaderManager::GetShader")) return true;
+                    if (value.Contains("Microsoft.Xna.Framework")) return true;
                     if (value.Contains("Luminance.Core.Graphics")) return true;
 
                     if (value.Contains("ModLoader.MusicLoader::GetMusicSlot")) return true;

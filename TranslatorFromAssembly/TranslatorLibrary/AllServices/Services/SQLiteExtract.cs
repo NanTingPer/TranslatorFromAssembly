@@ -1,10 +1,4 @@
-﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using SQLite;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 using TranslatorLibrary.Tools;
@@ -20,15 +14,15 @@ namespace TranslatorLibrary.AllServices.Services
         private SQLiteAsyncConnection _connection;
 
         private string _AllPath = GetAppFilePath.GetPathAndCreate();
-        
-        public SQLiteExtract() 
+
+        public SQLiteExtract()
         {
 
         }
 
-        public SQLiteAsyncConnection Connection 
-        { 
-            get => _connection; 
+        public SQLiteAsyncConnection Connection
+        {
+            get => _connection;
             set => _connection = value;
         }
 
@@ -39,9 +33,8 @@ namespace TranslatorLibrary.AllServices.Services
         /// <returns></returns>
         public async Task AddDataAsync(IList<PreLoadData> datas)
         {
-            if(ConnectionIsNULL()) return;
-            foreach (var item in datas)
-            {
+            if (ConnectionIsNULL()) return;
+            foreach (var item in datas) {
                 PreLoadData? whereItem = await Connection.Table<PreLoadData>().Where(f =>
                 f.ModName == item.ModName &&
                 f.ClassName == item.ClassName &&
@@ -50,8 +43,7 @@ namespace TranslatorLibrary.AllServices.Services
 
                 //降序排序取最大值
                 long? maxid = Connection.Table<PreLoadData>().OrderByDescending(x => x.Id).FirstOrDefaultAsync()?.Id;
-                if (whereItem is null)
-                {
+                if (whereItem is null) {
                     item.Id = maxid is null ? 0 : maxid.Value + 1;
                     await Connection.InsertAsync(item);
                 }
@@ -68,7 +60,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// <param name="skip">跳过 </param>
         /// <param name="take">取出数量</param>
         /// <returns></returns>
-        public async Task<PreLoadData[]> GetDataAsync(int skip,int take,string className="", string methodName="", string counte="",SaveMode save = SaveMode.None,bool isShow = false)
+        public async Task<PreLoadData[]> GetDataAsync(int skip, int take, string className = "", string methodName = "", string counte = "", SaveMode save = SaveMode.None, bool isShow = false)
         {
             PreLoadData[] pe = [];
             if (ConnectionIsNULL())
@@ -77,13 +69,12 @@ namespace TranslatorLibrary.AllServices.Services
             bool cn = false;
             bool mn = false;
             bool en = false;
-            if (string.IsNullOrWhiteSpace(className))cn = true;
-            if (string.IsNullOrWhiteSpace(methodName))mn = true;
-            if (string.IsNullOrWhiteSpace(counte))en = true;
+            if (string.IsNullOrWhiteSpace(className)) cn = true;
+            if (string.IsNullOrWhiteSpace(methodName)) mn = true;
+            if (string.IsNullOrWhiteSpace(counte)) en = true;
 
 
-            if (save == SaveMode.Write)
-            {
+            if (save == SaveMode.Write) {
                 return await Connection.Table<PreLoadData>()
                 .Where(f => cn || f.ClassName.Contains(className))
                 .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
@@ -92,16 +83,14 @@ namespace TranslatorLibrary.AllServices.Services
                 .ToArrayAsync();
             }
 
-            if(save == SaveMode.All)
-            {
+            if (save == SaveMode.All) {
                 return await Connection.Table<PreLoadData>()
                     .Where(f => !string.IsNullOrEmpty(f.Chinese))
                     .ToArrayAsync();
             }
 
-            
-            if (isShow)
-            {
+
+            if (isShow) {
                 return await Connection.Table<PreLoadData>()
                     .Where(f => f.IsShow == 1)
                     .Where(f => cn || f.ClassName.Contains(className))
@@ -135,9 +124,9 @@ namespace TranslatorLibrary.AllServices.Services
         public Task<int> PageCountAsync()
         {
 
-            if(ConnectionIsNULL())
+            if (ConnectionIsNULL())
                 return Task.FromResult(0);
-            
+
             return Connection.Table<PreLoadData>().CountAsync();
         }
 
@@ -158,7 +147,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// <returns></returns>
         private bool ConnectionIsNULL()
         {
-            if(Connection is null) return true;
+            if (Connection is null) return true;
             return false;
         }
 
@@ -173,21 +162,17 @@ namespace TranslatorLibrary.AllServices.Services
         {
             if (ConnectionIsNULL())
                 return;
-            if(mode == SaveMode.Chinese)
-            {
-                foreach (var item in preLoadData)
-                {
+            if (mode == SaveMode.Chinese) {
+                foreach (var item in preLoadData) {
                     var data = await Connection.Table<PreLoadData>().Where(f => f.Id == item.Id).FirstOrDefaultAsync();
                     data.Chinese = item.Chinese;
                     await Connection.UpdateAsync(data);
                 }
             }
-            if(mode == SaveMode.IsShowNo || mode == SaveMode.IsShowYes)
-            {
-                foreach (var item in preLoadData)
-                {
+            if (mode == SaveMode.IsShowNo || mode == SaveMode.IsShowYes) {
+                foreach (var item in preLoadData) {
                     var data = await Connection.Table<PreLoadData>().Where(f => f.Id == item.Id).FirstOrDefaultAsync();
-                    
+
                     data.IsShow = data.IsShow == 1 ? 0 : 1;
                     await Connection.UpdateAsync(data);
                 }

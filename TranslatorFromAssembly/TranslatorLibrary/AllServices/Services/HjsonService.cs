@@ -1,9 +1,4 @@
-﻿using Hjson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Hjson;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 
@@ -35,42 +30,35 @@ namespace TranslatorLibrary.AllServices.Services
             await _sqLiteExtract.ColseDatabaseAsync();
         }
 
-        public async Task SaveHjsonAsync(string path,ISQLiteExtract<HjsonModel> sQLiteExtract)
+        public async Task SaveHjsonAsync(string path, ISQLiteExtract<HjsonModel> sQLiteExtract)
         {
-            var data = await sQLiteExtract.GetDataAsync(0,0);
+            var data = await sQLiteExtract.GetDataAsync(0, 0);
             Hjson.JsonObject hjson = new JsonObject();
-            await Task.Run(() =>
-            {
-                foreach (var item in data)
-                {
+            await Task.Run(() => {
+                foreach (var item in data) {
                     //为空返true
                     hjson.Add(item.Key, string.IsNullOrWhiteSpace(item.Chinese) ? item.Value : item.Chinese);
                 }
             });
-            
-            await Task.Run(() =>
-            {
+
+            await Task.Run(() => {
                 using (FileStream stream = new FileStream(path, FileMode.Create)) {
-                    hjson.Save(stream,Stringify.Hjson);
+                    hjson.Save(stream, Stringify.Hjson);
                 }
-                    
+
             });
         }
 
-        private void HjsonObjectKV(JsonValue jsonValue,List<HjsonModel> list,string key="")
+        private void HjsonObjectKV(JsonValue jsonValue, List<HjsonModel> list, string key = "")
         {
-            if(jsonValue is JsonObject)
-            {
-                foreach(KeyValuePair<string,JsonValue> item in jsonValue)
-                {
+            if (jsonValue is JsonObject) {
+                foreach (KeyValuePair<string, JsonValue> item in jsonValue) {
                     HjsonObjectKV(item.Value, list, key + "." + item.Key);
                 }
-            }
-            else
-            {
+            } else {
                 list.Add(new HjsonModel() { Key = key.Substring(1), Value = jsonValue.ToValue().ToString() });
             }
-            
+
         }
     }
 }

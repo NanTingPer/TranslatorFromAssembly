@@ -1,9 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace TranslatorLibrary.Tools
 {
     public class SaveConfig
@@ -13,12 +7,11 @@ namespace TranslatorLibrary.Tools
         /// </summary>
         /// <param name="key">目标配置</param>
         /// <returns></returns>
-        public static string GetConfig(string key,string defaultV)
+        public static string GetConfig(string key, string defaultV)
         {
             string configPath = GetAppFilePath.GetPathAndCreate(key);
             string configValue = File.ReadAllText(configPath);
-            if(configValue is null || string.IsNullOrWhiteSpace(configValue))
-            {
+            if (configValue is null || string.IsNullOrWhiteSpace(configValue)) {
                 return defaultV;
             }
             return configValue;
@@ -29,7 +22,7 @@ namespace TranslatorLibrary.Tools
         /// </summary>
         /// <param name="key">目标key </param>
         /// <param name="value">要写入的值</param>
-        public static void SetConfig(string key,string value)
+        public static void SetConfig(string key, string value)
         {
             string configKey = GetAppFilePath.GetPathAndCreate(key);
             File.Delete(configKey);

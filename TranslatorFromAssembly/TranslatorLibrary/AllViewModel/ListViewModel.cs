@@ -39,11 +39,11 @@ namespace TranslatorLibrary.AllViewModel
         private bool fineIsShow = false;
 
         private string _english = string.Empty;
-        private PreLoadData _selectItem;
+        private PreLoadData? _selectItem;
 
         private ISQLiteExtract<PreLoadData> _SQLiteExtract;
 
-        private DataFilePath _dataFilePath;
+        private DataFilePath? _dataFilePath;
 
 
         public ICommand GetAssemblyStr_PgDnCommand { get; }
@@ -68,7 +68,7 @@ namespace TranslatorLibrary.AllViewModel
         /// <summary>
         /// 列表中被选中项
         /// </summary>
-        public PreLoadData SelectItem { get => _selectItem; set => SetProperty(ref _selectItem, value); }
+        public PreLoadData SelectItem { get => _selectItem!; set => SetProperty(ref _selectItem, value); }
 
         /// <summary>
         /// 存储被选中项 多选
@@ -80,7 +80,7 @@ namespace TranslatorLibrary.AllViewModel
         /// <summary>
         /// ListBox的被选中项
         /// </summary>
-        public DataFilePath DataFilePath { get => _dataFilePath; set => SetProperty(ref _dataFilePath, value); }
+        public DataFilePath DataFilePath { get => _dataFilePath!; set => SetProperty(ref _dataFilePath, value); }
         public ListViewModel(ISQLiteExtract<PreLoadData> sQLiteExtract)
         {
             _SQLiteExtract = sQLiteExtract;
@@ -111,7 +111,7 @@ namespace TranslatorLibrary.AllViewModel
                 pageNum = pageCount / pageSize - 1;
             }
             PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English, isShow: fineIsShow);
-            if (datas.Count() <= 0) { pageNum -= 1; return; }
+            if (datas.Length <= 0) { pageNum -= 1; return; }
 
 
             foreach (var item in datas) {
@@ -140,7 +140,7 @@ namespace TranslatorLibrary.AllViewModel
             }
 
             PreLoadData[] datas = await _SQLiteExtract.GetDataAsync((pageNum * pageSize), pageSize, ClassName, MethodName, English, isShow: fineIsShow);
-            if (datas.Count() == 0) { pageNum += 1; return; }
+            if (datas.Length == 0) { pageNum += 1; return; }
             foreach (var item in datas) {
                 if (DataList.Contains(item))
                     continue;
@@ -176,7 +176,7 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private async Task InitialTableList()
         {
-            if (DataFilePath is null || DataFilePath.FilePath is null || DataFilePath.FileName is null)
+            if (DataFilePath is null || DataFilePath.FilePath == string.Empty || DataFilePath.FileName == string.Empty)
                 return;
 
             if (string.IsNullOrWhiteSpace(DataFilePath.FileName) || string.IsNullOrWhiteSpace(DataFilePath.FilePath))
@@ -201,9 +201,9 @@ namespace TranslatorLibrary.AllViewModel
         /// </summary>
         private void initTextOrderBy()
         {
-            if (ClassName is null) ClassName = "";
-            if (MethodName is null) MethodName = "";
-            if (MethodName is null) MethodName = "";
+            ClassName ??= "";
+            MethodName ??= "";
+            MethodName ??= "";
         }
 
         /// <summary>

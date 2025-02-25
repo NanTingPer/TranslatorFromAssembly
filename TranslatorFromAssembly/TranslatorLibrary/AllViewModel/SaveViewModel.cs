@@ -19,16 +19,16 @@ namespace TranslatorLibrary.AllViewModel
         private IWriteFileService _writeFileService;
         private ISQLiteExtract<PreLoadData> _sQLiteExtract;
 
-        private string myModPath;
-        private string tarGetModName;
-        private string myModName;
-        private DataFilePath listBoxOption;
+        private string myModPath = string.Empty;
+        private string tarGetModName = string.Empty;
+        private string myModName = string.Empty;
+        private DataFilePath? listBoxOption;
 
         public string MyModPath { get => myModPath; set => SetProperty(ref myModPath, value); }
         public string TarGetModName { get => tarGetModName; set => SetProperty(ref tarGetModName, value); }
         public string MyModName { get => myModName; set => SetProperty(ref myModName, value); }
 
-        public DataFilePath ListBoxOption { get => listBoxOption; set => SetProperty(ref listBoxOption, value); }
+        public DataFilePath ListBoxOption { get => listBoxOption!; set => SetProperty(ref listBoxOption, value); }
 
         public ICommand ClickListOptionCommand { get; }
         public ICommand WriteOutputCommand { get; }
@@ -50,7 +50,7 @@ namespace TranslatorLibrary.AllViewModel
             if (string.IsNullOrWhiteSpace(MyModName) ||
                 string.IsNullOrWhiteSpace(TarGetModName) ||
                 string.IsNullOrWhiteSpace(MyModPath)) { return; }
-            await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption.FileName); //这FileName在不改文件名的情况下就是ModName
+            await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption!.FileName); //这FileName在不改文件名的情况下就是ModName
             _writeFileService.WriteFile(MyModPath, TarGetModName, MyModName);
 
             Config.SetConf(listBoxOption.FileName + MyModNameConf, MyModName); //设置自己的模组名称与自己的模组名称匹配
@@ -61,7 +61,7 @@ namespace TranslatorLibrary.AllViewModel
 
         private void ClickListOption()
         {
-            if (ListBoxOption.FileName == null)
+            if (ListBoxOption is null || ListBoxOption.FileName == string.Empty)
                 return;
 
             _sQLiteExtract.CreateDatabaseAsync(ListBoxOption.FileName);
@@ -70,7 +70,7 @@ namespace TranslatorLibrary.AllViewModel
             string? modDicPath = Config.GetConf(MyModDicPath); //获取存储目录
             MyModPath = modDicPath is null ? defaultModPath : Config.GetConf(MyModDicPath)!;
 
-            if(Config.GetConf(listBoxOption.FileName + MyModNameConf) is string mymodname) { //获取指定模组的指定目录
+            if(Config.GetConf(listBoxOption!.FileName + MyModNameConf) is string mymodname) { //获取指定模组的指定目录
                 MyModPath = Path.Combine(MyModPath, mymodname);
                 MyModName = mymodname;
             }

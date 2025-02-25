@@ -43,7 +43,7 @@ namespace TranslatorLibrary.AllViewModel
         private ISQLiteService _sqliteService;
         private IILService _ilService;
         private ISQLiteExtract<PreLoadData> _sQLiteExtract;
-        private string _indexText;
+        private string _indexText = string.Empty;
         public ICommand CommandGetTranslator { get; }
         public ICommand PitchsCommand { get; }
         public ICommand GetAssemblyStrCommand { get; }
@@ -77,7 +77,7 @@ namespace TranslatorLibrary.AllViewModel
             _ilService = iLService;
             _sQLiteExtract = liteExtract;
             CommandGetTranslator = new AsyncRelayCommand(GetTranslator);
-            PitchsCommand = new RelayCommand<object>(GetPitchs);
+            PitchsCommand = new RelayCommand<object>(GetPitchs!);
             GetAssemblyStrCommand = new AsyncRelayCommand(GetAssemblyStr);
             SetSQLiteExtractCommand = new AsyncRelayCommand(SetSQLiteExtract);
             GetAssemblyStrPgDnCommand = new AsyncRelayCommand(GetAssemblyStrPgDn);
@@ -111,7 +111,7 @@ namespace TranslatorLibrary.AllViewModel
             }
             if (pageNum <= 0) pageNum = 1;
             PreLoadData[] datas = await _sQLiteExtract.GetDataAsync((PageNum * pageSize), pageSize);
-            if (datas.Count() <= 0)
+            if (datas.Length <= 0)
                 return;
 
             foreach (var item in datas) {
@@ -130,7 +130,7 @@ namespace TranslatorLibrary.AllViewModel
             }
 
             PreLoadData[] datas = await _sQLiteExtract.GetDataAsync((PageNum * pageSize), pageSize);
-            if (datas.Count() == 0) return;
+            if (datas.Length == 0) return;
             foreach (var item in datas) {
                 ModEnglishList.Add(item);
                 ModEnglishList.RemoveAt(0);

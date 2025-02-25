@@ -12,15 +12,20 @@ namespace TranslatorLibrary.ModelClass
 
         public override bool Equals(object? obj)
         {
-            DataFilePath e = null;
+            DataFilePath? e;
             try {
-                e = (DataFilePath)obj;
+                e = (DataFilePath?)obj;
             } catch {
                 return false;
             }
             if (e is null) return true;
             if (FilePath == e.FilePath && FileName == e.FileName) return true;
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

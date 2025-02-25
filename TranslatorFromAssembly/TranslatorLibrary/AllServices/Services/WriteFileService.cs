@@ -10,7 +10,7 @@ namespace TranslatorLibrary.AllServices.Services
         /// <summary>
         /// 存储哪些方法 类
         /// </summary>
-        private static List<StaticHookClass> staticHookList = new List<StaticHookClass>();
+        private static List<StaticHookClass> staticHookList = [];
 
         /// <summary>
         /// 类名
@@ -332,7 +332,7 @@ namespace TranslatorLibrary.AllServices.Services
                         {
                             var method = item.MethodName;
                             var tuple2 = Tuple.Create(item.English, item.Chinese);
-                            var list = new List<Tuple<string,string>>();
+                            List<Tuple<string, string>> list = [];
                             list.Add(tuple2);
                             value.Add(method, list);
                         }
@@ -344,10 +344,10 @@ namespace TranslatorLibrary.AllServices.Services
                     var calssname = item.ClassName;
                     var methodname = item.MethodName;
                     var 内容 = Tuple.Create(item.English, item.Chinese);
-                    var list = new List<Tuple<string, string>>();
+                    List<Tuple<string, string>> list = [];
                     list.Add(内容);
 
-                    var map = new Dictionary<string,List<Tuple<string,string>>>();
+                    Dictionary<string, List<Tuple<string, string>>> map = [];
                     map.Add(methodname, list);
 
                     e.Add(calssname, map);
@@ -498,23 +498,23 @@ namespace TranslatorLibrary.AllServices.Services
         /// <summary>
         /// 写文件模型类 含类名
         /// </summary>
-        public class WriteFileModelOne
+        public class WriteFileModelOne(string Key, Dictionary<string, List<Tuple<string, string>>> keyValues)
         {
             /// <summary>
             /// 类名
             /// </summary>
-            public string ClassName;
+            public string ClassName = Key;
 
             /// <summary>
             /// 全部内容，其中Key是方法名称，Value是英文与中文的元组
             /// </summary>
-            public Dictionary<string, List<Tuple<string, string>>> Content;
+            public Dictionary<string, List<Tuple<string, string>>> Content = keyValues;
 
-            public WriteFileModelOne(string Key, Dictionary<string, List<Tuple<string, string>>> keyValues)
-            {
-                ClassName = Key;
-                Content = keyValues;
-            }
+            //public WriteFileModelOne(string Key, Dictionary<string, List<Tuple<string, string>>> keyValues)
+            //{
+            //    ClassName = Key;
+            //    Content = keyValues;
+            //}
         }
     }
 }

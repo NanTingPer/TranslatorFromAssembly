@@ -71,6 +71,11 @@ namespace TranslatorLibrary.ModelClass
             }
             return false;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     public enum IsShow

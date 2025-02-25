@@ -12,7 +12,7 @@ namespace TranslatorLibrary.AllServices.Services
     /// </summary>
     public class SQLiteExtract : ISQLiteExtract<PreLoadData>
     {
-        private SQLiteAsyncConnection _connection;
+        private SQLiteAsyncConnection? _connection;
 
         private string _AllPath = GetAppFilePath.GetPathAndCreate();
 
@@ -23,7 +23,7 @@ namespace TranslatorLibrary.AllServices.Services
 
         public SQLiteAsyncConnection Connection
         {
-            get => _connection;
+            get => _connection!;
             set => _connection = value;
         }
 
@@ -227,7 +227,7 @@ namespace TranslatorLibrary.AllServices.Services
 
                         //跨度更改，将跨过的内容修改为废弃，因为Hjson文件已经不存在此记录
                         var updataDatas = await sqlCon.Where(pld => pld.Id > 判断对象.upId && pld.Id < 判断对象.currId && pld.IsShow == 判断对象.IsShow).ToListAsync();
-                        if (!updataDatas.Any())
+                        if (updataDatas.Count == 0)
                             continue; //没有内容
                         updataDatas.ForEach(async pld => { pld.IsShow = (int)IsShow.废弃; await sql.Connection.UpdateAsync(pld); });
                     }

@@ -65,10 +65,15 @@ namespace TranslatorLibrary.ModelClass
 
         public override bool Equals(object? obj)
         {
-            var data = (DatabaseModle)obj;
+            var data = (DatabaseModle?)obj;
             if(data is null) return false;
             if (this.Id.Equals(data.Id)) return true;
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 

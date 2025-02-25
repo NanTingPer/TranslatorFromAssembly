@@ -49,7 +49,8 @@ namespace TranslatorLibrary.Tools
             IsShowNo,
             IsShowYes,
             Write,
-            All
+            All,
+            ReallAll
         }
         public static void LoadAllDataFileToDataFilePaths()
         {

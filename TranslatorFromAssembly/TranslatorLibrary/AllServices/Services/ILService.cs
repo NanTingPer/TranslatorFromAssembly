@@ -65,7 +65,7 @@ namespace TranslatorLibrary.AllServices.Services
 
                             (method.Name.Contains("Load") && english.Contains(":")) ||
                             (method.Name.Contains("Update") && english.Contains(":")))
-                            isShow = 1;
+                            isShow = 1;//show = 1 就是不显示
 
                         TempList.Add(new PreLoadData()
                         {
@@ -83,6 +83,15 @@ namespace TranslatorLibrary.AllServices.Services
             return TempList;
         }
 
+        /// <summary>
+        /// 判断此类型是否显示
+        /// </summary>
+        //private bool ViewTypeBool(TypeDefinition typeD)
+        //{
+        //    string typeFullName = typeD.FullName;
+        //    if (typeFullName.Contains(""))
+        //    return 
+        //}
 
         /// <summary>
         /// 判断内容中的值
@@ -183,67 +192,75 @@ namespace TranslatorLibrary.AllServices.Services
         private bool ExitsIL(/*int offset, */MCollections ILs, int count)
         {
             if (count + 1 < ILs.Count) {
-                var opc = ILs[/*offset*/count + 1].OpCode;
-                if (opc == OpCodes.Ret) return true;
-                if (opc == OpCodes.Stelem_Ref) return true;
-                if (opc == OpCodes.Newobj) {
-                    if (ILs[/*offset*/count + 1].Operand.ToString().Contains("Graphics.Shaders.ArmorShaderData")) return true;
+                var opc = ILs[/*offset*/count + 1];
+                var opCode = opc.OpCode;
+                object? operand = opc.Operand;
+                if (opCode == OpCodes.Ret) return true;
+                if (opCode == OpCodes.Stelem_Ref) return true;
+                if (opCode == OpCodes.Newobj) {
+                    if(operand is not null) {
+                        bool? str = operand?.ToString()?.Contains("Graphics.Shaders.ArmorShaderData");
+                        if (str != null && str.Value) return true;
+                    }
                 }
+                if(operand is not null) {
+                    bool? str = operand?.ToString()?.Contains("Terraria.Main::npcChatText");
+                    if (str != null && str.Value) return false;
+                }
+
             }
 
             int num = 0;
             //存储当前第几条
-            int conuts = count;
+            //int conuts = count;
             for (int i = count; i < ILs.Count; i++) {
                 var instruction = ILs[i];
                 if (num == 2) break;
                 if (instruction.OpCode == OpCodes.Call || instruction.OpCode == OpCodes.Callvirt) {
                     num++;
-                    string value = instruction.Operand.ToString();
+                    string? value = instruction?.Operand.ToString();
+                    if (value is not null) {
+                        if (value.Contains("ModLoader.Mod::Find")) return true;
+                        if (value.Contains("ModLoader.NPCShop::")) return true;
+                        if (value.Contains("ModLoader.IO.TagCompound")) return true;
+                        if (value.Contains("ModLoader.ModContent::Find")) return true;
+                        if (value.Contains("ModLoader.ModContent::Request")) return true;
+                        if (value.Contains("ModLoader.ModContent::TryFind")) return true;
+                        if (value.Contains("ModLoader.ModType::get_Name")) return true;
+                        if (value.Contains("ModLoader.ModLoader::GetMod")) return true;
+                        if (value.Contains("ModLoader.ModLoader::HasMod")) return true;
 
-                    if (value.Contains("ModLoader.Mod::Find")) return true;
-                    if (value.Contains("ModLoader.NPCShop::")) return true;
-                    if (value.Contains("ModLoader.IO.TagCompound")) return true;
-                    if (value.Contains("ModLoader.ModContent::Find")) return true;
-                    if (value.Contains("ModLoader.ModContent::Request")) return true;
-                    if (value.Contains("ModLoader.ModContent::TryFind")) return true;
-                    if (value.Contains("ModLoader.ModType::get_Name")) return true;
-                    if (value.Contains("ModLoader.ModLoader::GetMod")) return true;
-                    if (value.Contains("ModLoader.ModLoader::HasMod")) return true;
+                        if (value.Contains("ModLoader.ILocalizedModTypeExtensions::GetLocalization")) return true;
+                        if (value.Contains("ModLoader.ILocalizedModTypeExtensions::GetLocalizationKey")) return true;
+                        if (value.Contains("ModLoader.ILocalizedModTypeExtensions::GetLocalizedValue")) return true;
 
-                    if (value.Contains("ModLoader.ILocalizedModTypeExtensions::GetLocalization")) return true;
-                    if (value.Contains("ModLoader.ILocalizedModTypeExtensions::GetLocalizationKey")) return true;
-                    if (value.Contains("ModLoader.ILocalizedModTypeExtensions::GetLocalizedValue")) return true;
+                        if (value.Contains("Localization.Language::GetText")) return true;
+                        if (value.Contains("Localization.Language::GetTextValue")) return true;
+                        if (value.Contains("Graphics.ShaderManager::GetShader")) return true;
+                        if (value.Contains("Microsoft.Xna.Framework")) return true;
+                        if (value.Contains("Luminance.Core.Graphics")) return true;
 
-                    if (value.Contains("Localization.Language::GetText")) return true;
-                    if (value.Contains("Localization.Language::GetTextValue")) return true;
-                    if (value.Contains("Graphics.ShaderManager::GetShader")) return true;
-                    if (value.Contains("Microsoft.Xna.Framework")) return true;
-                    if (value.Contains("Luminance.Core.Graphics")) return true;
+                        if (value.Contains("ModLoader.MusicLoader::GetMusicSlot")) return true;
+                        if (value.Contains("ModLoader.ModLoader::TryGetMod")) return true;
+                        if (value.Contains("Graphics.Effects.EffectManager")) return true;
 
-                    if (value.Contains("ModLoader.MusicLoader::GetMusicSlot")) return true;
-                    if (value.Contains("ModLoader.ModLoader::TryGetMod")) return true;
-                    if (value.Contains("Graphics.Effects.EffectManager")) return true;
+                        if (value.Contains("Terraria.Audio.SoundStyle")) return true;
+                        if (value.Contains("Terraria.Graphics.Shaders.MiscShaderData")) return true;
+                        if (value.Contains("Terraria.Recipe::AddIngredient")) return true;
+                        if (value.Contains("Terraria.Player::ManageSpecialBiomeVisuals")) return true;
+                        if (value.Contains("ReLogic.Content.AssetRepository::Request")) return true;
 
-                    if (value.Contains("Terraria.Audio.SoundStyle")) return true;
-                    if (value.Contains("Terraria.Graphics.Shaders.MiscShaderData")) return true;
-                    if (value.Contains("Terraria.Recipe::AddIngredient")) return true;
-                    if (value.Contains("Terraria.Player::ManageSpecialBiomeVisuals")) return true;
-                    if (value.Contains("ReLogic.Content.AssetRepository::Request")) return true;
-
-                    if (value.Contains("System.Type::GetMethod")) return true;
-                    if (value.Contains("System.Type::get_Assembly")) return true;
-                    if (value.Contains("System.Reflection.Assembly::GetType")) return true;
-                    if (value.Contains("System.Collections.Generic.Dictionary")) return true;
-                    if (value.Contains("System.Object::GetType")) return true;
-                    if (value.Contains("System.Reflection")) return true;
+                        if (value.Contains("System.Type::GetMethod")) return true;
+                        if (value.Contains("System.Type::get_Assembly")) return true;
+                        if (value.Contains("System.Reflection.Assembly::GetType")) return true;
+                        if (value.Contains("System.Collections.Generic.Dictionary")) return true;
+                        if (value.Contains("System.Object::GetType")) return true;
+                        if (value.Contains("System.Reflection")) return true;
 
 
-                    //对于穹月的特别优化
-                    if (value.Contains("Stellamod.Helpers.LangText")) return true;
-
-                    if (num == 1)
-                        break;
+                        //对于穹月的特别优化
+                        if (value.Contains("Stellamod.Helpers.LangText")) return true;
+                    }
                 }
             }
 

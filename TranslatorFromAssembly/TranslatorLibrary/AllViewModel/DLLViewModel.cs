@@ -5,6 +5,8 @@ using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 using TranslatorLibrary.Tools;
+using static TranslatorLibrary.Tools.HjsonSerializer;
+
 
 namespace TranslatorLibrary.AllViewModel
 {
@@ -161,9 +163,20 @@ namespace TranslatorLibrary.AllViewModel
 
                 await CreateSQLiteExtractDataBase(strs[0]);
                 List<PreLoadData> tempList = await _ilService.GetAssemblyILStringAsync(IndexText);
+
+                //寻找是否存在Hjson文件 存在先把数据干进去
+                await HjsonToSQLite(strs[0], _sQLiteExtract);
+
+                //直接添加
                 await _sQLiteExtract.AddDataAsync(tempList);
 
+                //将数据保存为Hjson
+                PreLoadData[] plds = await _sQLiteExtract.GetDataAsync(0,0,save: PublicProperty.SaveMode.ReallAll);
+                SaveToHjson(plds, strs[0]);
+
                 await GetAssemblyStr();
+
+                
             }
             pageCount = await _sQLiteExtract.PageCountAsync();
             PageNum = 1;

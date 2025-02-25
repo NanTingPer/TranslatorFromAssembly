@@ -1,4 +1,5 @@
 using SQLite;
+using System.Threading.Tasks;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
 using TranslatorLibrary.Tools;
@@ -42,8 +43,8 @@ namespace TranslatorLibrary.AllServices.Services
                 f.English == item.English).FirstOrDefaultAsync();
 
                 //降序排序取最大值
-                long? maxid = Connection.Table<PreLoadData>().OrderByDescending(x => x.Id).FirstOrDefaultAsync()?.Id;
                 if (whereItem is null) {
+                    long? maxid = Connection.Table<PreLoadData>().OrderByDescending(x => x.Id).FirstOrDefaultAsync()?.Id;
                     item.Id = maxid is null ? 0 : maxid.Value + 1;
                     await Connection.InsertAsync(item);
                 }
@@ -62,6 +63,9 @@ namespace TranslatorLibrary.AllServices.Services
         /// <returns></returns>
         public async Task<PreLoadData[]> GetDataAsync(int skip, int take, string className = "", string methodName = "", string counte = "", SaveMode save = SaveMode.None, bool isShow = false)
         {
+            if (save == SaveMode.ReallAll)
+                return await Connection.Table<PreLoadData>().Where(f => f.IsShow != (int)IsShow.废弃).ToArrayAsync();
+
             PreLoadData[] pe = [];
             if (ConnectionIsNULL())
                 return pe;
@@ -183,5 +187,62 @@ namespace TranslatorLibrary.AllServices.Services
         {
             throw new NotImplementedException();
         }
+
+        #region 后加
+
+        /// <summary>
+        /// 传入数据库连接，传入一个spd将spd更新入数据库
+        /// </summary>
+        public static async Task UpdateData(ISQLiteExtract<PreLoadData> sqlConnect, IEnumerable<SimplePreLoadData> spds) /*where T : new()*/
+        {
+            if(sqlConnect is SQLiteExtract sql) {
+                if (!spds.Any())
+                    return;
+                
+                var sqlCon = sql.Connection.Table<PreLoadData>();
+                spds = spds.Order(new SimplePreLoadData());
+                long? oneId = spds.FirstOrDefault()?.Id;
+                if (oneId is null)
+                    return;
+
+                var oneData = await sqlCon.FirstOrDefaultAsync(f => f.Id == oneId);
+                if (oneData is null)
+                    return;
+
+                int isShow = oneData.IsShow;
+                var 判断对象 = new 判断对象 { IsShow = isShow, upId = -1L, currId = -1L };
+                var 最大ID = await sqlCon.CountAsync();
+                foreach (var spd in spds) {
+                    PreLoadData pld = await sqlCon.FirstOrDefaultAsync(f => f.Id == spd.Id);
+                    判断对象.upId = 判断对象.currId;
+                    判断对象.currId = pld.Id;
+                    if (pld is not null) {
+                        if (pld.ClassName == spd.ClassName) {
+                            pld.English = spd.English;
+                            pld.Chinese = spd.Chinese;
+                            await sql.Connection.UpdateAsync(pld);//更新
+                        }
+                        if (/*判断对象.upId == -1L || */判断对象.currId == -1L)
+                            continue;
+
+                        //跨度更改，将跨过的内容修改为废弃，因为Hjson文件已经不存在此记录
+                        var updataDatas = await sqlCon.Where(pld => pld.Id > 判断对象.upId && pld.Id < 判断对象.currId && pld.IsShow == 判断对象.IsShow).ToListAsync();
+                        if (!updataDatas.Any())
+                            continue; //没有内容
+                        updataDatas.ForEach(async pld => { pld.IsShow = (int)IsShow.废弃; await sql.Connection.UpdateAsync(pld); });
+                    }
+                }
+            }
+        }
+
+        private class 判断对象()
+        {
+            public int IsShow;
+            public long upId;
+            public long currId;
+        }
+        #endregion
+
+        
     }
 }

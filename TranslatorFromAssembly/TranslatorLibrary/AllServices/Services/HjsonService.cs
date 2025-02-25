@@ -56,7 +56,7 @@ namespace TranslatorLibrary.AllServices.Services
                     HjsonObjectKV(item.Value, list, key + "." + item.Key);
                 }
             } else {
-                list.Add(new HjsonModel() { Key = key.Substring(1), Value = jsonValue.ToValue().ToString() });
+                list.Add(new HjsonModel() { Key = key.Substring(1), Value = jsonValue.ToValue().ToString()! });
             }
 
         }

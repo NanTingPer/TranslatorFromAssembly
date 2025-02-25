@@ -305,6 +305,7 @@ namespace TranslatorLibrary.AllServices.Services
         public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract,string dataBaseName)
         {
             await sQLiteExtract.CreateDatabaseAsync(dataBaseName);
+            await HjsonSerializer.HjsonToSQLite(dataBaseName, sQLiteExtract);
             PreLoadData[] data = await sQLiteExtract.GetDataAsync(0, 0, save : PublicProperty.SaveMode.Write);
 
             var e = PublicProperty.WriteMap;

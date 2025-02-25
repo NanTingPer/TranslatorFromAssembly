@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace TranslatorLibrary.ModelClass
 {
     /// <summary>
@@ -15,30 +17,35 @@ namespace TranslatorLibrary.ModelClass
         /// 模组名称
         /// </summary>
         [SQLite.Column("modname")]
+        [JsonPropertyName("ModName")]
         public string ModName { get; set; } = string.Empty;
 
         /// <summary>
         /// 类名称
         /// </summary>
         [SQLite.Column("classname")]
+        [JsonPropertyName("ClassName")]
         public string ClassName { get; set; } = string.Empty;
 
         /// <summary>
         /// 方法名称
         /// </summary>
         [SQLite.Column("methodname")]
+        [JsonPropertyName("MethodName")]
         public string MethodName { get; set; } = string.Empty;
 
         /// <summary>
         /// 英文
         /// </summary>
         [SQLite.Column("english")]
+        [JsonPropertyName("English")]
         public string English { get; set; } = string.Empty;
 
         /// <summary>
         /// 中文
         /// </summary>
         [SQLite.Column("chinese")]
+        [JsonPropertyName("Translator")]
         public string Chinese { get; set; } = string.Empty;
 
         /// <summary>
@@ -64,5 +71,12 @@ namespace TranslatorLibrary.ModelClass
             }
             return false;
         }
+    }
+
+    public enum IsShow
+    {
+        显示 = 0,
+        不显示 = 1,
+        废弃 = 3,
     }
 }

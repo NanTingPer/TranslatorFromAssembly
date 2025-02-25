@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "新建配置文件",
+    "Projects": [
+      {
+        "Path": "TranslatorFromAssembly\\TranslatorFromAssembly.csproj",
+        "Action": "Start",
+        "DebugTarget": "TranslatorFromAssembly"
+      },
+      {
+        "Path": "HjsonForamt\\HjsonForamt.csproj",
+        "Action": "Start",
+        "DebugTarget": "HjsonForamt"
+      }
+    ]
+  }
+]

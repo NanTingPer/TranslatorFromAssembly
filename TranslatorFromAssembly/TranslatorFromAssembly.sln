@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslatorFromAssembly", "TranslatorFromAssembly\TranslatorFromAssembly.csproj", "{A1D6F31E-3A11-4F23-A233-1726F8A65A5D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslatorFromAssembly", "T
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslatorLibrary", "TranslatorLibrary\TranslatorLibrary.csproj", "{39200E79-C3C9-463B-BC8B-D59AEEFD5850}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HjsonForamt", "HjsonForamt\HjsonForamt.csproj", "{686BFEB5-66D6-4050-967C-5516EAD8A960}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,8 +26,15 @@ Global
 		{39200E79-C3C9-463B-BC8B-D59AEEFD5850}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39200E79-C3C9-463B-BC8B-D59AEEFD5850}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39200E79-C3C9-463B-BC8B-D59AEEFD5850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{686BFEB5-66D6-4050-967C-5516EAD8A960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{686BFEB5-66D6-4050-967C-5516EAD8A960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{686BFEB5-66D6-4050-967C-5516EAD8A960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{686BFEB5-66D6-4050-967C-5516EAD8A960}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A022157-2940-426E-B698-0B9EE06AA7AE}
 	EndGlobalSection
 EndGlobal

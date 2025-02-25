@@ -1,5 +1,7 @@
 using CommunityToolkit.Mvvm.Input;
+using Hjson;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -23,7 +25,6 @@ namespace TranslatorLibrary.AllViewModel
 
         public DataFilePath ListBoxOption { get => listBoxOption; set => SetProperty(ref listBoxOption, value); }
 
-
         public ICommand ClickListOptionCommand { get; }
         public ICommand WriteOutputCommand { get; }
         public ICommand LoadDataPathToListCommand { get; }
@@ -44,7 +45,7 @@ namespace TranslatorLibrary.AllViewModel
             if (string.IsNullOrWhiteSpace(MyModName) ||
                 string.IsNullOrWhiteSpace(TarGetModName) ||
                 string.IsNullOrWhiteSpace(MyModPath)) { return; }
-            await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption.FileName);
+            await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption.FileName); //这FileName在不改文件名的情况下就是ModName
             _writeFileService.WriteFile(MyModPath, TarGetModName, MyModName);
         }
 
@@ -70,6 +71,23 @@ namespace TranslatorLibrary.AllViewModel
 
             await Task.Run(async () => {
                 PreLoadData[] preLoadDatas = await _sQLiteExtract.GetDataAsync(0, 0, save: PublicProperty.SaveMode.All);
+                #region Json解析
+                /*
+                string hjsonCount = File.ReadAllText("C:/Users/23759/Documents/My Games/Terraria/tModLoader/ModSources/LibTest/Localization/BACK_Mods.LibTest.hjson");
+                JsonValue jsv = HjsonValue.Load("C:/Users/23759/Documents/My Games/Terraria/tModLoader/ModSources/LibTest/Localization/BACK_Mods.LibTest.hjson");
+                var r= jsv["3001"].ToString();
+
+
+                var jsonObj = new JsonObject();
+                foreach (var pd in preLoadDatas) {
+                    jsonObj.Add(pd.Id.ToString(), JsonValue.Parse(JsonSerializer.Serialize(pd)));
+                }
+
+                var jsonValue = HjsonValue.Parse(jsonObj.ToString());
+                jsonValue.Save("C:/Users/23759/Documents/My Games/Terraria/tModLoader/ModSources/LibTest/Localization/BACK_Mods.LibTest.hjson", Stringify.Hjson);
+                */
+                #endregion
+                #region 保存为sw
                 using (FileStream file = new FileStream(savePath, FileMode.Create)) {
                     file.Write(StrToBytes("switch (str)"));
                     file.Write(StrToBytes("{"));
@@ -83,6 +101,7 @@ namespace TranslatorLibrary.AllViewModel
                     file.Write(StrToBytes("}"));
                     file.Flush();
                 }
+                #endregion
             });
 
         }

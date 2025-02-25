@@ -12,6 +12,8 @@ namespace TranslatorLibrary.AllViewModel
 {
     public partial class DLLViewModel : ViewModelBase
     {
+        private const string LastDLLConfKey = "DLLPath";
+
         /// <summary>
         /// 拿出数据条数
         /// </summary>
@@ -66,7 +68,7 @@ namespace TranslatorLibrary.AllViewModel
         /// <summary>
         /// 第一个可编辑文本框 未来用来填入 FilePath
         /// </summary>
-        public string IndexText { get => _indexText; set => SetProperty(ref _indexText, value); }
+        public string IndexText { get => _indexText; set { SetProperty(ref _indexText, value); Config.SetConf(LastDLLConfKey, _indexText); } }
 
         public int PageNum { get => pageNum; set => SetProperty(ref pageNum, value); }
         public DLLViewModel(ISQLiteService sqliteService, IILService iLService, ISQLiteExtract<PreLoadData> liteExtract)
@@ -79,8 +81,10 @@ namespace TranslatorLibrary.AllViewModel
             GetAssemblyStrCommand = new AsyncRelayCommand(GetAssemblyStr);
             SetSQLiteExtractCommand = new AsyncRelayCommand(SetSQLiteExtract);
             GetAssemblyStrPgDnCommand = new AsyncRelayCommand(GetAssemblyStrPgDn);
-
-            IndexText = "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\目标模组名\\目标.dll";
+            if(Config.GetConf(LastDLLConfKey) is null) {
+                Config.SetConf(LastDLLConfKey, "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\目标模组名\\目标.dll");
+            }
+            IndexText = Config.GetConf(LastDLLConfKey)!;
         }
 
         /// <summary>

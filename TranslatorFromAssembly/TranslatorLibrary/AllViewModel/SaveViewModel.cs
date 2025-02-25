@@ -11,6 +11,11 @@ namespace TranslatorLibrary.AllViewModel
 {
     public class SaveViewModel : ViewModelBase
     {
+        private const string defaultModPath = "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
+        private const string MyModDicPath = "MyModPath";
+        private const string MyModNameConf = ".TarGetModName";
+
+
         private IWriteFileService _writeFileService;
         private ISQLiteExtract<PreLoadData> _sQLiteExtract;
 
@@ -47,6 +52,11 @@ namespace TranslatorLibrary.AllViewModel
                 string.IsNullOrWhiteSpace(MyModPath)) { return; }
             await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption.FileName); //这FileName在不改文件名的情况下就是ModName
             _writeFileService.WriteFile(MyModPath, TarGetModName, MyModName);
+
+            Config.SetConf(listBoxOption.FileName + MyModNameConf, MyModName); //设置自己的模组名称与自己的模组名称匹配
+            string? path = Path.GetDirectoryName(MyModPath);//ModSource文件夹目录
+            if (path is not null)
+                Config.SetConf(MyModDicPath, path);
         }
 
         private void ClickListOption()
@@ -56,7 +66,15 @@ namespace TranslatorLibrary.AllViewModel
 
             _sQLiteExtract.CreateDatabaseAsync(ListBoxOption.FileName);
             TarGetModName = ListBoxOption.FileName;
-            MyModPath = "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
+
+            string? modDicPath = Config.GetConf(MyModDicPath); //获取存储目录
+            MyModPath = modDicPath is null ? defaultModPath : Config.GetConf(MyModDicPath)!;
+
+            if(Config.GetConf(listBoxOption.FileName + MyModNameConf) is string mymodname) { //获取指定模组的指定目录
+                MyModPath = Path.Combine(MyModPath, mymodname);
+                MyModName = mymodname;
+            }
+
         }
 
         private void LoadDataPathToList()

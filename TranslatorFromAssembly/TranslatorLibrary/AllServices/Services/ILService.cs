@@ -9,6 +9,7 @@ using MCollections = Mono.Collections.Generic.Collection<Mono.Cecil.Cil.Instruct
 using TranslatorLibrary.Tools;
 using Mono.Cecil.Cil;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace TranslatorLibrary.AllServices.Services
 {
@@ -30,54 +31,45 @@ namespace TranslatorLibrary.AllServices.Services
             long tempNume = 0L;
             List<PreLoadData> TempList = new List<PreLoadData>();
             ModuleDefinition DLLModule = ModuleDefinition.ReadModule(dllPath);
+            List<MethodDefinition> AllMethod = [];
             foreach (var type in DLLModule.GetTypes()) {
-                foreach (var method in type.GetMethods()) {
-                    var count = 0;
-                    MMethodBody methodBody = method.Body;
-                    if (methodBody is null)
+                AllMethod.AddRange(type.GetMethods().AsEnumerable());
+            }
+            foreach (var method in AllMethod) {
+                TypeDefinition type = method.DeclaringType;
+                var count = 0;
+                MMethodBody methodBody = method.Body;
+                if (methodBody is null)
+                    continue;
+
+                foreach (var il in methodBody.Instructions) {
+                    count++;
+                    if (!il.OpCode.Equals(MOpenCodes.Ldstr))
                         continue;
 
-                    foreach (var il in methodBody.Instructions) {
-                        count++;
-                        if (!il.OpCode.Equals(MOpenCodes.Ldstr))
-                            continue;
+                    string? english = il.Operand.ToString();
 
-                        string? english = il.Operand.ToString();
+                    if (string.IsNullOrWhiteSpace(english))
+                        continue;
+                    int isShow = 0;
+                    string chinese = await Litter.TranEnglish(english, _sqliteService);
 
-                        if (string.IsNullOrWhiteSpace(english))
-                            continue;
-                        int isShow = 0;
-                        string chinese = await Litter.TranEnglish(english, _sqliteService);
+                    var allIL = methodBody.Instructions;
 
-                        //当前Il偏移量
-                        int ilOffset = il.Offset;
-                        var allIL = methodBody.Instructions;
+                    if (english == "AntisocialBuff")
+                        isShow = 0;
 
-                        if (english == "AntisocialBuff") {
-                            isShow = 0;
-                        }
+                    if (MethodCount(type, method.Name) ||
+                        ExitsIL(/*ilOffset,*/ allIL, count) ||
+                        type.Name.Contains("<") ||
+                        type.Name.Contains(">") ||
+                        ContentValue(english) ||
 
-                        if (MethodCount(type, method.Name) ||
-                            ExitsIL(/*ilOffset,*/ allIL, count) ||
-                            type.Name.Contains("<") ||
-                            type.Name.Contains(">") ||
-                            ContentValue(english) ||
+                        (method.Name.Contains("Load") && english.Contains(":")) ||
+                        (method.Name.Contains("Update") && english.Contains(":")))
+                        isShow = 1;//show = 1 就是不显示
 
-                            (method.Name.Contains("Load") && english.Contains(":")) ||
-                            (method.Name.Contains("Update") && english.Contains(":")))
-                            isShow = 1;//show = 1 就是不显示
-
-                        TempList.Add(new PreLoadData()
-                        {
-                            Id = tempNume++,
-                            English = english,
-                            ModName = ModName,
-                            MethodName = method.Name,
-                            ClassName = type.FullName,
-                            AutoChinese = chinese,
-                            IsShow = isShow
-                        });
-                    }
+                    TempList.Add(new PreLoadData(){ Id = tempNume++,English = english,ModName = ModName,MethodName = method.Name,ClassName = type.FullName,AutoChinese = chinese,IsShow = isShow});
                 }
             }
             return TempList;

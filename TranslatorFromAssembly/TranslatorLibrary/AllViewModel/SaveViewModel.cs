@@ -57,6 +57,7 @@ namespace TranslatorLibrary.AllViewModel
             string? path = Path.GetDirectoryName(MyModPath);//ModSource文件夹目录
             if (path is not null)
                 Config.SetConf(MyModDicPath, path);
+            //想法001 能否通过创建Hjson存储Key与ILIndex的对应关系，这样在进行IL编辑时速度会更快
         }
 
         private void ClickListOption()
@@ -77,6 +78,9 @@ namespace TranslatorLibrary.AllViewModel
 
         }
 
+        /// <summary>
+        /// 加载全部数据库到显示集合
+        /// </summary>
         private void LoadDataPathToList()
         {
             PublicProperty.LoadAllDataFileToDataFilePaths();

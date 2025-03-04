@@ -38,6 +38,7 @@ namespace TranslatorLibrary.Tools
             foreach (var oneValue in showJsonValue) { //遍历
                 var rrr = (KeyValuePair<string, Hjson.JsonValue>)oneValue;
                 SimplePreLoadData spd = JsonSerializer.Deserialize<SimplePreLoadData>(rrr.Value.ToString())!;
+                SPLDTaiWanOrHongKong(spd);
                 PLDS.Add(spd);
             }
             await SQLiteExtract.UpdateData(_sQLiteExtract, PLDS);
@@ -76,5 +77,15 @@ namespace TranslatorLibrary.Tools
         }
         #endregion Hjson
 
+        /// <summary>
+        /// 判断spld对象的TaiWan与HongKong是否为空串 是的话就替换为普通中文
+        /// </summary>
+        private static void SPLDTaiWanOrHongKong(SimplePreLoadData spld)
+        {
+            if (string.IsNullOrEmpty(spld.TaiWan))
+                spld.TaiWan = spld.Chinese;
+            if (string.IsNullOrEmpty(spld.HongKong))
+                spld.HongKong = spld.Chinese;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using SQLite;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -77,20 +78,23 @@ namespace TranslatorLibrary.AllServices.Services
             if (string.IsNullOrWhiteSpace(methodName)) mn = true;
             if (string.IsNullOrWhiteSpace(counte)) en = true;
 
+            if (save == SaveMode.All) {
+                var list = await Connection.Table<PreLoadData>()
+                    .Where(f => !string.IsNullOrEmpty(f.Chinese))
+                    .ToListAsync();
 
-            if (save == SaveMode.Write) {
-                return await Connection.Table<PreLoadData>()
-                .Where(f => cn || f.ClassName.Contains(className))
-                .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
-                .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
-                .Where(f => !string.IsNullOrEmpty(f.Chinese))
-                .ToArrayAsync();
+                return list.Select(Select).ToArray();
             }
 
-            if (save == SaveMode.All) {
-                return await Connection.Table<PreLoadData>()
-                    .Where(f => !string.IsNullOrEmpty(f.Chinese))
-                    .ToArrayAsync();
+            #region 垃圾代码 可以简化表达式树
+            if (save == SaveMode.Write) {
+                var list = await Connection.Table<PreLoadData>()
+                     .Where(f => cn || f.ClassName.Contains(className))
+                     .Where(f => mn || f.MethodName.Contains(methodName)/* == methodName*/)
+                     .Where(f => en || f.English.Contains(counte)/*f.English == counte*/)
+                     .Where(f => !string.IsNullOrEmpty(f.Chinese))
+                     .ToListAsync();
+                return list.Select(Select).ToArray();
             }
 
 
@@ -113,8 +117,18 @@ namespace TranslatorLibrary.AllServices.Services
                     .Skip(skip)
                     .Take(take)
                     .ToArrayAsync();
+            #endregion
         }
 
+        private static PreLoadData Select(PreLoadData f)
+        {
+            if (string.IsNullOrEmpty(f.TaiWan))
+                f.TaiWan = f.Chinese;
+            if (string.IsNullOrEmpty(f.HongKong))
+                f.HongKong = f.Chinese;
+            return f;
+        }
+        
         public Task Delete()
         {
             throw new NotImplementedException();
@@ -213,6 +227,7 @@ namespace TranslatorLibrary.AllServices.Services
                 var 判断对象 = new 判断对象 { IsShow = isShow, upId = -1L, currId = -1L };
                 var 最大ID = await sqlCon.CountAsync();
                 foreach (var spd in spds) {
+                    //pld是老数据
                     PreLoadData pld = await sqlCon.FirstOrDefaultAsync(f => f.Id == spd.Id);
                     判断对象.upId = 判断对象.currId;
                     判断对象.currId = pld.Id;
@@ -220,6 +235,8 @@ namespace TranslatorLibrary.AllServices.Services
                         if (pld.ClassName == spd.ClassName) {
                             pld.English = spd.English;
                             pld.Chinese = spd.Chinese;
+                            pld.TaiWan = spd.TaiWan;
+                            pld.HongKong = spd.HongKong;
                             await sql.Connection.UpdateAsync(pld);//更新
                         }
                         if (/*判断对象.upId == -1L || */判断对象.currId == -1L)

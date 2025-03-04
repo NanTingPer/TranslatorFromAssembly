@@ -19,9 +19,23 @@ namespace TranslatorLibrary.ModelClass
         [JsonPropertyName("Chinese")]
         public string Chinese { get; set; } = string.Empty;
 
+        [JsonPropertyName("HongKong")]
+        public string HongKong { get; set; } = string.Empty;
+
+        [JsonPropertyName("TaiWan")]
+        public string TaiWan { get; set; } = string.Empty;
+
         public static SimplePreLoadData ToSimplePreLoadData(PreLoadData r)
         {
-            return new SimplePreLoadData() { Chinese = r.Chinese, English = r.English, ClassName = r.ClassName, Id = r.Id };
+            return new SimplePreLoadData()
+            {
+                Chinese = r.Chinese,
+                English = r.English,
+                ClassName = r.ClassName,
+                Id = r.Id,
+                TaiWan = r.TaiWan,
+                HongKong = r.HongKong
+            };
         }
 
         public int Compare(SimplePreLoadData? x, SimplePreLoadData? y)

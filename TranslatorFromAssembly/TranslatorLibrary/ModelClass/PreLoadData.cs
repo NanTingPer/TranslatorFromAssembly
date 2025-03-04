@@ -48,6 +48,13 @@ namespace TranslatorLibrary.ModelClass
         [JsonPropertyName("Translator")]
         public string Chinese { get; set; } = string.Empty;
 
+        [SQLite.Column("hongkong")]
+        [JsonPropertyName("HongKong")]
+        public string HongKong { get; set; } = string.Empty;
+
+        [SQLite.Column("taiwan")]
+        [JsonPropertyName("TaiWan")]
+        public string TaiWan { get; set; } = string.Empty;
         /// <summary>
         /// 纯机翻
         /// </summary>

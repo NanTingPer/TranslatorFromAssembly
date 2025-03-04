@@ -87,6 +87,47 @@ namespace TranslatorLibrary.AllViewModel
             IndexText = Config.GetConf(LastDLLConfKey)!;
         }
 
+
+
+        /// <summary>
+        /// 将内容插入数据库
+        /// </summary>
+        private async Task SetSQLiteExtract()
+        {
+            PageNum = 0;
+            string[] strs = Path.GetFileName(IndexText).Split(".");
+            if (strs[1] is "dll") {
+                ModEnglishList.Clear();
+
+                //载入空数据 防止无法加载
+                for (int i = 0; i < 10; i++)
+                    ModEnglishList.Add(new());
+
+                await CreateSQLiteExtractDataBase(strs[0]);
+                List<PreLoadData> tempList = await _ilService.GetAssemblyILStringAsync(IndexText);
+
+                //寻找是否存在Hjson文件 存在先把数据干进去
+                await HjsonToSQLite(strs[0], _sQLiteExtract);
+
+                //直接添加
+                await _sQLiteExtract.AddDataAsync(tempList);
+
+                //将数据保存为Hjson
+                PreLoadData[] plds = await _sQLiteExtract.GetDataAsync(0,0,save: PublicProperty.SaveMode.ReallAll);
+                SaveToHjson(plds, strs[0]);
+
+                await GetAssemblyStr();
+
+                
+            }
+            pageCount = await _sQLiteExtract.PageCountAsync();
+            PageNum = 1;
+            InitaDataList();
+            return;
+        }
+
+
+        #region 无什么大用了
         /// <summary>
         /// 获取单词翻译
         /// </summary>
@@ -151,42 +192,6 @@ namespace TranslatorLibrary.AllViewModel
             }
         }
 
-        /// <summary>
-        /// 将内容插入数据库
-        /// </summary>
-        private async Task SetSQLiteExtract()
-        {
-            PageNum = 0;
-            string[] strs = Path.GetFileName(IndexText).Split(".");
-            if (strs[1] is "dll") {
-                ModEnglishList.Clear();
-
-                //载入空数据 防止无法加载
-                for (int i = 0; i < 10; i++)
-                    ModEnglishList.Add(new());
-
-                await CreateSQLiteExtractDataBase(strs[0]);
-                List<PreLoadData> tempList = await _ilService.GetAssemblyILStringAsync(IndexText);
-
-                //寻找是否存在Hjson文件 存在先把数据干进去
-                await HjsonToSQLite(strs[0], _sQLiteExtract);
-
-                //直接添加
-                await _sQLiteExtract.AddDataAsync(tempList);
-
-                //将数据保存为Hjson
-                PreLoadData[] plds = await _sQLiteExtract.GetDataAsync(0,0,save: PublicProperty.SaveMode.ReallAll);
-                SaveToHjson(plds, strs[0]);
-
-                await GetAssemblyStr();
-
-                
-            }
-            pageCount = await _sQLiteExtract.PageCountAsync();
-            PageNum = 1;
-            InitaDataList();
-            return;
-        }
 
         /// <summary>
         /// 初始化显示视图
@@ -200,7 +205,7 @@ namespace TranslatorLibrary.AllViewModel
                 ModEnglishList.RemoveAt(0);
             }
         }
-
+        #endregion
         private async Task CreateSQLiteExtractDataBase(string name)
         {
             await _sQLiteExtract.CreateDatabaseAsync(name);

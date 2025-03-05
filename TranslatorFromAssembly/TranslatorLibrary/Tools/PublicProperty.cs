@@ -23,7 +23,7 @@ namespace TranslatorLibrary.Tools
         /// <para>第一个Kv对中，Key是类名</para>
         /// <para>第二个Kv对中，Key是方法名，List是该方法的全部内容</para>
         /// </summary>
-        public static Dictionary<string, Dictionary<string, List<Tuple<string, string>>>> WriteMap { get; set; } = new();
+        public static Dictionary<string, Dictionary<string, List<英汉台港>>> WriteMap { get; set; } = new();
 
         /// <summary>
         /// 公共的 用来存储要被GridData显示的项目

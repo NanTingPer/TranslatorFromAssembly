@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
-using Hjson;
 using System.Text;
-using System.Text.Json;
+using static TranslatorLibrary.Tools.HjsonSerializer;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -52,7 +51,10 @@ namespace TranslatorLibrary.AllViewModel
                 string.IsNullOrWhiteSpace(MyModPath)) { return; }
             await _writeFileService.CreateWriteMap(_sQLiteExtract, listBoxOption!.FileName); //这FileName在不改文件名的情况下就是ModName
             _writeFileService.WriteFile(MyModPath, TarGetModName, MyModName);
-
+            #region 导出为Hjson
+            var datas = await _sQLiteExtract.GetDataAsync(0, 0, save: PublicProperty.SaveMode.ReallAll);
+            SaveToHjson(datas, listBoxOption.FileName);
+            #endregion
             Config.SetConf(listBoxOption.FileName + MyModNameConf, MyModName); //设置自己的模组名称与自己的模组名称匹配
             string? path = Path.GetDirectoryName(MyModPath);//ModSource文件夹目录
             if (path is not null)
@@ -86,7 +88,7 @@ namespace TranslatorLibrary.AllViewModel
             PublicProperty.LoadAllDataFileToDataFilePaths();
         }
 
-        //保持到临时文件
+        #region 保持到临时文件
         private async void SaveToSwitch()
         {
             string savePath = Path.Combine(Path.GetTempPath(), TarGetModName + ".txt");
@@ -127,6 +129,7 @@ namespace TranslatorLibrary.AllViewModel
             });
 
         }
+        #endregion
 
         private static byte[] StrToBytes(string str)
         {

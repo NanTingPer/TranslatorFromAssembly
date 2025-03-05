@@ -99,11 +99,23 @@ namespace TranslatorLibrary.AllServices.Services
             var map = PublicProperty.WriteMap;
 
             #region 构建汉化内容存储的文件 并创建头内容
-            var tarGetFileName = ModName + "Translator.cs";
-            var writeTarGet = Path.Combine(filePath, tarGetFileName);
-            if(File.Exists(writeTarGet))
-                File.Delete(writeTarGet);
+            var tarGetFileName = ModName + "Translator.cs"; //LocalTextTranslator.cs
+            var HongKongHjsonFileName = "IL_" + ModName + "hk.hjson";
+            var TawiWanHjsonFileName = "IL_" + ModName + "tw.hjson";
+            var CnZhHjsonFileName = "IL_" + ModName + "zh.hjson";
+            var writeTarGet = Path.Combine(filePath, tarGetFileName); // LocalText/LocalTextTranslator/LocalTextTranslator.cs
+            var HKHjson = Path.Combine(filePath, HongKongHjsonFileName);
+            var TWHjson = Path.Combine(filePath, TawiWanHjsonFileName);
+            var ZHHjson = Path.Combine(filePath, CnZhHjsonFileName);
+
+            if (File.Exists(writeTarGet)) File.Delete(writeTarGet);
+            if (File.Exists(HKHjson)) File.Delete(HKHjson);
+            if (File.Exists(TWHjson)) File.Delete(TWHjson);
+            if (File.Exists(ZHHjson)) File.Delete(ZHHjson);
             using var Write = File.Create(writeTarGet);
+            using var HKWrite = File.Create(HKHjson);
+            using var TWWrite = File.Create(TWHjson);
+            using var ZHWrite = File.Create(ZHHjson);
             WriteTo(Write, MyModName, rootPath, tarGetFileName.Split(".")[0], ModName);
             #endregion 构建汉化内容存储的文件
 
@@ -129,13 +141,23 @@ namespace TranslatorLibrary.AllServices.Services
                     var 内容 = value.Value;
                     //填入全类名 还有方法名
                     //ClassName 全类名 value.Key 方法名
-                    Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem.Replace("/", "+")}\", \"{value.Key}\", new ()"));
+                    string classname = ClassNaem.Replace("/", "+");
+                    Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{classname}\", \"{value.Key}\", new ()"));
                     Write.Write(StringToByte("\t\t\t\t{"));
                     Write.Flush();
-                    foreach (Tuple<String, String> tpule in 内容)
+                    //Item1是英文内容，Item2是中文内容
+                    foreach (英汉台港 英汉台港 in 内容)
                     {
-                        Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + tpule.Item1.Replace("\n", "\\n") + "\"" + "," + "\"" + tpule.Item2.Replace("\n", "\\n") + "\"" + "},"));
+                        //这里需要改成本地化键的键，内容是英文内容
+                        //Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + 英汉台港.英文.Replace("\n", "\\n") + "\"" + "," + "\"" + 英汉台港.中文.Replace("\n", "\\n") + "\"" + "},"));
+                        //{"ModName.classname.methodname.english","ENGLISH"},
+                        Write.Write(StringToByte("\t\t\t\t\t{\"" + ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + "\"," + "\"" + 英汉台港.英文 + "\"},"));
+                        HKWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.香港));
+                        TWWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.台湾));
+                        ZHWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.中文));
                         Write.Flush();
+                        HKWrite.Flush();
+                        TWWrite.Flush();
                     }
                     Write.Write(StringToByte("\t\t\t\t});"));
                 }
@@ -151,8 +173,16 @@ namespace TranslatorLibrary.AllServices.Services
             Write.Write(StringToByte("\t\t}"));
             Write.Write(StringToByte("\t}"));
             Write.Write(StringToByte("}"));
+            #region 关闭流
             Write.Dispose();
+            HKWrite.Dispose();
+            TWWrite.Dispose();
+            ZHWrite.Dispose();
             Write.Close();
+            HKWrite.Close();
+            TWWrite.Close();
+            ZHWrite.Close();
+            #endregion
             //构建Mod主类文件
             BuildModFile(ModRootClassPath);
 
@@ -302,52 +332,45 @@ namespace TranslatorLibrary.AllServices.Services
         /// 构造 WriteMap 需要传入一个dataBase的名称
         /// </summary>
         /// <param name="dataBaseName"></param>
-        public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract,string dataBaseName)
+        public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, string dataBaseName)
         {
             await sQLiteExtract.CreateDatabaseAsync(dataBaseName);
             await HjsonSerializer.HjsonToSQLite(dataBaseName, sQLiteExtract);
-            PreLoadData[] data = await sQLiteExtract.GetDataAsync(0, 0, save : PublicProperty.SaveMode.Write);
+            PreLoadData[] data = await sQLiteExtract.GetDataAsync(0, 0, save: PublicProperty.SaveMode.Write);
 
             var e = PublicProperty.WriteMap;
 
-            foreach (var item in data)
-            {
-                if (e.ContainsKey(item.ClassName))
-                {
+            foreach (var item in data) {
+                if (e.ContainsKey(item.ClassName)) {
 
                     //获取值 存在是一定有值的
-                    if(e.TryGetValue(item.ClassName,out var value))
-                    {
+                    if (e.TryGetValue(item.ClassName, out var value)) {
 
                         //判断是否存在指定方法
-                        if (value.ContainsKey(item.MethodName))
-                        {
-                            if(value.TryGetValue(item.MethodName,out var 内容))
-                            {
-                                内容.Add(Tuple.Create(item.English, item.Chinese));
+                        if (value.ContainsKey(item.MethodName)) {
+                            if (value.TryGetValue(item.MethodName, out var 内容)) {
+                                内容.Add(new 英汉台港(item.English, item.Chinese, item.TaiWan, item.HongKong, item.Id)/*Tuple.Create(item.English, item.Chinese)*/);
                             }
-                        } 
+                        }
                         //不存在指定方法 那就创建 同时赋值
-                        else
-                        {
+                        else {
                             var method = item.MethodName;
-                            var tuple2 = Tuple.Create(item.English, item.Chinese);
-                            List<Tuple<string, string>> list = [];
+                            var tuple2 = new 英汉台港(item.English, item.Chinese, item.TaiWan, item.HongKong, item.Id);
+                            List<英汉台港> list = [];
                             list.Add(tuple2);
                             value.Add(method, list);
                         }
                     }
                 }
                 //不存在指定类
-                else
-                {
+                else {
                     var calssname = item.ClassName;
                     var methodname = item.MethodName;
-                    var 内容 = Tuple.Create(item.English, item.Chinese);
-                    List<Tuple<string, string>> list = [];
+                    var 内容 = new 英汉台港(item.English, item.Chinese, item.TaiWan, item.HongKong, item.Id);
+                    List<英汉台港> list = [];
                     list.Add(内容);
 
-                    Dictionary<string, List<Tuple<string, string>>> map = [];
+                    Dictionary<string, List<英汉台港>> map = [];
                     map.Add(methodname, list);
 
                     e.Add(calssname, map);
@@ -389,7 +412,7 @@ namespace TranslatorLibrary.AllServices.Services
             //要被汉化的模组的名称
             Write.Write(StringToByte($"\t\tprivate class {ModName}" + "{}"));
 
-            //延迟加载
+            //选择性加载与JIT
             Write.Write(StringToByte($"\t\t[ExtendsFromMod(\"{ModName}\"), JITWhenModsEnabled(\"{ModName}\")]"));
 
             Write.Write(StringToByte($"\t\tprivate class TranslatorLoad : ForceLocalizeSystem<{ModName}, TranslatorLoad>" + "{}"));

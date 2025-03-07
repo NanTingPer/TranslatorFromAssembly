@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using TranslatorLibrary.AllServices.IServices;
 using TranslatorLibrary.ModelClass;
@@ -43,12 +44,15 @@ namespace TranslatorLibrary.AllViewModel
         private ISQLiteService _sqliteService;
         private IILService _ilService;
         private ISQLiteExtract<PreLoadData> _sQLiteExtract;
+        private IRootViewCut _rootViewCut;
         private string _indexText = string.Empty;
         public ICommand CommandGetTranslator { get; }
         public ICommand PitchsCommand { get; }
         public ICommand GetAssemblyStrCommand { get; }
         public ICommand GetAssemblyStrPgDnCommand { get; }
         public ICommand SetSQLiteExtractCommand { get; }
+        public ICommand GotSaveViewCommand { get; }
+        public ICommand OpenFilePathCommand { get; }
 
         /// <summary>
         /// 用来显示项目
@@ -71,17 +75,20 @@ namespace TranslatorLibrary.AllViewModel
         public string IndexText { get => _indexText; set { SetProperty(ref _indexText, value); Config.SetConf(LastDLLConfKey, _indexText); } }
 
         public int PageNum { get => pageNum; set => SetProperty(ref pageNum, value); }
-        public DLLViewModel(ISQLiteService sqliteService, IILService iLService, ISQLiteExtract<PreLoadData> liteExtract)
+        public DLLViewModel(ISQLiteService sqliteService, IILService iLService, ISQLiteExtract<PreLoadData> liteExtract, IRootViewCut viewcut)
         {
             _sqliteService = sqliteService;
             _ilService = iLService;
             _sQLiteExtract = liteExtract;
+            _rootViewCut = viewcut;
             CommandGetTranslator = new AsyncRelayCommand(GetTranslator);
             PitchsCommand = new RelayCommand<object>(GetPitchs!);
             GetAssemblyStrCommand = new AsyncRelayCommand(GetAssemblyStr);
             SetSQLiteExtractCommand = new AsyncRelayCommand(SetSQLiteExtract);
             GetAssemblyStrPgDnCommand = new AsyncRelayCommand(GetAssemblyStrPgDn);
-            if(Config.GetConf(LastDLLConfKey) is null) {
+            OpenFilePathCommand = new RelayCommand(OpenFilePath);
+            GotSaveViewCommand = new RelayCommand(GoToSaveView);
+            if (Config.GetConf(LastDLLConfKey) is null) {
                 Config.SetConf(LastDLLConfKey, "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModReader\\目标模组名\\目标.dll");
             }
             IndexText = Config.GetConf(LastDLLConfKey)!;
@@ -121,7 +128,20 @@ namespace TranslatorLibrary.AllViewModel
             return;
         }
 
+        private void GoToSaveView()
+        {
+            _rootViewCut.ViewCut("SaveViewModel");
+        }
 
+        private void OpenFilePath()
+        {
+            Process.Start(new ProcessStartInfo() 
+            { 
+                FileName = "explorer.exe", 
+                Arguments = GetAppFilePath.GetPath(), 
+                UseShellExecute = true 
+            });
+        }
         #region 无什么大用了
         /// <summary>
         /// 获取单词翻译
@@ -179,7 +199,7 @@ namespace TranslatorLibrary.AllViewModel
         /// 项目被选中 触发 并载入(加载) Pitchs
         /// </summary>
         /// <param name="args"></param>
-        public void GetPitchs(object args)
+        private void GetPitchs(object args)
         {
             IList tempIEn = (IList)args;
             foreach (var item in tempIEn) {

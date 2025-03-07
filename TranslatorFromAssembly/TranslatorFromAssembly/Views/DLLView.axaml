@@ -9,35 +9,63 @@
     d:DesignWidth="800"
     DataContext="{Binding DLLViewModel, Source={StaticResource ServiceLocator}}"
     mc:Ignorable="d">
+
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+    </UserControl.Styles>
+
     <Grid ColumnDefinitions="*">
         <!--  0是头 1是文本框(URL) 2是确定按钮 3是list 4是上下  -->
-        <Grid Grid.Column="0" RowDefinitions="0.5*,0.6*,0.6*,7.7*,0.6*">
+        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
             <Label Grid.Row="0" Background="Linen" />
             <TextBox
                 x:Name="IndexText"
                 Grid.Row="1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
                 AcceptsReturn="True"
-                CornerRadius="0"
-                FontSize="14"
+                FontSize="22"
                 Text="{Binding IndexText}"
                 TextWrapping="Wrap" />
 
             <Button
                 Grid.Row="2"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
                 Command="{Binding SetSQLiteExtractCommand}"
                 Content="确定"
-                CornerRadius="0"
-                FontSize="22"
                 IsVisible="True" />
 
+            <Button
+                Grid.Row="3"
+                Command="{Binding GotSaveViewCommand}"
+                Content="导出硬编码"
+                IsVisible="True" />
+
+            <Button
+                Grid.Row="4"
+                Command="{Binding OpenFilePathCommand}"
+                Content="打开资源文件夹"
+                IsVisible="True" />
+
+
+
+            <!--
             <DataGrid
                 x:Name="grid"
                 Grid.Row="3"
@@ -56,8 +84,10 @@
                     </EventTriggerBehavior>
                 </Interaction.Behaviors>
                 <DataGrid.Columns>
-                    <!--
-                  <DataGridTextColumn Binding="{Binding Id}" Header="ID" />-->
+            -->
+
+            <!--<DataGridTextColumn Binding="{Binding Id}" Header="ID" />-->
+            <!--
                     <DataGridTextColumn Binding="{Binding ModName}" Header="模组名称" />
                     <DataGridTextColumn Binding="{Binding ClassName}" Header="类名称" />
                     <DataGridTextColumn Binding="{Binding MethodName}" Header="方法名称" />
@@ -66,8 +96,8 @@
                     <DataGridTextColumn Binding="{Binding AutoChinese}" Header="机翻" />
                 </DataGrid.Columns>
             </DataGrid>
-
-
+            -->
+            <!--
             <Grid Grid.Row="4" ColumnDefinitions="4.5*,auto,4.5*">
                 <Button
                     Grid.Column="0"
@@ -100,8 +130,7 @@
                     Content="下一页"
                     CornerRadius="0"
                     FontSize="20" />
-            </Grid>
-
+            </Grid>-->
         </Grid>
     </Grid>
 </UserControl>

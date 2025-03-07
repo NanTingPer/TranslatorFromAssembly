@@ -43,8 +43,6 @@
 
                 <Grid Grid.Row="0" ColumnDefinitions="30,60,auto,60,auto,60,auto,70,100,100,100,*">
                     <Button
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
                         Command="{Binding IsPaneOpenMethodCommand}"
                         Content="三"
                         CornerRadius="0">
@@ -138,27 +136,15 @@
                     <Grid Grid.Row="2" ColumnDefinitions="5*,auto,5*">
                         <Button
                             Grid.Column="0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
                             Command="{Binding GetAssemblyStr_PgUpCommand}"
                             Content="上一页"
                             CornerRadius="0" />
                         <TextBox
                             Grid.Column="1"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
                             BorderThickness="0"
                             CornerRadius="0" />
                         <Button
                             Grid.Column="2"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
                             Command="{Binding GetAssemblyStr_PgDnCommand}"
                             Content="下一页"
                             CornerRadius="0" />

@@ -14,6 +14,12 @@ namespace TranslatorLibrary.AllServices.IServices
         /// <returns></returns>
         Task LoadHjsonAsync(string path);
 
+        /// <summary>
+        /// 保存Hjson到给定路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="sQLiteExtract"></param>
+        /// <returns></returns>
         Task SaveHjsonAsync(string path,ISQLiteExtract<HjsonModel> sQLiteExtract);
     }
 }

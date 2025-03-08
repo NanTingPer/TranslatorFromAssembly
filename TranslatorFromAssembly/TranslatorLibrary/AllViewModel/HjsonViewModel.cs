@@ -56,6 +56,7 @@ namespace TranslatorLibrary.AllViewModel
                 foreach (var item in FilePath) {
                     await _hjsonProcess.LoadHjsonAsync(item.FilePath);
                 }
+                FilePath.Clear();
             }
         }
     }

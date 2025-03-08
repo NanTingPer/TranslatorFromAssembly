@@ -35,6 +35,9 @@ namespace TranslatorLibrary.ModelClass
         [SQLite.Column("chinese")]
         public string Chinese { get; set; } = string.Empty;
 
+        public string TaiWan { get; set; } = string.Empty;
+        public string HongKong { get; set; } = string.Empty;
+
         /// <summary>
         /// 上一次的中文值
         /// </summary>

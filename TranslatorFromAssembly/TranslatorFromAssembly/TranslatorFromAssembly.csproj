@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TranslatorLibrary\TranslatorLibrary.csproj" />
+    <ProjectReference Include="..\TranslatorFromAssembly.ViewModels\TranslatorFromAssembly.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

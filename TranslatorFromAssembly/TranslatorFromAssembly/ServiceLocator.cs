@@ -3,11 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using TranslatorFromAssembly.AllService;
 using TranslatorFromAssembly.Models;
-using TranslatorLibrary.AllServices.IServices;
-using TranslatorLibrary.AllServices.Services;
-using TranslatorLibrary.AllServices.Services.SQLiteServices;
-using TranslatorLibrary.AllViewModel;
-using TranslatorLibrary.ModelClass;
+using TranslatorFormAssembly.Models;
+using TranslatorFromAssembly.Services.Services;
+using TranslatorFromAssembly.Services.IServices;
+using TranslatorFromAssembly.ViewModels;
 
 namespace TranslatorFromAssembly
 {
@@ -43,7 +42,7 @@ namespace TranslatorFromAssembly
         public MainWindowModel? MainWindowModel => _serviceProvider.GetService<MainWindowModel>();
         public MainViewModel? MainViewModel => _serviceProvider.GetService<MainViewModel>();
 
-        public ListViewModel? ListViewModel => _serviceProvider.GetService<ListViewModel>();
+        //public ListViewModel? ListViewModel => _serviceProvider.GetService<ListViewModel>();
         public SaveViewModel? SaveViewModel => _serviceProvider.GetService<SaveViewModel>();
         public HjsonViewModel? HjsonViewModel => _serviceProvider.GetService<HjsonViewModel>();
         public HjsonEditViewModel? HjsonEditViewModel => _serviceProvider.GetService<HjsonEditViewModel>();
@@ -76,7 +75,7 @@ namespace TranslatorFromAssembly
             _services.AddSingleton<DLLViewModel>();
             _services.AddSingleton<MainWindowModel>();
             _services.AddSingleton<MainViewModel>();
-            _services.AddSingleton<ListViewModel>();
+            //_services.AddSingleton<ListViewModel>();
             _services.AddSingleton<SaveViewModel>();
             _services.AddSingleton<HjsonViewModel>();
             _services.AddSingleton<HjsonEditViewModel>();

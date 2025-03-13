@@ -1,8 +1,8 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 using TranslatorFromAssembly.AllService;
-using TranslatorLibrary.AllServices.IServices;
-using TranslatorLibrary.AllViewModel;
+using TranslatorFromAssembly.Services.IServices;
+using TranslatorFromAssembly.ViewModels;
 
 namespace TranslatorFromAssembly.Models
 {

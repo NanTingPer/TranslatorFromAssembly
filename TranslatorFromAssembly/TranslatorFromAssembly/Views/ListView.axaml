@@ -16,7 +16,8 @@
     </Interaction.Behaviors>
 
     <!--  OpenPaneLength="{Binding Source={x:Static app:App.PaneSiezs[0]}}  -->
-    <UserControl.Styles>
+    <!--
+<UserControl.Styles>
         <Style Selector="Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -117,8 +118,10 @@
                         </Interaction.Behaviors>
 
                         <DataGrid.Columns>
-                            <!--<DataGridTextColumn Binding="{Binding Id}" Header="ID" />-->
-                            <DataGridTextColumn Binding="{Binding ModName}" Header="模组名称" />
+    -->
+    <!--<DataGridTextColumn Binding="{Binding Id}" Header="ID" />-->
+    <!--
+<DataGridTextColumn Binding="{Binding ModName}" Header="模组名称" />
                             <DataGridTextColumn Binding="{Binding ClassName}" Header="类名称" />
                             <DataGridTextColumn Binding="{Binding MethodName}" Header="方法名称" />
                             <DataGridTextColumn Binding="{Binding English}" Header="英文" />
@@ -128,11 +131,12 @@
                                 Header="中文"
                                 IsReadOnly="False" />
                             <DataGridTextColumn Binding="{Binding IsShow}" Header="1不显示" />
-                            <!--<DataGridTextColumn Binding="{Binding AutoChinese}" Header="机翻" />-->
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <!--  最下面的三个小玩意  -->
+    -->
+    <!--<DataGridTextColumn Binding="{Binding AutoChinese}" Header="机翻" />-->
+    <!--</DataGrid.Columns>
+                    </DataGrid>    -->
+    <!--  最下面的三个小玩意  -->
+    <!--
                     <Grid Grid.Row="2" ColumnDefinitions="5*,auto,5*">
                         <Button
                             Grid.Column="0"
@@ -186,4 +190,5 @@
         </SplitView.Pane>
 
     </SplitView>
+</UserControl>    -->
 </UserControl>

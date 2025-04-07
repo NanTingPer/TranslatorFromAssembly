@@ -34,8 +34,16 @@ namespace TranslatorFromAssembly.Services.Services
             List<PreLoadData> TempList = new List<PreLoadData>();
             ModuleDefinition DLLModule = ModuleDefinition.ReadModule(dllPath);
             List<MethodDefinition> AllMethod = [];
-            foreach (var type in DLLModule.GetTypes()) {
-                AllMethod.AddRange(type.GetMethods().AsEnumerable());
+            //List<MemberReference>? MemberRefs = DLLModule.GetMemberReferences().ToList();
+            //foreach (var memref in MemberRefs) {
+            //    if(memref is MethodReference methodRef) {
+            //        AllMethod.Add(methodRef.Resolve());
+            //    }
+            //}
+            foreach (TypeDefinition TypeDef in DLLModule.GetAllTypes()) {
+                foreach (var MethodDef in TypeDef.Methods) {
+                    AllMethod.Add(MethodDef);
+                }
             }
             foreach (var method in AllMethod) {
                 TypeDefinition type = method.DeclaringType;

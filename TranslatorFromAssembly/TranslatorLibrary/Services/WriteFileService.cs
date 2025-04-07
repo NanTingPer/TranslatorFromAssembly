@@ -55,20 +55,17 @@ namespace TranslatorFromAssembly.Services.Services
             string[] files = Directory.GetFiles(ModRootPath);                                   //获取跟目录下的全部文件
             string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));//寻找模组主类
             //备份原始 模组.cs文件
-            if (tarGetFile != null)
-            {
+            if (tarGetFile != null) {
                 int a = 0;
                 string bakFile = tarGetFile + ".bak";
                 string newBakFile = string.Empty;
 
-                do
-                {
+                do {
                     newBakFile = bakFile + a;
                     a++;
                 } while (File.Exists(newBakFile));
 
-                if (!File.Exists(newBakFile))
-                {
+                if (!File.Exists(newBakFile)) {
                     File.Create(newBakFile).Dispose();
                 }
                 //将tarGetFile替换给bakFile 备份为他自己
@@ -79,15 +76,13 @@ namespace TranslatorFromAssembly.Services.Services
 
             #region 资源转移
             Stream? dll = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
-            if(dll is not null)
-            {
+            if (dll is not null) {
                 string tempDric = Path.Combine(ModRootPath, "Systems");
                 //文件夹不存在就创建
-                if(!Directory.Exists(tempDric)) Directory.CreateDirectory(tempDric);
-                string tempFile  = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
+                if (!Directory.Exists(tempDric)) Directory.CreateDirectory(tempDric);
+                string tempFile = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
                 //资源没有转移就转移
-                if (!File.Exists(tempFile))
-                {
+                if (!File.Exists(tempFile)) {
                     Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
                     dll.CopyTo(newStream);
                     newStream.Close();
@@ -128,15 +123,13 @@ namespace TranslatorFromAssembly.Services.Services
             #endregion
 
 
-            foreach (var item in map)
-            {
+            foreach (var item in map) {
                 ClassNaem = item.Key;
                 Write.Write(StringToByte($"\t\t\t\t#region {ClassNaem}"));
                 //方法名称 内容
                 var Translat = item.Value;
                 #region 开始输出
-                foreach (var value in Translat)
-                {
+                foreach (var value in Translat) {
                     MethodName = value.Key;
                     var 内容 = value.Value;
                     //填入全类名 还有方法名
@@ -146,8 +139,7 @@ namespace TranslatorFromAssembly.Services.Services
                     Write.Write(StringToByte("\t\t\t\t{"));
                     Write.Flush();
                     //Item1是英文内容，Item2是中文内容
-                    foreach (英汉台港 英汉台港 in 内容)
-                    {
+                    foreach (英汉台港 英汉台港 in 内容) {
                         //这里需要改成本地化键的键，内容是英文内容
                         //Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + 英汉台港.英文.Replace("\n", "\\n") + "\"" + "," + "\"" + 英汉台港.中文.Replace("\n", "\\n") + "\"" + "},"));
                         //{"ModName.classname.methodname.english","ENGLISH"},
@@ -348,14 +340,14 @@ namespace TranslatorFromAssembly.Services.Services
 
                         //判断是否存在指定方法
                         if (value.ContainsKey(item.MethodName)) {
-                            if (value.TryGetValue(item.MethodName, out var 内容)) {
-                                内容.Add(new 英汉台港(item.English, item.Chinese, item.TaiWan, item.HongKong, item.Id)/*Tuple.Create(item.English, item.Chinese)*/);
+                            if (value.TryGetValue(item.MethodName, out List<英汉台港>? 内容)) {
+                                内容.Add(CreateYHTG(item))/*Tuple.Create(item.English, item.Chinese)*/;
                             }
                         }
                         //不存在指定方法 那就创建 同时赋值
                         else {
                             var method = item.MethodName;
-                            var tuple2 = new 英汉台港(item.English, item.Chinese, item.TaiWan, item.HongKong, item.Id);
+                            var tuple2 = CreateYHTG(item);
                             List<英汉台港> list = [];
                             list.Add(tuple2);
                             value.Add(method, list);
@@ -366,7 +358,7 @@ namespace TranslatorFromAssembly.Services.Services
                 else {
                     var calssname = item.ClassName;
                     var methodname = item.MethodName;
-                    var 内容 = new 英汉台港(item.English, item.Chinese, item.TaiWan, item.HongKong, item.Id);
+                    var 内容 = CreateYHTG(item);
                     List<英汉台港> list = [];
                     list.Add(内容);
 
@@ -379,6 +371,11 @@ namespace TranslatorFromAssembly.Services.Services
             }
         }
 
+        private static 英汉台港 CreateYHTG(PreLoadData item)
+        {
+            return new 英汉台港(转义(item.English), 转义(item.Chinese), 转义(item.TaiWan), 转义(item.HongKong), item.Id);
+        }
+        private static string 转义(string str) => str.Replace("\n", @"\n");
         private static byte[] StringToByte(string str)
         {
             string str2 = str + "\r\n";
@@ -503,8 +500,7 @@ namespace TranslatorFromAssembly.Services.Services
             #endregion  固定输出
             write.Flush();
 
-            foreach(var item in staticHookList)
-            {
+            foreach (var item in staticHookList) {
                 write.Write(StringToByte($"\t\t\t{item.ClassName}.{item.MethodName}();"));
                 write.Flush();
             }

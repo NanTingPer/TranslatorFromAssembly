@@ -30,6 +30,10 @@ namespace TranslatorFromAssembly.Services.Services
             await _sqLiteExtract.ColseDatabaseAsync();
         }
 
+        /// <summary>
+        /// 给定一个数据库链接
+        /// <para> 将此链接的数据全部导出为Hjson </para>
+        /// </summary>
         public async Task SaveHjsonAsync(string path, ISQLiteExtract<HjsonModel> sQLiteExtract)
         {
             var data = await sQLiteExtract.GetDataAsync(0, 0);

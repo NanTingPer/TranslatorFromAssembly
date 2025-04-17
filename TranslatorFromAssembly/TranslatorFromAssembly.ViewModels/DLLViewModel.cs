@@ -130,11 +130,17 @@ namespace TranslatorFromAssembly.ViewModels
             return;
         }
 
+        /// <summary>
+        /// 跳转到报错视图
+        /// </summary>
         private void GoToSaveView()
         {
             _rootViewCut.ViewCut("SaveViewModel");
         }
 
+        /// <summary>
+        /// 打开文件资源路径
+        /// </summary>
         private void OpenFilePath()
         {
             Process.Start(new ProcessStartInfo() 

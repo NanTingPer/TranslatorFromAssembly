@@ -34,7 +34,8 @@ namespace TranslatorLibrary.Tools
         private static async Task 更新载入(string path, ISQLiteExtract<PreLoadData> _sQLiteExtract)
         {
             List<SimplePreLoadData> PLDS = [];
-            Hjson.JsonValue showJsonValue = HJsonValue.Parse(File.ReadAllText(path));
+            string content = File.ReadAllText(path);
+            Hjson.JsonValue showJsonValue = HJsonValue.Parse(content);
             foreach (var oneValue in showJsonValue) { //遍历
                 var rrr = (KeyValuePair<string, Hjson.JsonValue>)oneValue;
                 SimplePreLoadData spd = JsonSerializer.Deserialize<SimplePreLoadData>(rrr.Value.ToString())!;
@@ -44,6 +45,9 @@ namespace TranslatorLibrary.Tools
             await SQLiteExtract.UpdateData(_sQLiteExtract, PLDS);
         }
 
+        /// <summary>
+        /// 将给定的数据，保存为Hjson
+        /// </summary>
         public static void SaveToHjson(PreLoadData[] plds, string modName)
         {
             string iLHjsonDic = Path.Combine(GetAppFilePath.GetPathAndCreate(), "ILHjsoh");

@@ -118,12 +118,19 @@ namespace TranslatorFromAssembly.Services.Services
             #endregion
         }
 
+        /// <summary>
+        /// TODO 要增加则需要
+        /// </summary>
         private static PreLoadData Select(PreLoadData f)
         {
             if (string.IsNullOrEmpty(f.TaiWan))
                 f.TaiWan = f.Chinese;
             if (string.IsNullOrEmpty(f.HongKong))
                 f.HongKong = f.Chinese;
+            if (string.IsNullOrEmpty(f.CSOW))
+                f.CSOW = f.Chinese;
+            if (string.IsNullOrEmpty(f.PCR))
+                f.PCR = f.Chinese;
             return f;
         }
         

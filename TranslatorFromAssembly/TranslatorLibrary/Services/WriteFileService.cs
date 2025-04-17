@@ -98,19 +98,31 @@ namespace TranslatorFromAssembly.Services.Services
             var HongKongHjsonFileName = "IL_" + ModName + "hk.hjson";
             var TawiWanHjsonFileName = "IL_" + ModName + "tw.hjson";
             var CnZhHjsonFileName = "IL_" + ModName + "zh.hjson";
+            var PCRHjsonFileName = "IL_" + ModName + "pcr.hjson";
+            var CSOWHjsonFileName = "IL_" + ModName + "csow.hjson";
+
             var writeTarGet = Path.Combine(filePath, tarGetFileName); // LocalText/LocalTextTranslator/LocalTextTranslator.cs
             var HKHjson = Path.Combine(filePath, HongKongHjsonFileName);
             var TWHjson = Path.Combine(filePath, TawiWanHjsonFileName);
             var ZHHjson = Path.Combine(filePath, CnZhHjsonFileName);
+            var PCRHjson = Path.Combine(filePath, PCRHjsonFileName);
+            var CSOWHjson = Path.Combine(filePath, CSOWHjsonFileName);
+
 
             if (File.Exists(writeTarGet)) File.Delete(writeTarGet);
             if (File.Exists(HKHjson)) File.Delete(HKHjson);
             if (File.Exists(TWHjson)) File.Delete(TWHjson);
             if (File.Exists(ZHHjson)) File.Delete(ZHHjson);
+            if (File.Exists(PCRHjson)) File.Delete(PCRHjson);
+            if (File.Exists(CSOWHjson)) File.Delete(CSOWHjson);
+
             using var Write = File.Create(writeTarGet);
             using var HKWrite = File.Create(HKHjson);
             using var TWWrite = File.Create(TWHjson);
             using var ZHWrite = File.Create(ZHHjson);
+            using var PCRWrite = File.Create(PCRHjson);
+            using var CSOWWrite = File.Create(CSOWHjson);
+
             WriteTo(Write, MyModName, rootPath, tarGetFileName.Split(".")[0], ModName);
             #endregion 构建汉化内容存储的文件
 
@@ -147,9 +159,14 @@ namespace TranslatorFromAssembly.Services.Services
                         HKWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.香港));
                         TWWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.台湾));
                         ZHWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.中文));
+                        PCRWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.害人));
+                        CSOWWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.旧文));
+
                         Write.Flush();
                         HKWrite.Flush();
                         TWWrite.Flush();
+                        PCRWrite.Flush();
+                        CSOWWrite.Flush();
                     }
                     Write.Write(StringToByte("\t\t\t\t});"));
                 }
@@ -170,10 +187,14 @@ namespace TranslatorFromAssembly.Services.Services
             HKWrite.Dispose();
             TWWrite.Dispose();
             ZHWrite.Dispose();
+            PCRWrite.Dispose();
+            CSOWWrite.Dispose();
             Write.Close();
             HKWrite.Close();
             TWWrite.Close();
             ZHWrite.Close();
+            PCRWrite.Close();
+            CSOWWrite.Close();
             #endregion
             //构建Mod主类文件
             BuildModFile(ModRootClassPath);
@@ -373,7 +394,7 @@ namespace TranslatorFromAssembly.Services.Services
 
         private static 英汉台港 CreateYHTG(PreLoadData item)
         {
-            return new 英汉台港(转义(item.English), 转义(item.Chinese), 转义(item.TaiWan), 转义(item.HongKong), item.Id);
+            return new 英汉台港(转义(item.English), 转义(item.Chinese), 转义(item.TaiWan), 转义(item.HongKong), 转义(item.PCR), 转义(item.CSOW),item.Id);
         }
         private static string 转义(string str) => str.Replace("\n", @"\n");
         private static byte[] StringToByte(string str)

@@ -1,3 +1,4 @@
+using SQLite;
 using System.Text.Json.Serialization;
 
 namespace TranslatorFormAssembly.Models
@@ -55,6 +56,15 @@ namespace TranslatorFormAssembly.Models
         [SQLite.Column("taiwan")]
         [JsonPropertyName("TaiWan")]
         public string TaiWan { get; set; } = string.Empty;
+
+        [Column("pcr")]
+        [JsonPropertyName("PCR")]
+        public string PCR { get; set; } = string.Empty;
+
+        [Column("csow")]
+        [JsonPropertyName("CSOW")]
+        public string CSOW { get; set; } = string.Empty;
+
         /// <summary>
         /// 纯机翻
         /// </summary>

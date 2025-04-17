@@ -19,6 +19,12 @@ namespace TranslatorFormAssembly.Models
         [JsonPropertyName("TaiWan")]
         public string TaiWan { get; set; } = string.Empty;
 
+        [JsonPropertyName("PCR")]
+        public string PCR { get; set; } = string.Empty;
+
+        [JsonPropertyName("CSOW")]
+        public string CSOW { get; set; } = string.Empty;
+
         public static SimplePreLoadData ToSimplePreLoadData(PreLoadData r)
         {
             return new SimplePreLoadData()
@@ -28,7 +34,9 @@ namespace TranslatorFormAssembly.Models
                 ClassName = r.ClassName,
                 Id = r.Id,
                 TaiWan = r.TaiWan,
-                HongKong = r.HongKong
+                HongKong = r.HongKong,
+                PCR = r.PCR,
+                CSOW = r.CSOW
             };
         }
 

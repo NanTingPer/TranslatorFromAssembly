@@ -155,7 +155,7 @@ namespace TranslatorFromAssembly.Services.Services
                         //这里需要改成本地化键的键，内容是英文内容
                         //Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + 英汉台港.英文.Replace("\n", "\\n") + "\"" + "," + "\"" + 英汉台港.中文.Replace("\n", "\\n") + "\"" + "},"));
                         //{"ModName.classname.methodname.english","ENGLISH"},
-                        Write.Write(StringToByte("\t\t\t\t\t{\"" + ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + "\"," + "\"" + 英汉台港.英文 + "\"},"));
+                        Write.Write(StringToByte("\t\t\t\t\t{\"" + ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + "\"," /*+ "\""*/ + 英汉台港.英文 + "},"));
                         HKWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.香港));
                         TWWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.台湾));
                         ZHWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.中文));

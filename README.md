@@ -8,9 +8,6 @@
 - 汉化挂钩使用源码[[TerrariaTigerForceLocalizationLib](https://github.com/TigerChenzzz/TerrariaTigerForceLocalizationLib)
   - 文件位于源码目录 : TranslatorFromAssembly/TranslatorFromAssembly/TranslatorLibrary/ForceLocalizeSystem
 
-
-汉化讨论 / 反馈(但愿) : 909428503 (神秘企鹅数字)
-
 ## 特别鸣谢
 
 - [Tigerzzz](https://github.com/TigerChenzzz) 提供技术支持

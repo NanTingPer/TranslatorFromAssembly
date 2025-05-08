@@ -5,7 +5,9 @@
 - 项目使用[AvaloniaUI](https://github.com/AvaloniaUI/Avalonia)
 - 提取部分使用[Mono.Cecil](https://github.com/jbevain/cecil)
 - 文件保存使用[SQLite-net](https://github.com/praeclarum/sqlite-net)
-- 汉化挂钩使用源码[[TerrariaTigerForceLocalizationLib](https://github.com/TigerChenzzz/TerrariaTigerForceLocalizationLib)
+
+(目前已经更改)
+- 汉化挂钩使用源码[TerrariaTigerForceLocalizationLib](https://github.com/TigerChenzzz/TerrariaTigerForceLocalizationLib)
   - 文件位于源码目录 : TranslatorFromAssembly/TranslatorFromAssembly/TranslatorLibrary/ForceLocalizeSystem
 
 ## 特别鸣谢
@@ -14,8 +16,7 @@
 - [凌](https://github.com/NLick47) 提供技术指导
 - [渝北](https://github.com/zlzhaidou) 提供精神支持
 - 小西王 [月渎](https://github.com/moonditch)帮助测试
-
-
+- 反馈 895423665 (企鹅)
 
 ## 使用
 

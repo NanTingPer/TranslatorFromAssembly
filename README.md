@@ -47,3 +47,24 @@
 - 左侧选中要被汉化的模组，并按要求填写后，单击导出
 
   ![image-20250508215054286](./markdownImg/image-20250508215054286.png)
+
+- 随后来到模组根目录下的`System`目录下，建议直接使用`VisualStudio`打开模组项目。打开`LocalizeLoad`进行编辑
+
+![image-20250603160807180](./markdownImg/image-20250603160807180.png)
+
+> 注意System下4个文件的名称空间！
+
+如果只要中文，那么下面的`Load`只留简体中文。上面的集合只填写`ZHHJson`即可。随后编译运行。
+
+```cs
+[ModuleInitializer]
+public static void LoadLocalizationJson()
+{
+    Load(PCRHJson, Language.Potralia的害人汉化);
+    Load(TWHJson, Language.台湾繁体);
+    Load(ZHHJson, Language.简体中文);
+    Load(CSOWHJson, Language.文言文汉化);
+    Load(HKHJson, Language.香港繁体废除);
+}
+```
+

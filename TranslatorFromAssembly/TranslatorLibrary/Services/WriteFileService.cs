@@ -51,7 +51,7 @@ namespace TranslatorFromAssembly.Services.Services
                 return;
 
             #region 备份模组主类
-            //获取模组根目录下的全部
+/*            //获取模组根目录下的全部
             string[] files = Directory.GetFiles(ModRootPath);                                   //获取跟目录下的全部文件
             string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));//寻找模组主类
             //备份原始 模组.cs文件
@@ -72,23 +72,23 @@ namespace TranslatorFromAssembly.Services.Services
                 //File.Replace(tarGetFile, bakFile, tarGetFile,false);
                 File.Copy(tarGetFile, newBakFile, true);
             }
+*/            
             #endregion 备份模组主类
 
             #region 资源转移
-            Stream? dll = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
-            if (dll is not null) {
-                string tempDric = Path.Combine(ModRootPath, "Systems");
-                //文件夹不存在就创建
-                if (!Directory.Exists(tempDric)) Directory.CreateDirectory(tempDric);
-                string tempFile = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
-                //资源没有转移就转移
-                if (!File.Exists(tempFile)) {
-                    Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
-                    dll.CopyTo(newStream);
-                    newStream.Close();
-                }
-            }
-            dll?.Close();
+            Stream? ForceLocalizeSystemTigerzzz = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystemTigerzzz");
+            Stream? ForceLocalizeSystem = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
+            Stream? LocalizeLoad = typeof(WriteFileService).Assembly.GetManifestResourceStream("LocalizeLoad");
+            Stream? LocalizeUtil = typeof(WriteFileService).Assembly.GetManifestResourceStream("LocalizeUtil");
+            资源转移(ForceLocalizeSystemTigerzzz, nameof(ForceLocalizeSystemTigerzzz), ModRootPath);
+            资源转移(ForceLocalizeSystem, nameof(ForceLocalizeSystem), ModRootPath);
+            资源转移(LocalizeLoad, nameof(LocalizeLoad), ModRootPath);
+            资源转移(LocalizeUtil, nameof(LocalizeUtil), ModRootPath);
+
+            ForceLocalizeSystemTigerzzz?.Close();
+            ForceLocalizeSystem?.Close();
+            LocalizeLoad?.Close();
+            LocalizeUtil?.Close();
             #endregion
 
             var map = PublicProperty.WriteMap;
@@ -197,155 +197,173 @@ namespace TranslatorFromAssembly.Services.Services
             CSOWWrite.Close();
             #endregion
             //构建Mod主类文件
-            BuildModFile(ModRootClassPath);
+            //BuildModFile(ModRootClassPath);
 
             PublicProperty.WriteMap.Clear();
         }
 
-        #region oldWriteFile
-        /*
-        public void WriteFile(string ModRootPath, string ModName, string MyModName)
+        private void 资源转移(Stream? local, string localName, string modRootPath)
         {
-            this.ModName = ModName;
-            this.MyModName = MyModName;
-            //模组主类(继承Mod)
-            string ModRootClassPath = Path.Combine(ModRootPath, $"{MyModName}.cs");
-
-            //目标根目录 使用目标模组名称 + Translator
-            string rootPath = ModName + "Translator";
-
-            //目标文件路径 自己模组所在目录 + 目标根目录
-            string filePath = Path.Combine(ModRootPath, rootPath);
-            Directory.CreateDirectory(filePath);
-
-            if (PublicProperty.WriteMap.Count == 0)
-                return;
-
-            //获取模组根目录下的全部
-            string[] files = Directory.GetFiles(ModRootPath);
-
-            string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));
-            //备份原始 模组.cs文件
-            if (tarGetFile != null)
-            {
-                int a = 0;
-                string bakFile = tarGetFile + ".bak";
-                string newBakFile = string.Empty;
-
-                do
-                {
-                    newBakFile = bakFile + a;
-                    a++;
-                } while (File.Exists(newBakFile));
-
-                if (!File.Exists(newBakFile))
-                {
-                    File.Create(newBakFile).Dispose();
-                }
-                //将tarGetFile替换给bakFile 备份为他自己
-                //File.Replace(tarGetFile, bakFile, tarGetFile,false);
-                File.Copy(tarGetFile, newBakFile, true);
-            }
-
-            #region 资源转移
-            Stream? dll = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
-            if (dll is not null)
-            {
-                string tempDric = Path.Combine(ModRootPath, "Systems");
+            if (local is not null) {
+                string tempDric = Path.Combine(modRootPath, "Systems");
                 //文件夹不存在就创建
-                if (!Directory.Exists(tempDric))
-                    Directory.CreateDirectory(tempDric);
-                string tempFile = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
+                if (!Directory.Exists(tempDric)) Directory.CreateDirectory(tempDric);
+                string tempFile = Path.Combine(modRootPath, "Systems", localName + ".cs");
                 //资源没有转移就转移
-                if (!File.Exists(tempFile))
-                {
+                if (!File.Exists(tempFile)) {
                     Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
-                    dll.CopyTo(newStream);
+                    local.CopyTo(newStream);
                     newStream.Close();
                 }
             }
-            dll?.Close();
-            #endregion
-
-            int fileTail = 0;//防止名称重复
-            var map = PublicProperty.WriteMap;
-
-            //TODO 第一层循环 类名 方法名称 内容
-            foreach (var item in map)
-            {
-                ClassNaem = item.Key;
-                var Temp = ClassNaem.Split('.');
-
-                //文件名称的开头 现在是类名
-                var FileName = Temp[Temp.Length - 1];
-                FileName = FileName.Replace("<", "x").Replace(">", "d").Replace(".", "j").Replace("/", "g");
-
-
-                //使用类名 + 数字来命名
-                string fileSystemPath = Path.Combine(filePath, FileName + fileTail + ".cs");
-
-                if (File.Exists(fileSystemPath))
-                    File.Delete(fileSystemPath);
-
-                #region 构建staticHookList
-                staticHookList.Add(new StaticHookClass(
-                        ModName + "Translator",
-                        ModName + "Translator." + FileName + fileTail,
-                        "LoadTranslator")
-                { ModName = MyModName });
-                #endregion
-
-
-                //写
-                FileStream Write = File.Create(fileSystemPath);
-
-                WriteTo(Write, MyModName, rootPath, FileName, fileTail, ModName);
-
-                //方法名称 内容
-                var Translat = item.Value;
-                #region 开始输出
-                foreach (var value in Translat)
-                {
-                    MethodName = value.Key;
-                    var 内容 = value.Value;
-                    //填入全类名 还有方法名
-                    //ClassName 全类名 value.Key 方法名
-                    Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem.Replace("/", "+")}\", \"{value.Key}\", new ()"));
-                    Write.Write(StringToByte("\t\t\t\t{"));
-                    Write.Flush();
-                    foreach (Tuple<String, String> tpule in 内容)
-                    {
-                        Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + tpule.Item1.Replace("\n", "\\n") + "\"" + "," + "\"" + tpule.Item2.Replace("\n", "\\n") + "\"" + "},"));
-                        Write.Flush();
-                    }
-                    Write.Write(StringToByte("\t\t\t\t});"));
-                }
-
-
-                Write.Write(StringToByte("\t\t\t}"));
-                Write.Write(StringToByte("\t\t}"));
-                Write.Write(StringToByte("\t}"));
-                Write.Write(StringToByte("}"));
-                Write.Flush();
-                Write.Dispose();
-                Write.Close();
-                #endregion
-            }
-            fileTail++;
-
-            //构建Mod主类文件
-            BuildModFile(ModRootClassPath);
-
-            PublicProperty.WriteMap.Clear();
         }
-        */
-        #endregion oldWriteFile
 
-        /// <summary>
-        /// 构造 WriteMap 需要传入一个dataBase的名称
-        /// </summary>
-        /// <param name="dataBaseName"></param>
-        public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, string dataBaseName)
+#region oldWriteFile
+/*
+public void WriteFile(string ModRootPath, string ModName, string MyModName)
+{
+    this.ModName = ModName;
+    this.MyModName = MyModName;
+    //模组主类(继承Mod)
+    string ModRootClassPath = Path.Combine(ModRootPath, $"{MyModName}.cs");
+
+    //目标根目录 使用目标模组名称 + Translator
+    string rootPath = ModName + "Translator";
+
+    //目标文件路径 自己模组所在目录 + 目标根目录
+    string filePath = Path.Combine(ModRootPath, rootPath);
+    Directory.CreateDirectory(filePath);
+
+    if (PublicProperty.WriteMap.Count == 0)
+        return;
+
+    //获取模组根目录下的全部
+    string[] files = Directory.GetFiles(ModRootPath);
+
+    string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));
+    //备份原始 模组.cs文件
+    if (tarGetFile != null)
+    {
+        int a = 0;
+        string bakFile = tarGetFile + ".bak";
+        string newBakFile = string.Empty;
+
+        do
+        {
+            newBakFile = bakFile + a;
+            a++;
+        } while (File.Exists(newBakFile));
+
+        if (!File.Exists(newBakFile))
+        {
+            File.Create(newBakFile).Dispose();
+        }
+        //将tarGetFile替换给bakFile 备份为他自己
+        //File.Replace(tarGetFile, bakFile, tarGetFile,false);
+        File.Copy(tarGetFile, newBakFile, true);
+    }
+
+    #region 资源转移
+    Stream? dll = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
+    if (dll is not null)
+    {
+        string tempDric = Path.Combine(ModRootPath, "Systems");
+        //文件夹不存在就创建
+        if (!Directory.Exists(tempDric))
+            Directory.CreateDirectory(tempDric);
+        string tempFile = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
+        //资源没有转移就转移
+        if (!File.Exists(tempFile))
+        {
+            Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
+            dll.CopyTo(newStream);
+            newStream.Close();
+        }
+    }
+    dll?.Close();
+    #endregion
+
+    int fileTail = 0;//防止名称重复
+    var map = PublicProperty.WriteMap;
+
+    //TODO 第一层循环 类名 方法名称 内容
+    foreach (var item in map)
+    {
+        ClassNaem = item.Key;
+        var Temp = ClassNaem.Split('.');
+
+        //文件名称的开头 现在是类名
+        var FileName = Temp[Temp.Length - 1];
+        FileName = FileName.Replace("<", "x").Replace(">", "d").Replace(".", "j").Replace("/", "g");
+
+
+        //使用类名 + 数字来命名
+        string fileSystemPath = Path.Combine(filePath, FileName + fileTail + ".cs");
+
+        if (File.Exists(fileSystemPath))
+            File.Delete(fileSystemPath);
+
+        #region 构建staticHookList
+        staticHookList.Add(new StaticHookClass(
+                ModName + "Translator",
+                ModName + "Translator." + FileName + fileTail,
+                "LoadTranslator")
+        { ModName = MyModName });
+        #endregion
+
+
+        //写
+        FileStream Write = File.Create(fileSystemPath);
+
+        WriteTo(Write, MyModName, rootPath, FileName, fileTail, ModName);
+
+        //方法名称 内容
+        var Translat = item.Value;
+        #region 开始输出
+        foreach (var value in Translat)
+        {
+            MethodName = value.Key;
+            var 内容 = value.Value;
+            //填入全类名 还有方法名
+            //ClassName 全类名 value.Key 方法名
+            Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem.Replace("/", "+")}\", \"{value.Key}\", new ()"));
+            Write.Write(StringToByte("\t\t\t\t{"));
+            Write.Flush();
+            foreach (Tuple<String, String> tpule in 内容)
+            {
+                Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + tpule.Item1.Replace("\n", "\\n") + "\"" + "," + "\"" + tpule.Item2.Replace("\n", "\\n") + "\"" + "},"));
+                Write.Flush();
+            }
+            Write.Write(StringToByte("\t\t\t\t});"));
+        }
+
+
+        Write.Write(StringToByte("\t\t\t}"));
+        Write.Write(StringToByte("\t\t}"));
+        Write.Write(StringToByte("\t}"));
+        Write.Write(StringToByte("}"));
+        Write.Flush();
+        Write.Dispose();
+        Write.Close();
+        #endregion
+    }
+    fileTail++;
+
+    //构建Mod主类文件
+    BuildModFile(ModRootClassPath);
+
+    PublicProperty.WriteMap.Clear();
+}
+*/
+#endregion oldWriteFile
+
+
+
+/// <summary>
+/// 构造 WriteMap 需要传入一个dataBase的名称
+/// </summary>
+/// <param name="dataBaseName"></param>
+public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, string dataBaseName)
         {
             await sQLiteExtract.CreateDatabaseAsync(dataBaseName);
             await HjsonSerializer.HjsonToSQLite(dataBaseName, sQLiteExtract);
@@ -418,9 +436,11 @@ namespace TranslatorFromAssembly.Services.Services
         /// <param name="ModName"> 目标模组名称 </param>
         private static void WriteTo(FileStream Write, string MyModName, string rootPath, string FileName, string ModName, int fileTail = 1)
         {
+            Write.Write(StringToByte("#pragma warning disable CA2255"));
             Write.Write(StringToByte($"using {MyModName}.Systems;"));
             Write.Write(StringToByte("using System.Collections.Generic;"));
             Write.Write(StringToByte("using Terraria.ModLoader;"));
+            Write.Write(StringToByte("using System.Runtime.CompilerServices;"));
             //名称空间
             Write.Write(StringToByte($"namespace {MyModName}.{rootPath}"));
             Write.Write(StringToByte("{"));
@@ -434,11 +454,13 @@ namespace TranslatorFromAssembly.Services.Services
             Write.Write(StringToByte($"\t\t[ExtendsFromMod(\"{ModName}\"), JITWhenModsEnabled(\"{ModName}\")]"));
 
             Write.Write(StringToByte($"\t\tprivate class TranslatorLoad : ForceLocalizeSystem<{ModName}, TranslatorLoad>" + "{}"));
+            //[ModuleInitializer]
+            Write.Write(StringToByte("\t\t[ModuleInitializer]"));
             Write.Write(StringToByte("\t\tpublic static void LoadTranslator()"));
             Write.Write(StringToByte("\t\t{"));
 
             //获取模组判断同时能判断是不是存在
-            Write.Write(StringToByte($"\t\t\tif(ModLoader.TryGetMod(\"{ModName}\",out var mod))"));
+            Write.Write(StringToByte($"\t\t\tif(LoadModAssembly.LoadModContext.TryGetValue(\"{ModName}\",out _))"));
             Write.Write(StringToByte("\t\t\t{"));
 
         }

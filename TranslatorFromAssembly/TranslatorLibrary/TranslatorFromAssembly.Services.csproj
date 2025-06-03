@@ -5,9 +5,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="ForceLocalizeSystem"></None>
+    <EmbeddedResource Include="ForceLocalizeSystemTigerzzz">
+      <LogicalName>ForceLocalizeSystemTigerzzz</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="ForceLocalizeSystem">
       <LogicalName>ForceLocalizeSystem</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizeLoad">
+      <LogicalName>LocalizeLoad</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizeUtil">
+      <LogicalName>LocalizeUtil</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
 

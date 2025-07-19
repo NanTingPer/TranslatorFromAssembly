@@ -4,22 +4,27 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="ForceLocalizeSystemTigerzzz">
-      <LogicalName>ForceLocalizeSystemTigerzzz</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="ForceLocalizeSystem">
       <LogicalName>ForceLocalizeSystem</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalizeLoad">
-      <LogicalName>LocalizeLoad</LogicalName>
+    <EmbeddedResource Include="Language">
+      <LogicalName>Language</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalizeUtil">
-      <LogicalName>LocalizeUtil</LogicalName>
+    <EmbeddedResource Include="LanguageManagerExtend">
+      <LogicalName>LanguageManagerExtend</LogicalName>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
+    <EmbeddedResource Include="LoadModAssembly">
+      <LogicalName>LoadModAssembly</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizeNew">
+      <LogicalName>LocalizeNew</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TmodFile">
+      <LogicalName>TmodFile</LogicalName>
+    </EmbeddedResource>
+    
     <PackageReference Include="Avalonia" Version="11.2.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="Hjson" Version="3.0.0" />

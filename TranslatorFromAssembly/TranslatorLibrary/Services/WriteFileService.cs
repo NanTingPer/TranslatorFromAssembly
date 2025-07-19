@@ -2,6 +2,7 @@ using System.Text;
 using TranslatorFormAssembly.Models;
 using TranslatorLibrary.Tools;
 using TranslatorFromAssembly.Services.IServices;
+using System.Threading.Tasks;
 
 namespace TranslatorFromAssembly.Services.Services;
 
@@ -35,71 +36,62 @@ public class WriteFileService : IWriteFileService
     /// <summary>
     /// 给定模组根目录还有模组名称 开始生成
     /// </summary>
-    /// <param name="ModRootPath"> 模组根目录 </param>
-    /// <param name="ModName"> 要被汉化的模组名称 </param>
+    /// <param name="modRootPath"> 模组根目录 </param>
+    /// <param name="modName"> 要被汉化的模组名称 </param>
     /// <param name="YouModName">你的模组名称</param>
-    public void WriteFile(string ModRootPath, string ModName, string MyModName)
+    public void WriteFile(string modRootPath, string modName, string myModName)
     {
-        this.ModName = ModName;
-        this.MyModName = MyModName;
-        string ModRootClassPath = Path.Combine(ModRootPath, $"{MyModName}.cs"); //模组主类(继承Mod)
-        string rootPath = ModName + "Translator";                               //目标根目录 使用目标模组名称 + Translator
-        string filePath = Path.Combine(ModRootPath, rootPath);                  //目标文件路径 自己模组所在目录 + 目标根目录
+        this.ModName = modName;
+        this.MyModName = myModName;
+        string ModRootClassPath = Path.Combine(modRootPath, $"{myModName}.cs"); //模组主类(继承Mod)
+        string rootPath = modName + "Translator";                               //目标根目录 使用目标模组名称 + Translator
+        string filePath = Path.Combine(modRootPath, rootPath);                  //目标文件路径 自己模组所在目录 + 目标根目录
         Directory.CreateDirectory(filePath);                                    //创建目标文件夹(汉化文件存储的主目录)
 
         if (PublicProperty.WriteMap.Count == 0)             //如果没有内容就返回了
             return;
 
         #region 备份模组主类
-/*            //获取模组根目录下的全部
-        string[] files = Directory.GetFiles(ModRootPath);                                   //获取跟目录下的全部文件
-        string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));//寻找模组主类
-        //备份原始 模组.cs文件
-        if (tarGetFile != null) {
-            int a = 0;
-            string bakFile = tarGetFile + ".bak";
-            string newBakFile = string.Empty;
+        /*            //获取模组根目录下的全部
+                string[] files = Directory.GetFiles(ModRootPath);                                   //获取跟目录下的全部文件
+                string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));//寻找模组主类
+                //备份原始 模组.cs文件
+                if (tarGetFile != null) {
+                    int a = 0;
+                    string bakFile = tarGetFile + ".bak";
+                    string newBakFile = string.Empty;
 
-            do {
-                newBakFile = bakFile + a;
-                a++;
-            } while (File.Exists(newBakFile));
+                    do {
+                        newBakFile = bakFile + a;
+                        a++;
+                    } while (File.Exists(newBakFile));
 
-            if (!File.Exists(newBakFile)) {
-                File.Create(newBakFile).Dispose();
-            }
-            //将tarGetFile替换给bakFile 备份为他自己
-            //File.Replace(tarGetFile, bakFile, tarGetFile,false);
-            File.Copy(tarGetFile, newBakFile, true);
-        }
-*/            
+                    if (!File.Exists(newBakFile)) {
+                        File.Create(newBakFile).Dispose();
+                    }
+                    //将tarGetFile替换给bakFile 备份为他自己
+                    //File.Replace(tarGetFile, bakFile, tarGetFile,false);
+                    File.Copy(tarGetFile, newBakFile, true);
+                }
+        */
         #endregion 备份模组主类
 
         #region 资源转移
-        Stream? ForceLocalizeSystemTigerzzz = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystemTigerzzz");
-        Stream? ForceLocalizeSystem = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
-        Stream? LocalizeLoad = typeof(WriteFileService).Assembly.GetManifestResourceStream("LocalizeLoad");
-        Stream? LocalizeUtil = typeof(WriteFileService).Assembly.GetManifestResourceStream("LocalizeUtil");
-        资源转移(ForceLocalizeSystemTigerzzz, nameof(ForceLocalizeSystemTigerzzz), ModRootPath);
-        资源转移(ForceLocalizeSystem, nameof(ForceLocalizeSystem), ModRootPath);
-        资源转移(LocalizeLoad, nameof(LocalizeLoad), ModRootPath);
-        资源转移(LocalizeUtil, nameof(LocalizeUtil), ModRootPath);
-
-        ForceLocalizeSystemTigerzzz?.Close();
-        ForceLocalizeSystem?.Close();
-        LocalizeLoad?.Close();
-        LocalizeUtil?.Close();
+        string[] resValues = typeof(WriteFileService).Assembly.GetManifestResourceNames();
+        foreach (var resName in resValues) {
+            _ = Task.Run(() => 资源转移(resName, modRootPath));
+        }
         #endregion
 
         var map = PublicProperty.WriteMap;
 
         #region 构建汉化内容存储的文件 并创建头内容
-        var tarGetFileName = ModName + "Translator.cs"; //LocalTextTranslator.cs
-        var HongKongHjsonFileName = "IL_" + ModName + "hk.hjson";
-        var TawiWanHjsonFileName = "IL_" + ModName + "tw.hjson";
-        var CnZhHjsonFileName = "IL_" + ModName + "zh.hjson";
-        var PCRHjsonFileName = "IL_" + ModName + "pcr.hjson";
-        var CSOWHjsonFileName = "IL_" + ModName + "csow.hjson";
+        var tarGetFileName = modName + "Translator.cs"; //LocalTextTranslator.cs
+        var HongKongHjsonFileName = "IL_" + modName + "hk.hjson";
+        var TawiWanHjsonFileName = "IL_" + modName + "tw.hjson";
+        var CnZhHjsonFileName = "IL_" + modName + "zh.hjson";
+        var PCRHjsonFileName = "IL_" + modName + "pcr.hjson";
+        var CSOWHjsonFileName = "IL_" + modName + "csow.hjson";
 
         var writeTarGet = Path.Combine(filePath, tarGetFileName); // LocalText/LocalTextTranslator/LocalTextTranslator.cs
         var HKHjson = Path.Combine(filePath, HongKongHjsonFileName);
@@ -123,15 +115,15 @@ public class WriteFileService : IWriteFileService
         using var PCRWrite = File.Create(PCRHjson);
         using var CSOWWrite = File.Create(CSOWHjson);
 
-        WriteTo(Write, MyModName, rootPath, tarGetFileName.Split(".")[0], ModName);
+        WriteTo(Write, myModName, rootPath, tarGetFileName.Split(".")[0], modName);
         #endregion 构建汉化内容存储的文件
 
         #region 构建staticHookList
         staticHookList.Add(new StaticHookClass(
-                ModName + "Translator",
-                ModName + "Translator." + tarGetFileName.Split(".")[0],
+                modName + "Translator",
+                modName + "Translator." + tarGetFileName.Split(".")[0],
                 "LoadTranslator")
-        { ModName = MyModName });
+        { ModName = myModName });
         #endregion
 
 
@@ -155,12 +147,12 @@ public class WriteFileService : IWriteFileService
                     //这里需要改成本地化键的键，内容是英文内容
                     //Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + 英汉台港.英文.Replace("\n", "\\n") + "\"" + "," + "\"" + 英汉台港.中文.Replace("\n", "\\n") + "\"" + "},"));
                     //{"ModName.classname.methodname.english","ENGLISH"},
-                    Write.Write(StringToByte("\t\t\t\t\t{\"" + ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + "\"," /*+ "\""*/ + 英汉台港.英文 + "},"));
-                    HKWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.香港));
-                    TWWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.台湾));
-                    ZHWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.中文));
-                    PCRWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.害人));
-                    CSOWWrite.Write(StringToByte(ModName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.旧文));
+                    Write.Write(StringToByte("\t\t\t\t\t{\"" + modName + "." + classname + "." + MethodName + "." + 英汉台港.id + "\"," /*+ "\""*/ + 英汉台港.英文 + "},"));
+                    HKWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.香港));
+                    TWWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.台湾));
+                    ZHWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.中文));
+                    PCRWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.害人));
+                    CSOWWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.旧文));
 
                     Write.Flush();
                     HKWrite.Flush();
@@ -189,12 +181,6 @@ public class WriteFileService : IWriteFileService
         ZHWrite.Dispose();
         PCRWrite.Dispose();
         CSOWWrite.Dispose();
-        Write.Close();
-        HKWrite.Close();
-        TWWrite.Close();
-        ZHWrite.Close();
-        PCRWrite.Close();
-        CSOWWrite.Close();
         #endregion
         //构建Mod主类文件
         //BuildModFile(ModRootClassPath);
@@ -202,8 +188,14 @@ public class WriteFileService : IWriteFileService
         PublicProperty.WriteMap.Clear();
     }
 
-    private void 资源转移(Stream? local, string localName, string modRootPath)
+    /// <param name="localName">资源名称</param>
+    /// <param name="modRootPath"></param>
+    /// <returns></returns>
+    private async Task 资源转移(string localName, string modRootPath)
     {
+        if (MyModName == string.Empty)
+            return;
+        var local = GetType().Assembly.GetManifestResourceStream(localName);
         if (local is not null) {
             string tempDric = Path.Combine(modRootPath, "Systems");
             //文件夹不存在就创建
@@ -211,159 +203,164 @@ public class WriteFileService : IWriteFileService
             string tempFile = Path.Combine(modRootPath, "Systems", localName + ".cs");
             //资源没有转移就转移
             if (!File.Exists(tempFile)) {
-                Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
-                local.CopyTo(newStream);
-                newStream.Close();
+                FileStream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
+                var sr = new StreamReader(local);
+                var values = await sr.ReadToEndAsync();
+                var newValues = values.Replace("@${ModName}$@", MyModName);
+                newStream.Write(Encoding.UTF8.GetBytes(newValues));
+                newStream.Flush();
+                newStream.Dispose();
             }
         }
+        local?.Dispose();
     }
 
-#region oldWriteFile
-/*
-public void WriteFile(string ModRootPath, string ModName, string MyModName)
-{
-this.ModName = ModName;
-this.MyModName = MyModName;
-//模组主类(继承Mod)
-string ModRootClassPath = Path.Combine(ModRootPath, $"{MyModName}.cs");
-
-//目标根目录 使用目标模组名称 + Translator
-string rootPath = ModName + "Translator";
-
-//目标文件路径 自己模组所在目录 + 目标根目录
-string filePath = Path.Combine(ModRootPath, rootPath);
-Directory.CreateDirectory(filePath);
-
-if (PublicProperty.WriteMap.Count == 0)
-    return;
-
-//获取模组根目录下的全部
-string[] files = Directory.GetFiles(ModRootPath);
-
-string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));
-//备份原始 模组.cs文件
-if (tarGetFile != null)
-{
-    int a = 0;
-    string bakFile = tarGetFile + ".bak";
-    string newBakFile = string.Empty;
-
-    do
+    #region oldWriteFile
+    /*
+    public void WriteFile(string ModRootPath, string ModName, string MyModName)
     {
-        newBakFile = bakFile + a;
-        a++;
-    } while (File.Exists(newBakFile));
+    this.ModName = ModName;
+    this.MyModName = MyModName;
+    //模组主类(继承Mod)
+    string ModRootClassPath = Path.Combine(ModRootPath, $"{MyModName}.cs");
 
-    if (!File.Exists(newBakFile))
+    //目标根目录 使用目标模组名称 + Translator
+    string rootPath = ModName + "Translator";
+
+    //目标文件路径 自己模组所在目录 + 目标根目录
+    string filePath = Path.Combine(ModRootPath, rootPath);
+    Directory.CreateDirectory(filePath);
+
+    if (PublicProperty.WriteMap.Count == 0)
+        return;
+
+    //获取模组根目录下的全部
+    string[] files = Directory.GetFiles(ModRootPath);
+
+    string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));
+    //备份原始 模组.cs文件
+    if (tarGetFile != null)
     {
-        File.Create(newBakFile).Dispose();
-    }
-    //将tarGetFile替换给bakFile 备份为他自己
-    //File.Replace(tarGetFile, bakFile, tarGetFile,false);
-    File.Copy(tarGetFile, newBakFile, true);
-}
+        int a = 0;
+        string bakFile = tarGetFile + ".bak";
+        string newBakFile = string.Empty;
 
-#region 资源转移
-Stream? dll = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
-if (dll is not null)
-{
-    string tempDric = Path.Combine(ModRootPath, "Systems");
-    //文件夹不存在就创建
-    if (!Directory.Exists(tempDric))
-        Directory.CreateDirectory(tempDric);
-    string tempFile = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
-    //资源没有转移就转移
-    if (!File.Exists(tempFile))
-    {
-        Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
-        dll.CopyTo(newStream);
-        newStream.Close();
-    }
-}
-dll?.Close();
-#endregion
-
-int fileTail = 0;//防止名称重复
-var map = PublicProperty.WriteMap;
-
-//TODO 第一层循环 类名 方法名称 内容
-foreach (var item in map)
-{
-    ClassNaem = item.Key;
-    var Temp = ClassNaem.Split('.');
-
-    //文件名称的开头 现在是类名
-    var FileName = Temp[Temp.Length - 1];
-    FileName = FileName.Replace("<", "x").Replace(">", "d").Replace(".", "j").Replace("/", "g");
-
-
-    //使用类名 + 数字来命名
-    string fileSystemPath = Path.Combine(filePath, FileName + fileTail + ".cs");
-
-    if (File.Exists(fileSystemPath))
-        File.Delete(fileSystemPath);
-
-    #region 构建staticHookList
-    staticHookList.Add(new StaticHookClass(
-            ModName + "Translator",
-            ModName + "Translator." + FileName + fileTail,
-            "LoadTranslator")
-    { ModName = MyModName });
-    #endregion
-
-
-    //写
-    FileStream Write = File.Create(fileSystemPath);
-
-    WriteTo(Write, MyModName, rootPath, FileName, fileTail, ModName);
-
-    //方法名称 内容
-    var Translat = item.Value;
-    #region 开始输出
-    foreach (var value in Translat)
-    {
-        MethodName = value.Key;
-        var 内容 = value.Value;
-        //填入全类名 还有方法名
-        //ClassName 全类名 value.Key 方法名
-        Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem.Replace("/", "+")}\", \"{value.Key}\", new ()"));
-        Write.Write(StringToByte("\t\t\t\t{"));
-        Write.Flush();
-        foreach (Tuple<String, String> tpule in 内容)
+        do
         {
-            Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + tpule.Item1.Replace("\n", "\\n") + "\"" + "," + "\"" + tpule.Item2.Replace("\n", "\\n") + "\"" + "},"));
-            Write.Flush();
+            newBakFile = bakFile + a;
+            a++;
+        } while (File.Exists(newBakFile));
+
+        if (!File.Exists(newBakFile))
+        {
+            File.Create(newBakFile).Dispose();
         }
-        Write.Write(StringToByte("\t\t\t\t});"));
+        //将tarGetFile替换给bakFile 备份为他自己
+        //File.Replace(tarGetFile, bakFile, tarGetFile,false);
+        File.Copy(tarGetFile, newBakFile, true);
     }
 
-
-    Write.Write(StringToByte("\t\t\t}"));
-    Write.Write(StringToByte("\t\t}"));
-    Write.Write(StringToByte("\t}"));
-    Write.Write(StringToByte("}"));
-    Write.Flush();
-    Write.Dispose();
-    Write.Close();
+    #region 资源转移
+    Stream? dll = typeof(WriteFileService).Assembly.GetManifestResourceStream("ForceLocalizeSystem");
+    if (dll is not null)
+    {
+        string tempDric = Path.Combine(ModRootPath, "Systems");
+        //文件夹不存在就创建
+        if (!Directory.Exists(tempDric))
+            Directory.CreateDirectory(tempDric);
+        string tempFile = Path.Combine(ModRootPath, "Systems", "ForceLocalizeSystem.cs");
+        //资源没有转移就转移
+        if (!File.Exists(tempFile))
+        {
+            Stream newStream = new FileStream(tempFile, FileMode.OpenOrCreate);
+            dll.CopyTo(newStream);
+            newStream.Close();
+        }
+    }
+    dll?.Close();
     #endregion
-}
-fileTail++;
 
-//构建Mod主类文件
-BuildModFile(ModRootClassPath);
+    int fileTail = 0;//防止名称重复
+    var map = PublicProperty.WriteMap;
 
-PublicProperty.WriteMap.Clear();
-}
-*/
-#endregion oldWriteFile
+    //TODO 第一层循环 类名 方法名称 内容
+    foreach (var item in map)
+    {
+        ClassNaem = item.Key;
+        var Temp = ClassNaem.Split('.');
+
+        //文件名称的开头 现在是类名
+        var FileName = Temp[Temp.Length - 1];
+        FileName = FileName.Replace("<", "x").Replace(">", "d").Replace(".", "j").Replace("/", "g");
+
+
+        //使用类名 + 数字来命名
+        string fileSystemPath = Path.Combine(filePath, FileName + fileTail + ".cs");
+
+        if (File.Exists(fileSystemPath))
+            File.Delete(fileSystemPath);
+
+        #region 构建staticHookList
+        staticHookList.Add(new StaticHookClass(
+                ModName + "Translator",
+                ModName + "Translator." + FileName + fileTail,
+                "LoadTranslator")
+        { ModName = MyModName });
+        #endregion
+
+
+        //写
+        FileStream Write = File.Create(fileSystemPath);
+
+        WriteTo(Write, MyModName, rootPath, FileName, fileTail, ModName);
+
+        //方法名称 内容
+        var Translat = item.Value;
+        #region 开始输出
+        foreach (var value in Translat)
+        {
+            MethodName = value.Key;
+            var 内容 = value.Value;
+            //填入全类名 还有方法名
+            //ClassName 全类名 value.Key 方法名
+            Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{ClassNaem.Replace("/", "+")}\", \"{value.Key}\", new ()"));
+            Write.Write(StringToByte("\t\t\t\t{"));
+            Write.Flush();
+            foreach (Tuple<String, String> tpule in 内容)
+            {
+                Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + tpule.Item1.Replace("\n", "\\n") + "\"" + "," + "\"" + tpule.Item2.Replace("\n", "\\n") + "\"" + "},"));
+                Write.Flush();
+            }
+            Write.Write(StringToByte("\t\t\t\t});"));
+        }
+
+
+        Write.Write(StringToByte("\t\t\t}"));
+        Write.Write(StringToByte("\t\t}"));
+        Write.Write(StringToByte("\t}"));
+        Write.Write(StringToByte("}"));
+        Write.Flush();
+        Write.Dispose();
+        Write.Close();
+        #endregion
+    }
+    fileTail++;
+
+    //构建Mod主类文件
+    BuildModFile(ModRootClassPath);
+
+    PublicProperty.WriteMap.Clear();
+    }
+    */
+    #endregion oldWriteFile
 
 
 
-/// <summary>
-/// 构造 WriteMap 需要传入一个dataBase的名称
-/// </summary>
-/// <param name="dataBaseName"></param>
-public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, string dataBaseName)
+    /// <summary>
+    /// 构造 WriteMap 需要传入一个dataBase的名称
+    /// </summary>
+    /// <param name="dataBaseName"></param>
+    public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, string dataBaseName)
     {
         await sQLiteExtract.CreateDatabaseAsync(dataBaseName);
         await HjsonSerializer.HjsonToSQLite(dataBaseName, sQLiteExtract);
@@ -412,7 +409,7 @@ public async Task CreateWriteMap(ISQLiteExtract<PreLoadData> sQLiteExtract, stri
 
     private static 英汉台港 CreateYHTG(PreLoadData item)
     {
-        return new 英汉台港(转义(item.English), 转义(item.Chinese), 转义(item.TaiWan), 转义(item.HongKong), 转义(item.PCR), 转义(item.CSOW),item.Id);
+        return new 英汉台港(转义(item.English), 转义(item.Chinese), 转义(item.TaiWan), 转义(item.HongKong), 转义(item.PCR), 转义(item.CSOW), item.Id);
     }
     private static string 转义(string str) => str.Replace("\n", @"\n");
     private static byte[] StringToByte(string str)

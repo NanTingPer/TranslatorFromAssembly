@@ -1,5 +1,5 @@
 ﻿#nullable enable
-namespace ThoriumModzhcn.Systems;
+namespace @${ModName}$@.Systems;
 public enum Language
 {
     简体中文,

@@ -8,28 +8,13 @@ using System.Threading.Tasks;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using static ThoriumModzhcn.Systems.LocalizeExtend;
+using static @${ModName}$@.Systems.LocalizeExtend;
 
-namespace ThoriumModzhcn.Systems;
+namespace @${ModName}$@.Systems;
 
 public class LocalizeNew : ModSystem
 {
-    #region
-    /*public static List<string> PCRHJson { get; } =
-     [
-    ];
-
-    public static List<string> CSOWHJson { get; } =
-     [
-    ];*/
-    
-
-    //Unsimplifiedzh or zh-TW
-    public static List<TFile> TWHJson { get; set; }
-
-    //Simplifiedzh or zh-Hans
     public static List<TFile> ZHHJson { get; set; }
-    #endregion
     public static Language CurrentLanguage { get; set; } = Language.简体中文;
     public readonly static string ModName = typeof(LocalizeNew).FullName.Split('.')[0];
 
@@ -37,10 +22,6 @@ public class LocalizeNew : ModSystem
     public static void LoadLocalizationJson()
     {
         var allHjson = TFile.GetFiles(f => f.EndsWith(".hjson"));
-        TWHJson = allHjson
-            .Where(file => file.FilePath.Contains("Unsimplifiedzh") || file.FilePath.Contains("zh-TW"))
-            .ToList();
-
         ZHHJson = allHjson
             .Where(file => file.FilePath.Contains("Simplifiedzh") || file.FilePath.Contains("zh-Hans"))
             .ToList();
@@ -56,7 +37,7 @@ public class LocalizeNew : ModSystem
                 OverrideKeyValue(ZHHJson);
                 break;
             default:
-                OverrideKeyValue(TWHJson);
+                OverrideKeyValue(ZHHJson);
                 break;
         }
     }
@@ -145,27 +126,13 @@ public static class LocalizeExtend
 
 public class 语言切换 : ModConfig
 {
-    public Language 语言;
-
-    [JsonIgnore]
-    public CancellationTokenSource CTS;
-
-    public override ConfigScope Mode => ConfigScope.ClientSide;
-
     public override void OnChanged()
     {
-        if (CTS == null) {
-            CTS = new CancellationTokenSource();
-        } else {
-            CTS.Cancel();
-            CTS = new CancellationTokenSource();
-        }
-
-        LocalizeNew.CurrentLanguage = 语言;
+        LocalizeNew.CurrentLanguage = Language.简体中文;
         if (LocalizeNew.IsPostSetupContent) {
             _ = Task.Run(() => {
                LanguageManager.Instance.RecalculateBoundTextValues();
-            }/*, CTS.Token*/);
+            });
         }
 
         base.OnChanged();

@@ -2,7 +2,7 @@
 using System.Reflection;
 using Terraria.Localization;
 
-namespace ThoriumModzhcn.Systems;
+namespace @${ModName}$@.Systems;
 
 public static class LanguageManagerExtend
 {

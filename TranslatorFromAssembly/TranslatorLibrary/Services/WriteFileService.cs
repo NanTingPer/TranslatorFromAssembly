@@ -420,10 +420,6 @@ public class WriteFileService : IWriteFileService
 
     /// <summary>
     /// 公共内容
-    /// <para> Write 文件流 </para>
-    /// <para> MyModName 自己的模组名称</para>
-    /// <para> rootPath 汉化文件所在目录名称 </para>
-    /// <para> ModName 要被汉化的模组名字 </para>
     /// </summary>
     /// <param name="Write"> 文件流 </param>
     /// <param name="MyModName"> 你的模组名称 </param>
@@ -517,23 +513,6 @@ public class WriteFileService : IWriteFileService
         write.Write(StringToByte($"\tpublic class {staticHookList[0].ModName} : Mod"));
         write.Write(StringToByte("\t{"));
 
-        #region 挂钩子
-        /*
-        write.Write(StringToByte($"\t\tstatic {staticHookList[0].ModName}()"));
-        write.Write(StringToByte("\t\t{"));
-        write.Write(StringToByte("\t\t\tvar tModLoaderDLL = typeof(Main);"));
-        write.Write(StringToByte("\t\t\tvar ModLoaderType = tModLoaderDLL.Assembly.GetTypes().FirstOrDefault(f => f.Name == \"ModContent\");"));
-        write.Write(StringToByte("\t\t\tMethodInfo LoadMethod = ModLoaderType.GetMethods(BindingFlags.Static | BindingFlags.NonPublic).FirstOrDefault(f => f.Name == \"Load\");"));
-        write.Write(StringToByte("\t\t\tMonoModHooks.Add(LoadMethod, LanguageHook);"));
-        write.Write(StringToByte("\t\t}"));
-        write.Write(StringToByte(""));
-        write.Write(StringToByte("\t\tpublic delegate void LanguageDelegate(CancellationToken token);"));
-        write.Write(StringToByte(""));
-        write.Write(StringToByte("\t\tpublic static void LanguageHook(LanguageDelegate orig, CancellationToken token)"));
-        write.Write(StringToByte("\t\t{"));
-        */
-        #endregion 挂钩子
-
         write.Write(StringToByte("\t\tpublic override void Load()"));
         write.Write(StringToByte("\t\t{"));
 
@@ -545,34 +524,11 @@ public class WriteFileService : IWriteFileService
             write.Flush();
         }
         staticHookList.Clear();
-        //write.Write(StringToByte("\t\t\torig.Invoke(token);")); //挂钩子
         write.Write(StringToByte("\t\t\tbase.Load();"));
         write.Write(StringToByte("\t\t}"));
         write.Write(StringToByte("\t}"));
         write.Write(StringToByte("}"));
         write.Flush();
         write.Dispose();
-    }
-
-    /// <summary>
-    /// 写文件模型类 含类名
-    /// </summary>
-    public class WriteFileModelOne(string Key, Dictionary<string, List<Tuple<string, string>>> keyValues)
-    {
-        /// <summary>
-        /// 类名
-        /// </summary>
-        public string ClassName = Key;
-
-        /// <summary>
-        /// 全部内容，其中Key是方法名称，Value是英文与中文的元组
-        /// </summary>
-        public Dictionary<string, List<Tuple<string, string>>> Content = keyValues;
-
-        //public WriteFileModelOne(string Key, Dictionary<string, List<Tuple<string, string>>> keyValues)
-        //{
-        //    ClassName = Key;
-        //    Content = keyValues;
-        //}
     }
 }

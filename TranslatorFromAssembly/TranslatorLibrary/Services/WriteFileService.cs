@@ -142,6 +142,10 @@ public class WriteFileService : IWriteFileService
                 Write.Write(StringToByte($"\t\t\t\tTranslatorLoad.LocalizeByTypeFullName(\"{classname}\", \"{value.Key}\", new ()"));
                 Write.Write(StringToByte("\t\t\t\t{"));
                 Write.Flush();
+
+                //构造函数和静态构造
+                classname = ReplaceNotChar(classname);
+                MethodName = ReplaceNotChar(MethodName);
                 //Item1是英文内容，Item2是中文内容
                 foreach (英汉台港 英汉台港 in 内容) {
                     //这里需要改成本地化键的键，内容是英文内容
@@ -186,6 +190,11 @@ public class WriteFileService : IWriteFileService
         //BuildModFile(ModRootClassPath);
 
         PublicProperty.WriteMap.Clear();
+    }
+
+    private static string ReplaceNotChar(string str)
+    {
+        return str.Replace('<', 'x').Replace('>', 'd').Replace('.', 'j').Replace('/', 'g').Replace('+', 'j');
     }
 
     /// <param name="localName">资源名称</param>

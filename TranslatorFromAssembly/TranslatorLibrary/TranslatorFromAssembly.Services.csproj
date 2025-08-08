@@ -4,20 +4,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ForceLocalizeSystemTigerzzz">
-      <LogicalName>ForceLocalizeSystemTigerzzz</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ForceLocalizeSystem">
-      <LogicalName>ForceLocalizeSystem</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LocalizeLoad">
-      <LogicalName>LocalizeLoad</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LocalizeUtil">
-      <LogicalName>LocalizeUtil</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.1" />

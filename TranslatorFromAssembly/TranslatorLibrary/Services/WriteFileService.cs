@@ -51,31 +51,6 @@ public class WriteFileService : IWriteFileService
         if (PublicProperty.WriteMap.Count == 0)             //如果没有内容就返回了
             return;
 
-        #region 备份模组主类
-        /*            //获取模组根目录下的全部
-                string[] files = Directory.GetFiles(ModRootPath);                                   //获取跟目录下的全部文件
-                string? tarGetFile = files.FirstOrDefault(f => f.Contains(MyModName + ".cs"));//寻找模组主类
-                //备份原始 模组.cs文件
-                if (tarGetFile != null) {
-                    int a = 0;
-                    string bakFile = tarGetFile + ".bak";
-                    string newBakFile = string.Empty;
-
-                    do {
-                        newBakFile = bakFile + a;
-                        a++;
-                    } while (File.Exists(newBakFile));
-
-                    if (!File.Exists(newBakFile)) {
-                        File.Create(newBakFile).Dispose();
-                    }
-                    //将tarGetFile替换给bakFile 备份为他自己
-                    //File.Replace(tarGetFile, bakFile, tarGetFile,false);
-                    File.Copy(tarGetFile, newBakFile, true);
-                }
-        */
-        #endregion 备份模组主类
-
         #region 资源转移
         string[] resValues = typeof(WriteFileService).Assembly.GetManifestResourceNames();
         foreach (var resName in resValues) {
@@ -87,33 +62,13 @@ public class WriteFileService : IWriteFileService
 
         #region 构建汉化内容存储的文件 并创建头内容
         var tarGetFileName = modName + "Translator.cs"; //LocalTextTranslator.cs
-        var HongKongHjsonFileName = "IL_" + modName + "hk.hjson";
-        var TawiWanHjsonFileName = "IL_" + modName + "tw.hjson";
-        var CnZhHjsonFileName = "IL_" + modName + "Simplified.hjson";
-        var PCRHjsonFileName = "IL_" + modName + "pcr.hjson";
-        var CSOWHjsonFileName = "IL_" + modName + "csow.hjson";
 
-        var writeTarGet = Path.Combine(filePath, tarGetFileName); // LocalText/LocalTextTranslator/LocalTextTranslator.cs
-        var HKHjson = Path.Combine(filePath, HongKongHjsonFileName);
-        var TWHjson = Path.Combine(filePath, TawiWanHjsonFileName);
-        var ZHHjson = Path.Combine(filePath, CnZhHjsonFileName);
-        var PCRHjson = Path.Combine(filePath, PCRHjsonFileName);
-        var CSOWHjson = Path.Combine(filePath, CSOWHjsonFileName);
+        var writeTarGet = Path.Combine(filePath, tarGetFileName); // LocalText/LocalTextTranslator/
 
 
         if (File.Exists(writeTarGet)) File.Delete(writeTarGet);
-        if (File.Exists(HKHjson)) File.Delete(HKHjson);
-        if (File.Exists(TWHjson)) File.Delete(TWHjson);
-        if (File.Exists(ZHHjson)) File.Delete(ZHHjson);
-        if (File.Exists(PCRHjson)) File.Delete(PCRHjson);
-        if (File.Exists(CSOWHjson)) File.Delete(CSOWHjson);
 
         using var Write = File.Create(writeTarGet);
-        using var HKWrite = File.Create(HKHjson);
-        using var TWWrite = File.Create(TWHjson);
-        using var ZHWrite = File.Create(ZHHjson);
-        using var PCRWrite = File.Create(PCRHjson);
-        using var CSOWWrite = File.Create(CSOWHjson);
 
         WriteTo(Write, myModName, rootPath, tarGetFileName.Split(".")[0], modName);
         #endregion 构建汉化内容存储的文件
@@ -151,18 +106,9 @@ public class WriteFileService : IWriteFileService
                     //这里需要改成本地化键的键，内容是英文内容
                     //Write.Write(StringToByte("\t\t\t\t\t{" + "\"" + 英汉台港.英文.Replace("\n", "\\n") + "\"" + "," + "\"" + 英汉台港.中文.Replace("\n", "\\n") + "\"" + "},"));
                     //{"ModName.classname.methodname.english","ENGLISH"},
-                    Write.Write(StringToByte("\t\t\t\t\t{\"" + modName + "." + classname + "." + MethodName + "." + 英汉台港.id + "\"," /*+ "\""*/ + 英汉台港.英文 + "},"));
-                    HKWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.香港));
-                    TWWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.台湾));
-                    ZHWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.中文));
-                    PCRWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.害人));
-                    CSOWWrite.Write(StringToByte(modName + "." + classname + "." + MethodName + "." + 英汉台港.id + ": " + 英汉台港.旧文));
+                    Write.Write(StringToByte("\t\t\t\t\t{" + 英汉台港.中文 + "," /*+ "\""*/ + 英汉台港.英文 + "},"));
 
                     Write.Flush();
-                    HKWrite.Flush();
-                    TWWrite.Flush();
-                    PCRWrite.Flush();
-                    CSOWWrite.Flush();
                 }
                 Write.Write(StringToByte("\t\t\t\t});"));
             }
@@ -180,11 +126,6 @@ public class WriteFileService : IWriteFileService
         Write.Write(StringToByte("}"));
         #region 关闭流
         Write.Dispose();
-        HKWrite.Dispose();
-        TWWrite.Dispose();
-        ZHWrite.Dispose();
-        PCRWrite.Dispose();
-        CSOWWrite.Dispose();
         #endregion
         //构建Mod主类文件
         //BuildModFile(ModRootClassPath);

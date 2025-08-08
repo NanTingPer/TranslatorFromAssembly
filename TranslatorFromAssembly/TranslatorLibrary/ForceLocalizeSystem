@@ -105,7 +105,6 @@ public class ForceLocalizeSystem<TSale, 占位符>
                 foreach (var Key in Value.Keys) {
                     if (Value[Key] == oldString) {
                         ILCursor.Prev.Operand = Key;
-                        ILCursor.Emit(OpCodes.Call, LocalizeExtend.GetTextValue);
                         if (ILCursor.Next != null)
                             ILCursor.GotoNext();
                         break;

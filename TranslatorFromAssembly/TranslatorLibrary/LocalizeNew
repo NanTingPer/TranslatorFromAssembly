@@ -23,7 +23,7 @@ public class LocalizeNew : ModSystem
     {
         var allHjson = TFile.GetFiles(f => f.EndsWith(".hjson"));
         ZHHJson = allHjson
-            .Where(file => file.FilePath.Contains("Simplifiedzh") || file.FilePath.Contains("zh-Hans"))
+            .Where(file => file.FilePath.Contains("Simplified") || file.FilePath.Contains("zh-Hans"))
             .ToList();
         ;
 
@@ -123,19 +123,3 @@ public static class LocalizeExtend
     }
 
 }
-
-public class 语言切换 : ModConfig
-{
-    public override void OnChanged()
-    {
-        LocalizeNew.CurrentLanguage = Language.简体中文;
-        if (LocalizeNew.IsPostSetupContent) {
-            _ = Task.Run(() => {
-               LanguageManager.Instance.RecalculateBoundTextValues();
-            });
-        }
-
-        base.OnChanged();
-    }
-}
-

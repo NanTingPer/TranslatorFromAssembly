@@ -89,7 +89,7 @@ public class WriteFileService : IWriteFileService
         var tarGetFileName = modName + "Translator.cs"; //LocalTextTranslator.cs
         var HongKongHjsonFileName = "IL_" + modName + "hk.hjson";
         var TawiWanHjsonFileName = "IL_" + modName + "tw.hjson";
-        var CnZhHjsonFileName = "IL_" + modName + "zh.hjson";
+        var CnZhHjsonFileName = "IL_" + modName + "Simplified.hjson";
         var PCRHjsonFileName = "IL_" + modName + "pcr.hjson";
         var CSOWHjsonFileName = "IL_" + modName + "csow.hjson";
 

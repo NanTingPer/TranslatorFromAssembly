@@ -109,7 +109,7 @@ public class TFile(string filePath)
         if (FilePath.Contains("IL_")) {
             List<(string key, string value)> kv = [];
             foreach (KeyValuePair<string, Hjson.JsonValue> keyValue in HjsonValue.Parse(GetText())) {
-                kv.Add(keyValue.Key, keyValue.Value);
+                kv.Add((keyValue.Key, keyValue.Value));
             }
             return kv;
         } else {

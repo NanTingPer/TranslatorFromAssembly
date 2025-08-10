@@ -9,7 +9,10 @@ using TranslatorLibrary.Tools;
 namespace TranslatorFromAssembly.ViewModels;
 public class SaveViewModel : ViewModelBase
 {
-    private const string defaultModPath = "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
+    //private const string defaultModPath = "C:\\Users\\用户名\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
+
+    private readonly static string defaultModPath = $"C:\\Users\\{Environment.UserName}\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\";
+
     private const string MyModDicPath = "MyModPath";
     private const string MyModNameConf = ".TarGetModName";
 

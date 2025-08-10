@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Text;
 using static TranslatorLibrary.Tools.HjsonSerializer;
-using System.Windows.Input;
 using TranslatorFromAssembly.Services.IServices;
 using TranslatorFormAssembly.Models;
 using TranslatorLibrary.Tools;
@@ -31,10 +30,10 @@ public class SaveViewModel : ViewModelBase
 
     public DataFilePath ListBoxOption { get => listBoxOption!; set => SetProperty(ref listBoxOption, value); }
 
-    public ICommand ClickListOptionCommand { get; }
-    public ICommand WriteOutputCommand { get; }
-    public ICommand LoadDataPathToListCommand { get; }
-    public ICommand SaveToSwitchCommand { get; }
+    public IRelayCommand ClickListOptionCommand { get; }
+    public IRelayCommand WriteOutputCommand { get; }
+    public IRelayCommand LoadDataPathToListCommand { get; }
+    public IRelayCommand SaveToSwitchCommand { get; }
     public SaveViewModel(IWriteFileService writeFileService, ISQLiteExtract<PreLoadData> sQLiteExtract)
     {
         _writeFileService = writeFileService;

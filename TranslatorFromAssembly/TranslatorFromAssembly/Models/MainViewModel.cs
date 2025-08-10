@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
 using TranslatorFromAssembly.AllService;
 using TranslatorFromAssembly.Services.IServices;
 using TranslatorFromAssembly.ViewModels;
@@ -25,10 +24,10 @@ namespace TranslatorFromAssembly.Models
         private ViewModelBase _contentView;
         private AllViewInfo _allViewInfo = AllViewInfo.AllViewInfos[0];
 
-        public ICommand IsPaneOpenCommand { get; }
-        public ICommand SetPaneSizeCommand { get; }
-        public ICommand InitViewCommand { get; }
-        public ICommand ClickOptionCommand { get; }
+        public IRelayCommand IsPaneOpenCommand { get; }
+        public IRelayCommand SetPaneSizeCommand { get; }
+        public IRelayCommand InitViewCommand { get; }
+        public IRelayCommand ClickOptionCommand { get; }
         public bool IsPaneOpen { get => _isPaneOpen; set => SetProperty(ref _isPaneOpen, value); }
         public int PaneSize { get => _PaneSize; set => SetProperty(ref _PaneSize, value); }
         public AllViewInfo AllViewInfo { get => _allViewInfo; set => SetProperty(ref _allViewInfo, value); }

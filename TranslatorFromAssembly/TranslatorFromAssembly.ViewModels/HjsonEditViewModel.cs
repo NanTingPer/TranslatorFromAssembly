@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using TranslatorFormAssembly.Models;
 using TranslatorLibrary.Tools;
 using TranslatorFromAssembly.Services.IServices;
@@ -29,11 +28,11 @@ namespace TranslatorFromAssembly.ViewModels
         private IHjsonProcess _hjsonProcess;
         private ISQLiteExtract<HjsonModel> _sQLiteExtract;
 
-        public ICommand SaveFilePathCommand { get; }
-        public ICommand ListBoxTappedCommand { get; }
-        public ICommand EditEndedMethodCommand { get; }
-        public ICommand ListBoxBackspaceCommand { get; }
-        public ICommand ListBoxSelectInitalizedCommand { get; }
+        public IRelayCommand SaveFilePathCommand { get; }
+        public IRelayCommand ListBoxTappedCommand { get; }
+        public IRelayCommand EditEndedMethodCommand { get; }
+        public IRelayCommand ListBoxBackspaceCommand { get; }
+        public IRelayCommand ListBoxSelectInitalizedCommand { get; }
         //存储上下级
         public StackObservableList<string> DirectoryList { get; set; } = new StackObservableList<string>();
 

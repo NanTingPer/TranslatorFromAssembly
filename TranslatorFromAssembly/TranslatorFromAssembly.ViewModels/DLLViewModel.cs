@@ -2,7 +2,6 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Windows.Input;
 using TranslatorFormAssembly.Models;
 using TranslatorLibrary.Tools;
 using static TranslatorLibrary.Tools.HjsonSerializer;
@@ -45,13 +44,13 @@ namespace TranslatorFromAssembly.ViewModels
         private ISQLiteExtract<PreLoadData> _sQLiteExtract;
         private IRootViewCut _rootViewCut;
         private string _indexText = string.Empty;
-        public ICommand CommandGetTranslator { get; }
-        public ICommand PitchsCommand { get; }
-        public ICommand GetAssemblyStrCommand { get; }
-        public ICommand GetAssemblyStrPgDnCommand { get; }
-        public ICommand SetSQLiteExtractCommand { get; }
-        public ICommand GotSaveViewCommand { get; }
-        public ICommand OpenFilePathCommand { get; }
+        public IRelayCommand CommandGetTranslator { get; }
+        public IRelayCommand PitchsCommand { get; }
+        public IRelayCommand GetAssemblyStrCommand { get; }
+        public IRelayCommand GetAssemblyStrPgDnCommand { get; }
+        public IRelayCommand SetSQLiteExtractCommand { get; }
+        public IRelayCommand GotSaveViewCommand { get; }
+        public IRelayCommand OpenFilePathCommand { get; }
 
         /// <summary>
         /// 用来显示项目

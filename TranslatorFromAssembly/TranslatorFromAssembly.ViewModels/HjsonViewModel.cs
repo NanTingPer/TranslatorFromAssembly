@@ -1,7 +1,6 @@
 using Avalonia.Input;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using TranslatorFormAssembly.Models;
 using TranslatorFromAssembly.Services.IServices;
 
@@ -28,7 +27,7 @@ namespace TranslatorFromAssembly.ViewModels
         public ObservableCollection<FilePathModel> FilePath { get; set; } = new();
 
 
-        public ICommand FileDragInCommand { get; }
+        public IRelayCommand FileDragInCommand { get; }
 
 
         public async void FileDragIn(object? e)

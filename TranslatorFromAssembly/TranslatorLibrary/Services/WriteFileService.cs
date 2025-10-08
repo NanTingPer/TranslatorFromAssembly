@@ -74,6 +74,10 @@ public class WriteFileService : IWriteFileService
             Write.Write(StringToByte($"\t\t\t\t#region {ClassNaem}"));
             //方法名称 内容
             var Translat = item.Value;
+            foreach (var key in Translat.Keys) {
+                Translat[key] = Translat[key].DistinctBy(yhtg => yhtg.中文).ToList();
+            }
+
             #region 开始输出
             foreach (var value in Translat) {
                 MethodName = value.Key;

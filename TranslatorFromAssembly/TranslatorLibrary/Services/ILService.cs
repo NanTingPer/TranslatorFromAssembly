@@ -172,7 +172,7 @@ namespace TranslatorFromAssembly.Services.Services
             if (methodName.Contains("SaveWorldData")) return true;
 
 
-            if (type.BaseType.ToString().Contains("ModPlayer")) {
+            if (type.BaseType != null && type.BaseType.ToString().Contains("ModPlayer")) {
 
                 if (methodName.Contains("SaveData"))
                     return true;
